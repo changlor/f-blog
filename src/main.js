@@ -16,4 +16,4 @@ let router = new VueRouter({
 let app = Vue.extend(require('./App.vue'));
 routerConfig(router);
 
-router.start(app, 'app');
+router.start(app, '#app');

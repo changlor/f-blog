@@ -1,66 +1,75 @@
 <template>
 <div id="navbar-wrap">
-  <ul v-bind:class="[isContrary ? 'contrary-navbar' : 'navbar']" id="navbar-ctrl">
+  <div v-if="isGambled" class="unme-shadow">
+    <div v-if="isKamiWords" class="kami-words">{{ kamiWords }}</div>
+  </div>
+  <div class="unme">
+    <a v-if="!isGambled" v-on:click="unme">神はサイコロを投げる</a>
+  </div>
+  <div id="admin-entrance">
+    <a class="entrance" v-link="'/new'">unme の route</a>
+  </div>
+  <ul v-if="!isGambled" v-bind:class="[isContrary ? 'contrary-navbar' : 'navbar']" id="navbar-ctrl">
     <li class="about">
       <div>
-        <a v-link="{ path: 'about' }">
-          <i v-link="{ path: 'about' }" class="fa fa-about"></i>
+        <a v-link="'/about'">
+          <i v-link="'/about'" class="fa fa-about"></i>
           <span>关于</span>
         </a>
       </div>
     </li>
     <li class="daily">
       <div>
-        <a v-link="{ path: 'daily' }">
-          <i v-link="{ path: 'daily' }" class="fa fa-daily"></i>
+        <a v-link="'/daily'">
+          <i v-link="'/daily'" class="fa fa-daily"></i>
           <span>日常</span>
         </a>
       </div>
     </li>
     <li class="photo">
       <div>
-        <a v-link="{ path: 'photo' }">
-          <i v-link="{ path: 'photo' }" class="fa fa-photo"></i>
+        <a v-link="'/photo'">
+          <i v-link="'/photo'" class="fa fa-photo"></i>
           <span>照片</span>
         </a>
       </div>
     </li>
     <li class="coding">
       <div>
-        <a v-link="{ path: 'code' }">
-          <i v-link="{ path: 'code' }" class="fa fa-code"></i>
+        <a v-link="'/code'">
+          <i v-link="'/code'" class="fa fa-code"></i>
           <span>代码</span>
         </a>
       </div>
     </li>
     <li class="feel">
       <div>
-        <a v-link="{ path: 'feel' }">
-          <i v-link="{ path: 'feel' }" class="fa fa-feel"></i>
+        <a v-link="'/feel'">
+          <i v-link="'/feel'" class="fa fa-feel"></i>
           <span>随感</span>
         </a>
       </div>
     </li>
     <li class="board">
       <div>
-        <a  v-link="{ path: 'board' }">
-          <i v-link="{ path: 'board' }" class="fa fa-board"></i>
+        <a  v-link="'/board'">
+          <i v-link="'/board'" class="fa fa-board"></i>
           <span>留言</span>
         </a>
       </div>
     </li>
     <li class="music">
       <div>
-        <a v-link="{ path: 'music' }">
-          <i v-link="{ path: 'music' }" class="fa fa-music"></i>
+        <a v-link="'/music'">
+          <i v-link="'/music'" class="fa fa-music"></i>
           <span>音乐</span>
         </a>
       </div>
     </li>
     <li class="project">
       <div>
-        <a v-link="{ path: 'project' }">
-          <i v-link="{ path: 'project' }" class="fa fa-project"></i>
+        <a v-link="'/project'">
+          <i v-link="'/project'" class="fa fa-project"></i>
           <span>作品</span>
         </a>
       </div>
@@ -74,11 +83,59 @@ export default {
   data () {
     return {
       isContrary: false,
+      isGambled: false,
+      isKamiWords: false,
+      kamiWords: '命运向你投掷了一个硬币',
+      hasUnme: false,
     }
+  },
+  methods: {
+    unme () {
+      this.isGambled = true;
+      this.isKamiWords = true;
+      let $this = this;
+      setTimeout(function () {
+        $this.isKamiWords = false;
+      }, 6000);
+      if (this.hasUnme) {
+        setTimeout(function () {
+          $this.isGambled = false;
+        }, 7000);
+      }
+      if (!this.hasUnme) {
+        this.hasUnme = true;
+        setTimeout(function () {
+          $this.kamiWords = '你的命运硬币是反面';
+          $this.isKamiWords = true;
+        }, 7000);
+        setTimeout(function () {
+          $this.isKamiWords = false;
+        }, 13000);
+        setTimeout(function () {
+          $this.kamiWords = '你';
+          $this.isKamiWords = true;
+        }, 14000);
+        setTimeout(function () {
+          $this.isKamiWords = false;
+        }, 20000);
+        setTimeout(function () {
+          $this.kamiWords = '很怠惰呢';
+          $this.isKamiWords = true;
+        }, 21000);
+        setTimeout(function () {
+          $this.kamiWords = '你，很怠惰呢';
+          $this.isKamiWords = false;
+        }, 27000);
+        setTimeout(function () {
+          $this.isGambled = false;
+        }, 28000);
+      }
+    },
   },
   ready () {
     let $this = this;
     const scrollFunc = function(e) {
+      e.preventDefault();
       e = e || window.event;
       e.wheelDelta < 0 ? $this.isContrary = false : $this.isContrary = true;
     }
@@ -89,6 +146,50 @@ export default {
 </script>
 
 <style scoped>
+/* admin-entrance */
+#admin-entrance {
+  right: 8px;
+  top: 20px;
+  position: fixed;
+}
+/* kami */
+@keyframes bDark
+{
+  from {opacity: 0.2;}
+  to {opacity: 0.7;}
+}
+@keyframes wDark
+{
+  0% {opacity: 0.2;}
+  20% {opacity: 1;}
+  70% {opacity: 1;}
+  100% {opacity: 0;}
+}
+.unme-shadow {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+  background-color: black;
+  animation: bDark 2s 1;
+}
+.kami-words {
+  position: fixed;
+  font-size: 40px;
+  bottom: 200px;
+  left: 400px;
+  color: red;
+  opacity: 0;
+  animation: wDark 6s 1;
+}
+.unme a {
+  position: fixed;
+  top: 110px;
+  left: 220px;
+  transition: all 0.6s ease-in-out;
+  cursor: pointer;
+  z-index: 39;
+}
 /* 样式控制 */
 #navbar-ctrl li {
   font-size:20px;
@@ -263,6 +364,9 @@ export default {
   background-size: 80px 80px;
   background-color: #fff;
   border-radius: 40px;
+}
+#navbar-ctrl li div a.v-link-active span {
+  color: red;
 }
 .fa-about {
   background-image: url('../assets/me.jpg');

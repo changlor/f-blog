@@ -6,6 +6,22 @@ export default function (router) {
         '/': {
             component: require('./views/index.vue'),
         },
+        '/daily': {
+            component: require('./views/daily.vue'),
+        },
+        '/t/:tid': {
+            name: 'topic',
+            component: require('./views/viewTopic.vue'),
+        },
+        '/admin': {
+            component: require('./views/admin.vue'),
+        },
+        '/new': {
+            component: require('./views/new.vue'),
+        },
+        '/contribution': {
+            component: require('./views/contribution.vue'),
+        },
         //未匹配路由
         '*': {
             component: require('./views/notFound.vue'),
