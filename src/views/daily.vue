@@ -1,17 +1,14 @@
 <template>
 <div id="container">
-    <article class="p" v-for="daily in dailyIn">
+    <article class="p" v-for="daily in dailyInfo">
         <a v-on:click="setTopicKey($index)" v-link="{ name: 'topic', params: { tid: daily.tid } }">
             <h2 class="p-title many">{{ daily.title }}</h2>
             <ul class="p-meta">
-                <!--<li>代码</li>-->
-                <!--<li><a href="#!u/1">卜卜口</a></li>-->
                 <li><time>{{ daily.created_at }}</time></li>
             </ul>
             <div class="cover"><img v-bind:src="daily.cover" class=""></div>
         </a>
-        <div class="p-text" v-html="daily.profile | marked">
-        </div>
+        <div class="p-text" v-html="daily.profile | marked"></div>
     </article>
 </div>
 </template>
@@ -22,22 +19,35 @@ import blogCtrlApi from '../vuex/actions.js';
 export default {
     data () {
         return {
-            dailyIn: false,
+            dailyInfo: false,
+            fetchDailyInfo: false,
+            isCached: false,
         };
     },
     vuex: {
         getters: {
-            dailyInfo: blogDataApi.getDailyInfo,
+            fetchCachedColumnInfo: blogDataApi.fetchCachedColumnInfo,
+            fetchCachedColumnStatus: blogDataApi.fetchCachedColumnStatus,
         },
         actions: {
             setTopicKey: blogCtrlApi.setCurrentTopicCacheKey,
+            cachedInfo: blogCtrlApi.updateColumnCachedInfo,
+            cachedStatus: blogCtrlApi.updateColumnCachedStatus,
         },
     },
     ready () {
+        this.isCached = this.fetchCachedColumnStatus.daily;
+
+        this.isCached
+        ?
+        this.dailyInfo = this.fetchCachedColumnInfo.daily
+        :
         fetch('http://api.blog.rain/column/1')
         .then((response) => response.json())
         .then((response) => {
-            this.dailyIn = response.data;
+            this.dailyInfo = response.data;
+            this.cachedInfo('daily', response.data);
+            this.cachedStatus('daily', true);
         })
         .catch((error) => {
             console.error(error);
