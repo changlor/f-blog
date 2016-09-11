@@ -19,6 +19,10 @@ const state = {
         article: {},
     },
     currentKey: 0,
+    msgBox: {
+        createContent: '',
+        createStatus: false,
+    }
 };
 
 //创建一个对象储存一系列我们解析来要写的 mutation 函数
@@ -63,6 +67,10 @@ const mutations = {
             profile: content,
         }
         state.daily.push(newTopic);
+    },
+    CREATE_NEW_MSG_BOX (state, status, content) {
+        state.msgBox.createStatus = status;
+        state.msgBox.createContent = content;
     }
 };
 

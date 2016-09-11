@@ -1,5 +1,9 @@
 <template>
 <div id="navbar-wrap">
+  <div class="msg-box-wrap">
+    <div v-for="msgBox in msgBoxes" v-if="msgBox.isOn" transition="msg-box">{{ msgBox.msg }}<a v-on:click="offMsgBox($index)" class="close">x</a></div>
+    <a class="msg-box-btn" v-on:click="createNewMsgBox(true, 'oneesama')">只要我按下开关，然后你懂的/yx</a>
+  </div>
   <div v-if="isGambled" class="unme-shadow">
     <div v-if="isKamiWords" class="kami-words">{{ kamiWords }}</div>
   </div>
@@ -7,7 +11,7 @@
     <a v-if="!isGambled" v-on:click="unme">神はサイコロを投げる</a>
   </div>
   <div id="admin-entrance">
-    <a class="entrance" v-link="'/new'">unme の route</a>
+    <a class="entrance" v-link="'/unme'">unme の route</a>
   </div>
   <ul v-if="!isGambled" v-bind:class="[isContrary ? 'contrary-navbar' : 'navbar']" id="navbar-ctrl">
     <li class="about">
@@ -79,6 +83,8 @@
 </template>
 
 <script>
+import blogDataApi from '../vuex/getters.js';
+import blogCtrlApi from '../vuex/actions.js';
 export default {
   data () {
     return {
@@ -87,9 +93,34 @@ export default {
       isKamiWords: false,
       kamiWords: '命运向你投掷了一个硬币',
       hasUnme: false,
+      msgBoxes: []
+    }
+  },
+  vuex: {
+    getters: {
+      isMsgBoxCreate: blogDataApi.getMsgBoxCreateStatus,
+      msgBoxContent: blogDataApi.getMsgBoxCreateContent,
+    },
+    actions: {
+      createNewMsgBox: blogCtrlApi.createNewMsgBox,
+    }
+  },
+  watch: {
+    isMsgBoxCreate: function (val) {
+      if (val) {
+        const index = this.msgBoxes.push({msg: this.msgBoxContent,isOn: true});
+        console.log(index);
+        setTimeout(() => {
+          this.msgBoxes.splice(index - 1, 1);
+          this.createNewMsgBox(false);
+        }, 4000);
+      }
     }
   },
   methods: {
+    offMsgBox (index) {
+      this.msgBoxes[index].isOn = false;
+    },
     unme () {
       this.isGambled = true;
       this.isKamiWords = true;
@@ -146,6 +177,50 @@ export default {
 </script>
 
 <style scoped>
+@keyframes mBoxOn
+{
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+@keyframes mBoxOff
+{
+  to {opacity: 0;}
+}
+.msg-box-btn {
+  position: fixed;
+  left: 180px;
+  top: 70px;
+  cursor: pointer;
+}
+.msg-box-wrap {
+  position: fixed;
+  right: 0;
+  top: 40px;
+  z-index: 100;
+}
+.msg-box-transition {
+  width: 230px;
+  min-height: 40px;
+  color: #fff;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #222;
+}
+.msg-box-enter {
+  animation: mBoxOn 1.5s 1;
+}
+.msg-box-leave {
+  animation: mBoxOff 1.5s 1;
+}
+.close {
+  position: absolute;
+  left: 220px;
+  cursor: pointer;
+  padding: 5px;
+  padding-top: 0px;
+}
 /* admin-entrance */
 #admin-entrance {
   right: 8px;

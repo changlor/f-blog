@@ -6,7 +6,9 @@ class blogDataApi {
     static fetchCachedColumnStatus = state => state.cache.column;
     static fetchCachedArticleInfo = state => state.article;
     static fetchCachedArticleStatus = state => state.cache.article;
-    static getCurrentTopicKey = state =>state.currentKey;
+    static getCurrentTopicKey = state => state.currentKey;
+    static getMsgBoxCreateStatus = state => state.msgBox.createStatus;
+    static getMsgBoxCreateContent = state => state.msgBox.createContent;
 };
 
 export default blogDataApi;

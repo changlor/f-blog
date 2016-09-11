@@ -1,4 +1,5 @@
 'use strict';
+import getLocalStorageApi from './store.js';
 
 export default function (router) {
     //路由路径
@@ -13,8 +14,8 @@ export default function (router) {
             name: 'topic',
             component: require('./views/viewTopic.vue'),
         },
-        '/admin': {
-            component: require('./views/admin.vue'),
+        '/contribute': {
+            component: require('./views/contribute.vue'),
         },
         '/new': {
             component: require('./views/new.vue'),
@@ -35,15 +36,16 @@ export default function (router) {
 
     //路由限制
     router.beforeEach((transition) => {
-        if (transition.to.path === '/forbidden') {
-            router.app.authenticating = true;
-            setTimeout(() => {
-                router.app.authenticating = false;
-                alert('this route is forbidden by a global before hook');
-                transition.abort();
-            }, 3000);
-        } else {
-            transition.next();
+        switch (transition.to.path) {
+            case '/unme':
+                getLocalStorageApi.fetchAuth() ? transition.redirect('/new') : transition.redirect('/contribute');
+            break;
+            case '/new':
+                getLocalStorageApi.fetchAuth() ? transition.next() : transition.redirect('/contribute');
+            break;
+            default:
+                transition.next();
+            break;
         }
     });
 }

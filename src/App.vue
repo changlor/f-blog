@@ -22,7 +22,7 @@ body {
     margin: 0px;
 }
 ul{padding:0;}
-article{padding:2em 0;}
+article{padding:4em 0;}
 .clearfix:after {
     content: ".";
     display: block;

@@ -41,6 +41,9 @@ export default {
             .catch((error) => {
                 console.error(error);
             });
+            this.input = '';
+            this.title = '';
+            this.createNewMsgBox(true, '发射成功啦~QwQ')
         },
     },
     ready () {
@@ -61,6 +64,7 @@ export default {
     vuex: {
         actions: {
             addNewTopic: blogCtrlApi.addNewTopic,
+            createNewMsgBox: blogCtrlApi.createNewMsgBox,
         },
     }
 }

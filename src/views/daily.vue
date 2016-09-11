@@ -14,6 +14,7 @@
 </template>
 <script>
 import marked from 'marked';
+import blogFetchApi from '../common/fetch.js';
 import blogDataApi from '../vuex/getters.js';
 import blogCtrlApi from '../vuex/actions.js';
 export default {
@@ -23,6 +24,9 @@ export default {
             fetchDailyInfo: false,
             isCached: false,
         };
+    },
+    methods: {
+        fetchColumn: blogFetchApi.fetchData,
     },
     vuex: {
         getters: {
@@ -36,22 +40,17 @@ export default {
         },
     },
     ready () {
+        const fetchColumnCallback = (response) => {
+            this.dailyInfo = response.data;
+            this.cachedInfo('daily', response.data);
+            this.cachedStatus('daily', true);
+        };
         this.isCached = this.fetchCachedColumnStatus.daily;
-
         this.isCached
         ?
         this.dailyInfo = this.fetchCachedColumnInfo.daily
         :
-        fetch('http://api.blog.rain/column/1')
-        .then((response) => response.json())
-        .then((response) => {
-            this.dailyInfo = response.data;
-            this.cachedInfo('daily', response.data);
-            this.cachedStatus('daily', true);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+        this.fetchColumn('http://api.blog.rain/column/1', fetchColumnCallback);
         marked.setOptions({
             renderer: new marked.Renderer(),
             gfm: true,
@@ -69,5 +68,4 @@ export default {
 }
 </script>
 <style>
-
 </style>
