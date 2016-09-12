@@ -23,6 +23,9 @@ export default function (router) {
         '/contribution': {
             component: require('./views/contribution.vue'),
         },
+        '/ログイン': {
+            component: require('./views/signin.vue'),
+        },
         //未匹配路由
         '*': {
             component: require('./views/notFound.vue'),
