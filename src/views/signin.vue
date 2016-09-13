@@ -10,6 +10,7 @@
 </template>
 <script>
 import blogCtrlApi from '../vuex/actions.js';
+import getLocalStorageApi from '../store.js';
 export default {
     data () {
         return {
@@ -19,17 +20,28 @@ export default {
     },
     methods: {
         getToken () {
+            let formData = new FormData();
+            formData.append('username', this.username);
+            formData.append('password', this.password);
             fetch('http://api.blog.rain/auth/login', {
                 method: 'POST',
-                body:{},
+                body: formData,
             })
             .then((response) => {
-                console.log(response);
+                if (response.ok) {
+                    return response.json();
+                }
+            })
+            .then((response) => {
+                if (response.success) {
+                    getLocalStorageApi.savedToken(response.data.token);
+                    this.$route.router.go('/index');
+                }
             })
             .catch((error) => {
                 console.error(error);
             });
-            this.createNewMsgBox(true, '发射成功啦~QwQ')
+            //this.createNewMsgBox(true, '发射成功啦~QwQ')
         },
     },
 }

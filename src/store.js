@@ -1,9 +1,23 @@
-const STORAGE_KEY = 'onesan-daisuki';
-export default {
-    fetchAuth () {
-        return window.localStorage.getItem(STORAGE_KEY) || '';
-    },
-    savedAuth (items) {
-        window.localStorage.setItem(STORAGE_KEY, items);
-    },
+class localStorageApi {
+    static savedAuthor (username) {
+        window.localStorage.setItem(username, true);
+    }
+    
+    static savedToken (value) {
+        window.localStorage.setItem('token', value)
+    }
+
+    static expiredAuthor (username) {
+        window.localStorage.setItem(username, false);
+    }
+    
+    static fetchAuthor (username) {
+        return window.localStorage.getItem(username);
+    }
+
+    static fetchToken () {
+        return window.localStorage.getItem('token');
+    }
 }
+
+export default localStorageApi;

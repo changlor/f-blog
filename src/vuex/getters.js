@@ -9,6 +9,6 @@ class blogDataApi {
     static getCurrentTopicKey = state => state.currentKey;
     static getMsgBoxCreateStatus = state => state.msgBox.createStatus;
     static getMsgBoxCreateContent = state => state.msgBox.createContent;
-};
+}
 
 export default blogDataApi;

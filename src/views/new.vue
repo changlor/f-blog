@@ -13,6 +13,7 @@
 <script>
 import marked from 'marked';
 import blogCtrlApi from '../vuex/actions.js';
+import localStorageApi from '../store.js';
 export default {
     data () {
         return {
@@ -31,8 +32,11 @@ export default {
             let formData = new FormData();
             formData.append('title', this.title);
             formData.append('content', this.input);
+            let myHeaders = new Headers();
+            myHeaders.append("Auth-Token", localStorageApi.fetchToken());
             fetch('http://api.blog.rain/articles', {
                 method: 'POST',
+                headers: myHeaders,
                 body: formData,
             })
             .then((response) => {
@@ -47,6 +51,9 @@ export default {
         },
     },
     ready () {
+        if (!localStorageApi.fetchAuthor('changle')) {
+            this.$route.router.go('/contribute');
+        }
         marked.setOptions({
             renderer: new marked.Renderer(),
             gfm: true,
@@ -127,7 +134,7 @@ export default {
     width: 400px;
     min-height: 600px;
     bottom: -180px;
-    right: 20px;
+    left: 1000px;
 }
 #md-contrast:hover {
     opacity: 0.1;
