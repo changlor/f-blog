@@ -2,11 +2,11 @@
 //既然我们只对事件的分发(dispatch 对象)感兴趣。（state 也可以作为可选项放入）
 //我们可以利用 ES6 的解构（destructuring）功能来简化对参数的导入
 class blogCtrlApi {
-  static updateColumnCachedInfo ({ dispatch }, column, newInfo) {
-    dispatch('UPDATE_COLUMN_CACHED_INFO', column, newInfo);
+  static updateCategoryCachedInfo ({ dispatch }, category, newInfo) {
+    dispatch('UPDATE_CATEGORY_CACHED_INFO', category, newInfo);
   }
-  static updateColumnCachedStatus ({ dispatch }, column, newStatus) {
-    dispatch('UPDATE_COLUMN_CACHED_STATUS', column, newStatus);
+  static updateCategoryCachedStatus ({ dispatch }, category, newStatus) {
+    dispatch('UPDATE_CATEGORY_CACHED_STATUS', category, newStatus);
   }
   static updateArticleCachedInfo ({ dispatch }, newInfo) {
     dispatch('UPDATE_ARTICLE_CACHED_INFO', newInfo);

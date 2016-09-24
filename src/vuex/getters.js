@@ -2,8 +2,8 @@
 //在 ES6 里你可以写成：
 //export const getCount = state => state.count
 class blogDataApi {
-    static fetchCachedColumnInfo = state => state.column;
-    static fetchCachedColumnStatus = state => state.cache.column;
+    static fetchCachedCategoryInfo = state => state.category;
+    static fetchCachedCategoryStatus = state => state.cache.category;
     static fetchCachedArticleInfo = state => state.article;
     static fetchCachedArticleStatus = state => state.cache.article;
     static getCurrentTopicKey = state => state.currentKey;

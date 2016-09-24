@@ -1,5 +1,4 @@
 'use strict';
-import getLocalStorageApi from './store.js';
 
 export default function (router) {
     //路由路径
@@ -25,6 +24,9 @@ export default function (router) {
         },
         '/ログイン': {
             component: require('./views/signin.vue'),
+        },
+        '/unme': {
+            component: require('./views/unme.vue'),
         },
         //未匹配路由
         '*': {

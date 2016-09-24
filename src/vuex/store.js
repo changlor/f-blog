@@ -8,12 +8,12 @@ Vue.use(Vuex);
 const state = {
     //定义缓存数据
     
-    column: {
+    category: {
         daily: [],
     },
     article: [],
     cache: {
-        column: {
+        category: {
             daily: false,
         },
         article: {},
@@ -30,20 +30,20 @@ const state = {
 const mutations = {
     //mutation 的第一个参数是当前的 state
     //你可以在函数里修改 state
-    UPDATE_COLUMN_CACHED_INFO (state, column, newInfo) {
-        switch (column) {
+    UPDATE_CATEGORY_CACHED_INFO (state, category, newInfo) {
+        switch (category) {
             case 'daily':
-                state.column.daily = newInfo;
+                state.category.daily = newInfo;
             break;
             default:
                 false;
             break;
         }
     },
-    UPDATE_COLUMN_CACHED_STATUS (state, column, newStatus) {
-        switch (column) {
+    UPDATE_CATEGORY_CACHED_STATUS (state, category, newStatus) {
+        switch (category) {
             case 'daily':
-                state.cache.column.daily = newStatus;
+                state.cache.category.daily = newStatus;
             break;
             default:
                 false;

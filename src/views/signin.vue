@@ -10,7 +10,7 @@
 </template>
 <script>
 import blogCtrlApi from '../vuex/actions.js';
-import getLocalStorageApi from '../store.js';
+import getLocalStorageApi from '../common/store.js';
 export default {
     data () {
         return {
