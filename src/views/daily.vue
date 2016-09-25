@@ -1,7 +1,7 @@
 <template>
 <div id="container">
-    <article class="p" v-for="article in dailyArticles">
-        <a v-on:click="setTopicKey($index)" v-link="{ name: 'topic', params: { tid: article.tid } }">
+    <article class="p" v-for="article in articles">
+        <a v-link="{ name: 'topic', params: { tid: article.id } }">
             <h2 class="p-title many">{{ article.title }}</h2>
             <ul class="p-meta">
                 <li><time>{{ article.created_at }}</time></li>
@@ -21,7 +21,7 @@ import localStorageApi from '../common/store.js';
 export default {
     data () {
         return {
-            dailyArticles: false,
+            articles: false,
             isCached: false,
             isLocalStored: false,
             version: false,
@@ -29,8 +29,10 @@ export default {
     },
     methods: {
         fetchCategory: blogFetchApi.fetchData,
-        localStoredDailyArticles: localStorageApi.savedDailyArticles,
-        fetchLocalStoredDailyArticles: localStorageApi.fetchDailyArticles,
+        localStoredCategory: localStorageApi.savedCategory,
+        fetchLocalStoredCategory: localStorageApi.fetchCategory,
+        localStoredArticle: localStorageApi.savedArticle,
+        fetchLocalStoredArticle: localStorageApi.fetchArticle,
         getLocalStoredCategoryVersion: localStorageApi.storedCategoryVersion,
     },
     vuex: {
@@ -39,28 +41,38 @@ export default {
             fetchCachedCategoryStatus: blogDataApi.fetchCachedCategoryStatus,
         },
         actions: {
-            setTopicKey: blogCtrlApi.setCurrentTopicCacheKey,
             cachedInfo: blogCtrlApi.updateCategoryCachedInfo,
             cachedStatus: blogCtrlApi.updateCategoryCachedStatus,
         },
     },
     ready () {
         this.isCached = this.fetchCachedCategoryStatus.daily;
-        this.isLocalStored = this.fetchLocalStoredDailyArticles() !== null;
+        this.isLocalStored = this.fetchLocalStoredCategory('daily') !== null;
         //如果有本地保存，则获取本地缓存版本号
         if (this.isLocalStored) {
             this.version = this.getLocalStoredCategoryVersion('daily');
-            console.log(this.version);
         }
 
         const cachedArticles = (articles) => {
             this.isCached = true;
-            this.dailyArticles = articles;
+            this.articles = articles;
             this.cachedInfo('daily', articles);
             this.cachedStatus('daily', true);
         }
         const storedArticles = (articles) => {
-            this.localStoredDailyArticles(articles);
+            this.localStoredCategory('daily', articles);
+            for (let key in articles) {
+                const article = articles[key];
+                if (this.fetchLocalStoredArticle(article.id) === null) {
+                    this.localStoredArticle(article.id, {
+                        id: article.id,
+                        title: article.title,
+                        body: article.profile,
+                        cover: article.cover,
+                        created_at: article.created_at,
+                    });
+                }
+            }
         }
 
         const fetchCategoryCallback = (response) => {
@@ -70,7 +82,7 @@ export default {
 
         //获取localstorage缓存，如果本地存在数据，则不重复发送额外新的获取请求
         if (this.isLocalStored && !this.isCached) {
-            cachedArticles(this.fetchLocalStoredDailyArticles(this.articleId));
+            cachedArticles(this.fetchLocalStoredCategory('daily'));
         }
 
         this.isCached
@@ -96,7 +108,7 @@ export default {
             pedantic: false,
             sanitize: true,
             smartLists: true,
-            smartypants: false
+            smartypants: false,
         });
     },
     filters: {
@@ -105,4 +117,12 @@ export default {
 }
 </script>
 <style>
+    .cover {
+        overflow: hidden;
+        position: relative;
+        border-radius: 10px;
+    }
+    img {
+        margin: -60px 0;
+    }
 </style>

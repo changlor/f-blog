@@ -71,11 +71,13 @@ export default {
     methods: {
         //获取模块api函数
         fetchArticle: blogFetchApi.fetchData,
-        fetchComments: blogFetchApi.fetchData,
-        sendComment: blogFetchApi.sendData,
         localStoredArticle: localStorageApi.savedArticle,
         fetchLocalStoredArticle: localStorageApi.fetchArticle,
         getLocalStoredArticleVersion: localStorageApi.cachedArticleVersion,
+        
+        fetchComments: blogFetchApi.fetchData,
+        sendComment: blogFetchApi.sendData,
+
         getCurrentDate: blogCommonApi.getCurrentDate,
         //组件函数
         submitComment () {
@@ -122,7 +124,6 @@ export default {
         getters: {
             fetchCachedArticleStatus: blogDataApi.fetchCachedArticleStatus,
             fetchCachedArticleInfo: blogDataApi.fetchCachedArticleInfo,
-            topicKey: blogDataApi.getCurrentTopicKey,
         },
         actions: {
             cachedInfo: blogCtrlApi.updateArticleCachedInfo,

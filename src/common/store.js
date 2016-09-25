@@ -44,17 +44,17 @@ class localStorageApi {
         let category = window.localStorage.getItem(categoryName);
         category = escape(category).replace(/%u/gi, '\\u');
         category = unescape(category);
-
+        
         //return category;
         return sha1(category);
     }
 
-    static savedDailyArticles (articles) {
-        window.localStorage.setItem('daily', JSON.stringify(articles));
+    static savedCategory (category, content) {
+        window.localStorage.setItem(category, JSON.stringify(content));
     }
 
-    static fetchDailyArticles () {
-        return JSON.parse(window.localStorage.getItem('daily'));
+    static fetchCategory (category) {
+        return JSON.parse(window.localStorage.getItem(category));
     }
 }
 

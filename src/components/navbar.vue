@@ -2,7 +2,6 @@
 <div id="navbar-wrap">
   <div class="msg-box-wrap">
     <div v-for="msgBox in msgBoxes" v-if="msgBox.isOn" transition="msg-box">{{ msgBox.msg }}<a v-on:click="offMsgBox($index)" class="close">x</a></div>
-    <a class="msg-box-btn" v-on:click="createNewMsgBox(true, 'oneesama')">只要我按下开关，然后你懂的/yx</a>
   </div>
   <div v-if="isGambled" class="unme-shadow">
     <div v-if="isKamiWords" class="kami-words">{{ kamiWords }}</div>
@@ -259,7 +258,7 @@ export default {
 }
 .unme a {
   position: fixed;
-  top: 110px;
+  top: 80px;
   left: 220px;
   transition: all 0.6s ease-in-out;
   cursor: pointer;

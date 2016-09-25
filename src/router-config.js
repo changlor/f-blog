@@ -1,4 +1,5 @@
 'use strict';
+import localStorageApi from './common/store.js';
 
 export default function (router) {
     //路由路径
@@ -25,9 +26,6 @@ export default function (router) {
         '/ログイン': {
             component: require('./views/signin.vue'),
         },
-        '/unme': {
-            component: require('./views/unme.vue'),
-        },
         //未匹配路由
         '*': {
             component: require('./views/notFound.vue'),
@@ -41,7 +39,17 @@ export default function (router) {
 
     //路由限制
     router.beforeEach((transition) => {
-        transition.next();
+        switch (transition.to.path) {
+            case '/unme':
+                localStorageApi.fetchAuthor('changle') ? transition.redirect('/new') : transition.redirect('/contribute');
+            break;
+            case '/new':
+                localStorageApi.fetchAuthor('changle') ? transition.next() : transition.redirect('/login');
+            break;
+            default:
+                transition.next();
+            break;
+        }
     });
 }
 

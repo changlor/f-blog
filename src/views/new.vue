@@ -74,7 +74,7 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style>
 .editor-wrap {
     padding-top: 80px;
 }
@@ -93,31 +93,35 @@ export default {
     cursor: pointer;
 }
 #md-preview {
+    word-wrap: break-word;
     padding: 20px;
-    width: 400px;
+    width: 700px;
     height: 100%;
     float: left;
 }
 #t-title {
-    background-color: #fafafa;
+    background-color: #f1f1f1;
     position: fixed;
-    bottom: 50px;
+    top: 50px;
+    left: 440px;
     font-size: 16px;
     outline: none;
     border: 0;
     border-radius: 3px;
     padding: 10px 15px;
-    width: 612px;
+    width: 670px;
 }
 #t-title:hover {
     opacity: 0.1;
 }
 .md-editor {
     position: fixed;
-    width: 600px;
+    width: 660px;
     height: 100px;
     bottom: 100px;
     opacity: 0.9;
+    left: 440px;
+    border-right: 0;
 }
 .md-transparent:hover {
     opacity: 0.2;
@@ -132,7 +136,11 @@ export default {
     width: 400px;
     min-height: 600px;
     bottom: -180px;
-    left: 1000px;
+    left: 1030px;
+}
+#md-contrast pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 #md-contrast:hover {
     opacity: 0.1;
@@ -142,12 +150,19 @@ textarea {
     border-right: 1px solid #ccc;
     resize: none;
     outline: none;
-    background-color: #f6f6f6;
+    background-color: #f1f1f1;
     font-size: 14px;
     font-family: 'Monaco', courier, monospace;
     padding: 20px;
 }
 code {
     color: #f66;
+}
+pre {
+    overflow: auto;
+}
+#md-preview img {
+    width: 700px;
+    margin: 0;
 }
 </style>
