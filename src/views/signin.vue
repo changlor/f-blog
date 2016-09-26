@@ -20,12 +20,16 @@ export default {
     },
     methods: {
         getToken () {
-            let formData = new FormData();
-            formData.append('username', this.username);
-            formData.append('password', this.password);
             fetch('http://api.blog.rain/auth/login', {
                 method: 'POST',
-                body: formData,
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: this.username,
+                    password: this.password,
+                }),
             })
             .then((response) => {
                 if (response.ok) {

@@ -18,10 +18,12 @@ const state = {
         },
         article: {},
     },
-    currentKey: 0,
-    msgBox: {
-        createContent: '',
-        createStatus: false,
+    msgbox: {
+        createContents: [],
+        createCount: 0,
+    },
+    shadow: {
+        rightbar: false,
     }
 };
 
@@ -56,9 +58,6 @@ const mutations = {
     UPDATE_ARTICLE_CACHED_STATUS (state, articleId, articleIndex) {
         state.cache.article[`id${articleId}`] = articleIndex;
     },
-    SET_CURRENT_TOPIC_KEY (state, currentKey) {
-        state.currentKey = currentKey
-    },
     ADD_NEW_TOPIC (state, title, content) {
         const newTopic = {
             title: title,
@@ -68,9 +67,15 @@ const mutations = {
         }
         state.daily.push(newTopic);
     },
-    CREATE_NEW_MSG_BOX (state, status, content) {
-        state.msgBox.createStatus = status;
-        state.msgBox.createContent = content;
+    CREATE_NEW_MSGBOX (state, content) {
+        state.msgbox.createCount++;
+        state.msgbox.createContents.push({msg: content, isRead: false});
+    },
+    READ_MSGBOX (state, status) {
+        state.msgbox.createContents = [];
+    },
+    UPDATE_SHADOW_ACTIVED_STATUS (state, component, status) {
+        state.shadow[component] = status;
     }
 };
 

@@ -1,0 +1,355 @@
+/* others */
+/* admin-entrance */
+#admin-entrance {
+  right: 8px;
+  top: 20px;
+  position: fixed;
+}
+/* kami */
+@keyframes bDark
+{
+  from {opacity: 0.2;}
+  to {opacity: 0.7;}
+}
+@keyframes wDark
+{
+  0% {opacity: 0.2;}
+  20% {opacity: 1;}
+  70% {opacity: 1;}
+  100% {opacity: 0;}
+}
+.unme-shadow {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+  background-color: black;
+  animation: bDark 2s 1;
+}
+.kami-words {
+  position: fixed;
+  font-size: 40px;
+  bottom: 200px;
+  left: 400px;
+  color: red;
+  opacity: 0;
+  animation: wDark 6s 1;
+}
+.unme a {
+  position: fixed;
+  top: 80px;
+  left: 220px;
+  transition: all 0.6s ease-in-out;
+  cursor: pointer;
+  z-index: 39;
+}
+/* 弹层 */
+@keyframes msgBoxOn
+{
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+@keyframes msgBoxOff
+{
+  to {opacity: 0;}
+}
+.msgbox-wrap {
+  position: fixed;
+  right: 0;
+  top: 40px;
+  z-index: 100;
+}
+.msg-box-transition {
+  width: 230px;
+  min-height: 40px;
+  color: #fff;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #222;
+}
+.msg-box-enter {
+  animation: msgBoxOn 1.5s 1;
+}
+.msg-box-leave {
+  animation: msgBoxOff 1.5s 1;
+}
+.close {
+  position: absolute;
+  left: 220px;
+  cursor: pointer;
+  padding: 5px;
+  padding-top: 0px;
+}
+/* 导航栏样式 */
+#navbar-wrap {
+  width: 300px;
+  height: 100%;
+  position: fixed;
+  z-index: 2;
+}
+#navbar-ctrl li {
+  font-size:20px;
+  line-height: 208px;
+  width:300px;
+  list-style: none;
+  position:absolute;
+  text-align:center;
+  transform-origin:231px 300px;
+}
+#navbar-ctrl li div a {
+  text-decoration: none;
+}
+#navbar-ctrl li div a span {
+  padding-left: 1em;
+  color: #58c5c7;
+}
+/* 导航栏图标 */
+.fa {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background-size: 80px 80px;
+  background-color: #fff;
+  border-radius: 40px;
+}
+.fa-about {
+  background-image: url('../me.jpg');
+}
+.fa-daily {
+  background-image: url('../nichijou.svg');
+}
+.fa-photo {
+  background-image: url('../photo.svg');
+}
+.fa-code {
+  background-image: url('../code.svg');
+}
+.fa-feel {
+  background-image: url('../feel.svg');
+}
+.fa-board {
+  background-image: url('../vsco.svg');
+}
+.fa-music {
+  background-image: url('../music.svg');
+}
+.fa-project {
+  background-image: url('../link.svg');
+}
+#navbar-ctrl li {
+  pointer-events: none;
+}
+#navbar-ctrl li div a {
+  padding-top: 15px;
+  padding-right: 20px;
+  pointer-events: auto;
+}
+
+#navbar-ctrl li div a.v-link-active span {
+  color: red;
+}
+/* 导航栏动画 */
+@keyframes clockwise-1
+{
+  75% {
+    transform: rotate(45deg);
+    top: 46px;
+    left: -198px;
+  }
+  100% {
+    transform: rotate(45deg);
+    top: 46px;
+    left: -198px;
+  }
+}
+@keyframes clockwise-2
+{
+  75% {
+    transform: rotate(90deg);
+    top: 74px;
+    left: -194px;
+  }
+  100% {
+    transform: rotate(90deg);
+    top: 74px;
+    left: -194px;
+  }
+}
+@keyframes eastern-1
+{
+  75% {
+    transform: rotate(-45deg);
+    top: 34px;
+    left: -247px;
+}
+  100% {
+    transform: rotate(-45deg);
+    top: 34px;
+    left: -247px;
+  }
+}
+@keyframes eastern-2
+{
+  75% {transform: rotate(-90deg);}
+  100% {transform: rotate(-90deg);}
+}
+@keyframes r-0
+{
+  75% {transform: rotate(45deg);}
+  100% {transform: rotate(45deg);}
+}
+@keyframes r-1
+{
+  75% {transform: rotate(0deg);}
+  100% {transform: rotate(0deg);}
+}
+@keyframes r-2
+{
+  75% {transform: rotate(-45deg);}
+  100% {transform: rotate(-45deg);}
+}
+@keyframes r-3
+{
+  75% {transform: rotate(-90deg);}
+  100% {transform: rotate(-90deg);}
+}
+@keyframes r-4
+{
+  75% {transform: rotate(-135deg);}
+  100% {transform: rotate(-135deg);}
+}
+@keyframes r-5
+{
+  75% {transform: rotate(-180deg);}
+  100% {transform: rotate(-180deg);}
+}
+@keyframes r-6
+{
+  75% {transform: rotate(-225deg);}
+  100% {transform: rotate(-225deg);}
+}
+@keyframes r-7
+{
+  75% {transform: rotate(-270deg);}
+  100% {transform: rotate(-270deg);}
+}
+@keyframes r-8
+{
+  75% {transform: rotate(-315deg);}
+  100% {transform: rotate(-315deg);}
+}
+@keyframes r-9
+{
+  75% {transform: rotate(-360deg);}
+  100% {transform: rotate(-360deg);}
+}
+@keyframes r-10
+{
+  75% {transform: rotate(-405deg);}
+  100% {transform: rotate(-405deg);}
+}
+/* 旋转控制 */
+.nav-1 {
+  transform: rotate(0deg);
+}
+.nav-2 {
+  transform: rotate(45deg);
+}
+.nav-3 {
+  transform: rotate(90deg);
+}
+.nav-4 {
+  transform: rotate(135deg);
+}
+.nav-5 {
+  transform: rotate(180deg);
+}
+.nav-6 {
+  transform: rotate(225deg);
+}
+.nav-7 {
+  transform: rotate(270deg);
+}
+.nav-8 {
+  transform: rotate(315deg);
+}
+.nav-1 div {
+  transform: rotate(0deg);
+}
+.nav-2 div {
+  transform: rotate(-45deg);
+}
+.nav-3 div {
+  transform: rotate(-90deg);
+}
+.nav-4 div {
+  transform: rotate(-135deg);
+}
+.nav-5 div {
+  transform: rotate(-180deg);
+}
+.nav-6 div {
+  transform: rotate(-225deg);
+}
+.nav-7 div {
+  transform: rotate(-270deg);
+}
+.nav-8 div {
+  transform: rotate(-315deg);
+}
+.nav-to-0 {
+  animation: r-0 0.8s 1;
+}
+.nav-to-1 {
+  animation: r-1 0.8s 1;
+}
+.nav-to-2 {
+  animation: r-2 0.8s 1;
+}
+.nav-to-3 {
+  animation: r-3 0.8s 1;
+}
+.nav-to-4 {
+  animation: r-4 0.8s 1;
+}
+.nav-to-5 {
+  animation: r-5 0.8s 1;
+}
+.nav-to-6 {
+  animation: r-6 0.8s 1;
+}
+.nav-to-7 {
+  animation: r-7 0.8s 1;
+}
+.nav-to-8 {
+  animation: r-8 0.8s 1;
+}
+.nav-to-9 {
+  animation: r-9 0.8s 1;
+}
+.nav-to-10 {
+  animation: r-10 0.8s 1;
+}
+.navbar {
+  position: fixed;
+  width: 480px;
+  height: 530px;
+  padding: 0px;
+  transition: all 0.8s ease-in-out;
+  left: -220px;
+  top: 30px;
+}
+.navbar-clockwise-1 {
+  animation: clockwise-1 0.8s 1;
+}
+.navbar-clockwise-2 {
+  animation: clockwise-2 0.8s 1;
+}
+.navbar-eastern-1 {
+  animation: eastern-1 0.8s 1;
+}
+.navbar-eastern-2 {
+  animation: eastern-2 0.8s 1;
+}

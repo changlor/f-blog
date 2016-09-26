@@ -14,14 +14,17 @@ class blogCtrlApi {
   static updateArticleCachedStatus ({ dispatch }, articleId, articleIndex) {
     dispatch('UPDATE_ARTICLE_CACHED_STATUS', articleId, articleIndex);
   }
-  static setCurrentTopicCacheKey ({ dispatch }, currentKey) {
-    dispatch('SET_CURRENT_TOPIC_KEY', currentKey);
-  }
   static addNewTopic ({ dispatch }, title, content) {
     dispatch('ADD_NEW_TOPIC', title, content);
   }
-  static createNewMsgBox ({ dispatch }, status, content) {
-    dispatch('CREATE_NEW_MSG_BOX', status, content);
+  static createNewMsgbox ({ dispatch }, status, content) {
+    dispatch('CREATE_NEW_MSGBOX', status, content);
+  }
+  static readMsgbox ({ dispatch }, status) {
+    dispatch('READ_MSGBOX', status);
+  }
+  static updateShadowActivedStatus ({ dispatch }, component, status) {
+    dispatch('UPDATE_SHADOW_ACTIVED_STATUS', component, status);
   }
 };
 

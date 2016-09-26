@@ -51,5 +51,9 @@ export default function (router) {
             break;
         }
     });
+
+    router.afterEach((transition) => {
+        scroll(0,0);
+    });
 }
 

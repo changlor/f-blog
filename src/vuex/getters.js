@@ -7,8 +7,9 @@ class blogDataApi {
     static fetchCachedArticleInfo = state => state.article;
     static fetchCachedArticleStatus = state => state.cache.article;
     static getCurrentTopicKey = state => state.currentKey;
-    static getMsgBoxCreateStatus = state => state.msgBox.createStatus;
-    static getMsgBoxCreateContent = state => state.msgBox.createContent;
+    static getMsgboxCount = state => state.msgbox.createCount;
+    static getMsgboxCreateContents = state => state.msgbox.createContents;
+    static getShadowRightbarActivedStatus = state => state.shadow.rightbar;
 }
 
 export default blogDataApi;

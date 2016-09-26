@@ -1,0 +1,71 @@
+.editor-wrap {
+    padding-top: 80px;
+}
+.md-editor {
+    position: fixed;
+    width: 660px;
+    height: 100px;
+    bottom: 100px;
+    opacity: 0.9;
+    left: 440px;
+    border-right: 0;
+}
+.md-transparent:hover {
+    opacity: 0.2;
+}
+#md-preview {
+    word-wrap: break-word;
+    padding: 20px;
+    width: 700px;
+    height: 100%;
+    float: left;
+}
+#md-preview img {
+    width: 700px;
+    margin: 0;
+}
+#md-contrast {
+    opacity: 0.6;
+    background-color: #f6f6f6;
+    border-radius: 10px;
+    padding: 5px;
+    transform: scale(0.3);
+    position: fixed;
+    width: 500px;
+    min-height: 600px;
+    top: -163px;
+    left: 1000px;
+}
+#md-contrast pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+#md-contrast:hover {
+    opacity: 0.1;
+}
+#t-title {
+    background-color: #f1f1f1;
+    position: absolute;
+    top: 50px;
+    left: 440px;
+    font-size: 16px;
+    outline: none;
+    border: 0;
+    border-radius: 3px;
+    padding: 10px 15px;
+    width: 670px;
+}
+.adjust-btn {
+    position: fixed;
+    bottom: 200px;
+    left: 265px;
+    z-index: 30;
+    cursor: pointer;
+}
+.submit-btn {
+    position: fixed;
+    bottom: 150px;
+    left: 281px;
+    z-index: 30;
+    cursor: pointer;
+}
