@@ -6,12 +6,19 @@
     width: 660px;
     height: 100px;
     bottom: 100px;
+    background-color: #fafafa;
     opacity: 0.9;
     left: 440px;
     border-right: 0;
 }
 .md-transparent:hover {
     opacity: 0.2;
+}
+.title-preview {
+    margin-top: 80px;
+    padding: 20px;
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 #md-preview {
     word-wrap: break-word;
@@ -44,28 +51,49 @@
     opacity: 0.1;
 }
 #t-title {
-    background-color: #f1f1f1;
+    background-color: #fafafa;
     position: absolute;
-    top: 50px;
-    left: 440px;
+    top: 95px;
+    left: 300px;
     font-size: 16px;
     outline: none;
     border: 0;
     border-radius: 3px;
     padding: 10px 15px;
-    width: 670px;
+    width: 870px;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+}
+.group-btn-wrap {
+    position: fixed;
+    padding: 0 15px;
+    padding-top: 160px;
+    padding-bottom: 20px;
+    height: 200px;
+    top: 150px;
+    left: 300px;
+    border-radius: 6px;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+    background-color: #fafafa;
 }
 .adjust-btn {
-    position: fixed;
-    bottom: 200px;
-    left: 265px;
-    z-index: 30;
+    float: left;
+    clear: left;
+    margin-top: 20px;
+    color: #444;
     cursor: pointer;
 }
+.empty-btn {
+    top: 390px;
+}
+.darft-btn {
+    top: 430px;
+}
+.transparent-btn {
+    top: 470px;
+}
+.cache-btn {
+    top: 510px;
+}
 .submit-btn {
-    position: fixed;
-    bottom: 150px;
-    left: 281px;
-    z-index: 30;
-    cursor: pointer;
+    top: 550px;
 }

@@ -1,95 +1,20 @@
-/* others */
-/* admin-entrance */
-#admin-entrance {
-  right: 8px;
-  top: 20px;
-  position: fixed;
-}
-/* kami */
-@keyframes bDark
-{
-  from {opacity: 0.2;}
-  to {opacity: 0.7;}
-}
-@keyframes wDark
-{
-  0% {opacity: 0.2;}
-  20% {opacity: 1;}
-  70% {opacity: 1;}
-  100% {opacity: 0;}
-}
-.unme-shadow {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  opacity: 0.7;
-  background-color: black;
-  animation: bDark 2s 1;
-}
-.kami-words {
-  position: fixed;
-  font-size: 40px;
-  bottom: 200px;
-  left: 400px;
-  color: red;
-  opacity: 0;
-  animation: wDark 6s 1;
-}
-.unme a {
-  position: fixed;
-  top: 80px;
-  left: 220px;
-  transition: all 0.6s ease-in-out;
-  cursor: pointer;
-  z-index: 39;
-}
-/* 弹层 */
-@keyframes msgBoxOn
-{
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
-@keyframes msgBoxOff
-{
-  to {opacity: 0;}
-}
-.msgbox-wrap {
-  position: fixed;
-  right: 0;
-  top: 40px;
-  z-index: 100;
-}
-.msg-box-transition {
-  width: 230px;
-  min-height: 40px;
-  color: #fff;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 6px;
-  font-size: 14px;
-  background-color: #222;
-}
-.msg-box-enter {
-  animation: msgBoxOn 1.5s 1;
-}
-.msg-box-leave {
-  animation: msgBoxOff 1.5s 1;
-}
-.close {
-  position: absolute;
-  left: 220px;
-  cursor: pointer;
-  padding: 5px;
-  padding-top: 0px;
-}
 /* 导航栏样式 */
-#navbar-wrap {
+.navbar-wrap {
   width: 300px;
   height: 100%;
   position: fixed;
   z-index: 2;
 }
-#navbar-ctrl li {
+.navbar {
+  position: fixed;
+  width: 480px;
+  height: 530px;
+  padding: 0px;
+  transition: all 0.8s ease-in-out;
+  left: -220px;
+  top: 30px;
+}
+.navbar-ctrl li {
   font-size:20px;
   line-height: 208px;
   width:300px;
@@ -97,13 +22,20 @@
   position:absolute;
   text-align:center;
   transform-origin:231px 300px;
+  pointer-events: none;
 }
-#navbar-ctrl li div a {
+.navbar-ctrl li div a {
   text-decoration: none;
+  padding-top: 15px;
+  padding-right: 20px;
+  pointer-events: auto;
 }
-#navbar-ctrl li div a span {
+.navbar-ctrl li div a span {
   padding-left: 1em;
   color: #58c5c7;
+}
+.navbar-ctrl li div a.v-link-active span {
+  color: red;
 }
 /* 导航栏图标 */
 .fa {
@@ -137,18 +69,6 @@
 }
 .fa-project {
   background-image: url('../link.svg');
-}
-#navbar-ctrl li {
-  pointer-events: none;
-}
-#navbar-ctrl li div a {
-  padding-top: 15px;
-  padding-right: 20px;
-  pointer-events: auto;
-}
-
-#navbar-ctrl li div a.v-link-active span {
-  color: red;
 }
 /* 导航栏动画 */
 @keyframes clockwise-1
@@ -331,15 +251,6 @@
 }
 .nav-to-10 {
   animation: r-10 0.8s 1;
-}
-.navbar {
-  position: fixed;
-  width: 480px;
-  height: 530px;
-  padding: 0px;
-  transition: all 0.8s ease-in-out;
-  left: -220px;
-  top: 30px;
 }
 .navbar-clockwise-1 {
   animation: clockwise-1 0.8s 1;

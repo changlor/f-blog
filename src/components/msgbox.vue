@@ -1,6 +1,6 @@
 <template>
 <div class="msgbox-wrap">
-    <div v-for="msgbox in msgboxes" v-if="!msgbox.isRead" transition="msg-box">{{ msgbox.msg }}<a v-on:click="offMsgbox($index)" class="close">x</a></div>
+    <div v-for="msgbox in msgboxes" v-if="!msgbox.isRead" transition="msgbox">{{ msgbox.msg }}<a v-on:click="offMsgbox($index)" class="msgbox-close">x</a></div>
 </div>
 </template>
 <script>

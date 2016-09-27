@@ -86,7 +86,7 @@ export default {
         }
 
         this.isCached
-        ? this.dailyArticles = this.fetchCachedCategoryInfo.daily
+        ? this.articles = this.fetchCachedCategoryInfo.daily
         : this.fetchCategory('category/1', fetchCategoryCallback);
 
         //最后，当本地存在文章缓存的时候，为避免无法更新数据，需要确认一次版本号

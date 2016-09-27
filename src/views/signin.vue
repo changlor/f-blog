@@ -39,7 +39,7 @@ export default {
             .then((response) => {
                 if (response.success) {
                     getLocalStorageApi.savedToken(response.data.token);
-                    this.$route.router.go('/index');
+                    this.$route.router.go('/new');
                 }
             })
             .catch((error) => {

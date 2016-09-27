@@ -24,7 +24,8 @@ const state = {
     },
     shadow: {
         rightbar: false,
-    }
+    },
+    admin: false,
 };
 
 //创建一个对象储存一系列我们解析来要写的 mutation 函数
@@ -76,6 +77,9 @@ const mutations = {
     },
     UPDATE_SHADOW_ACTIVED_STATUS (state, component, status) {
         state.shadow[component] = status;
+    },
+    UPDATE_ADMIN_STATUS (state, status) {
+        state.admin = status;
     }
 };
 

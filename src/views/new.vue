@@ -3,10 +3,18 @@
     <div class="editor-wrap clearfix">
         <textarea v-bind:class="['md-editor', { 'md-transparent': isTransparent }]" v-model="input"></textarea>
         <input id="t-title" name="title" placeholder="标题" v-model="title" />
-        <div id="md-preview" v-html="input | marked"></div>
+        <h2 class="title-preview">{{ title }}</h2>
+        <div id="md-preview" class="p-text" v-html="input | marked"></div>
+        <!--
         <div id="md-contrast"><pre>{{ input }}</pre></div>
-        <a v-on:click="switchTransparent" class="adjust-btn">{{ transparentNotice }}</a>
-        <a v-on:click="publishArticle" class="submit-btn">提交</a>
+        -->
+        <div class="group-btn-wrap clearfix">
+            <a v-on:click="switchTransparent" class="transparent-btn adjust-btn">{{ transparentNotice }}</a>
+            <a v-on:click="publishArticle" class="submit-btn adjust-btn">提交文章</a>
+            <a v-on:click="clearArticle" class="empty-btn adjust-btn">清空内容</a>
+            <a v-on:click="savedArticleDarft" class="cache-btn adjust-btn">保存草稿</a>
+            <a v-on:click="fetchArticleDarft" class="darft-btn adjust-btn">读取草稿</a>
+        </div>
     </div>
 </div>
 </template>
@@ -18,7 +26,7 @@ import localStorageApi from '../common/store.js';
 export default {
     data () {
         return {
-            input: '## 发帖前须知',
+            input: '',
             title: '',
             isTransparent: true,
             transparentNotice: '不要透明',
@@ -26,9 +34,26 @@ export default {
     },
     methods: {
         sendArticle: blogFetchApi.sendImportantData,
+        savedDarft: localStorageApi.savedDarft,
+        fetchDarft: localStorageApi.fetchDarft,
+        clearArticle () {
+            this.title = '';
+            this.input = '';
+            this.createNewMsgbox('清除成功啦OoO');
+        },
         switchTransparent () {
             this.isTransparent = !this.isTransparent;
             this.isTransparent ? this.transparentNotice = '不要透明' : this.transparentNotice = '选择透明';
+        },
+        savedArticleDarft () {
+            this.savedDarft({ title: this.title, content: this.input });
+            this.createNewMsgbox('保存成功啦OoO');
+        },
+        fetchArticleDarft () {
+            const darft = this.fetchDarft();
+            this.title = darft.title;
+            this.input = darft.content;
+            this.createNewMsgbox('读取成功啦OoO');
         },
         publishArticle () {
             let formData = new FormData();
@@ -38,9 +63,9 @@ export default {
             headers.append("Auth-Token", localStorageApi.fetchToken());
             const sendArticleCallback = (response) => {
                 if (response.success) {
-                    this.createNewMsgBox(true, '发射成功啦~QwQ');
+                    this.createNewMsgbox(true, '发射成功啦QoQ');
                 } else {
-                    this.createNewMsgBox(true, '失，失败了OoO');
+                    this.createNewMsgbox(true, '失，失败了OoO');
                 }
             };
             this.sendArticle('articles', headers, formData, sendArticleCallback);
@@ -49,9 +74,7 @@ export default {
         },
     },
     ready () {
-        if (!localStorageApi.fetchAuthor('changle')) {
-            this.$route.router.go('/contribute');
-        }
+        this.updateAdminStatus(true);
         marked.setOptions({
             renderer: new marked.Renderer(),
             gfm: true,
@@ -69,7 +92,8 @@ export default {
     vuex: {
         actions: {
             addNewTopic: blogCtrlApi.addNewTopic,
-            createNewMsgBox: blogCtrlApi.createNewMsgBox,
+            createNewMsgbox: blogCtrlApi.createNewMsgbox,
+            updateAdminStatus: blogCtrlApi.updateAdminStatus,
         },
     }
 }

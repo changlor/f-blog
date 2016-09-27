@@ -10,6 +10,7 @@ class blogDataApi {
     static getMsgboxCount = state => state.msgbox.createCount;
     static getMsgboxCreateContents = state => state.msgbox.createContents;
     static getShadowRightbarActivedStatus = state => state.shadow.rightbar;
+    static getAdminStatus= state => state.admin;
 }
 
 export default blogDataApi;

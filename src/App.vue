@@ -21,5 +21,7 @@ export default {
 @import './assets/css/editor.css';
 @import './assets/css/highlight.css';
 @import './assets/css/navbar.css';
+@import './assets/css/amuse.css';
+@import './assets/css/msgbox.css';
 </style>
 

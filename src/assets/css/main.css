@@ -55,6 +55,9 @@ p code {
 #container {
     padding: 0 120px;
 }
+.sep5 {
+    height: 5px;
+}
 /* 左侧栏 */
 .sidebar {
     bottom:0px;

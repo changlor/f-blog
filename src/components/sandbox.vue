@@ -12,8 +12,7 @@ export default {
         }
     },
     ready () {
-        this.createNewMsgbox('xx');
-        this.createNewMsgbox('oo');
+        //
     },
 }
 </script>

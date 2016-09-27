@@ -56,6 +56,14 @@ class localStorageApi {
     static fetchCategory (category) {
         return JSON.parse(window.localStorage.getItem(category));
     }
+
+    static savedDarft (darft) {
+        window.localStorage.setItem('darft', JSON.stringify(darft));
+    }
+
+    static fetchDarft () {
+        return JSON.parse(window.localStorage.getItem('darft'));
+    }
 }
 
 export default localStorageApi;
