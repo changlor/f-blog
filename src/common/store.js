@@ -1,69 +1,38 @@
-import sha1 from './sha1.js';
-class localStorageApi {
-    static savedAuthor (username) {
-        window.localStorage.setItem(username, true);
-    }
-    
-    static savedToken (value) {
-        window.localStorage.setItem('token', value)
+import storeApi from '../lib/store.js';
+//注册接口函数
+const readJson = storeApi.readJson;
+const storeJson = storeApi.storeJson;
+const readData = storeApi.readData;
+const storeData = storeApi.storeData;
+
+class store {
+    static read (key) {
+        return readData(key);
     }
 
-    static expiredAuthor (username) {
-        window.localStorage.setItem(username, false);
-    }
-    
-    static fetchAuthor (username) {
-        return window.localStorage.getItem(username);
+    static store (key, value) {
+        storeData(key, value);
     }
 
-    static fetchToken () {
-        return window.localStorage.getItem('token');
+    static readPost (postId) {
+        return readJson('id-' + postId);
     }
 
-    static savedArticle (articleId, article) {
-        window.localStorage.setItem('t-' + articleId, JSON.stringify(article));
+    static storePost (postId, article) {
+        storeJson('id-' + postId, article);
     }
 
-    static fetchArticle (articleId) {
-        try {
-            return JSON.parse(window.localStorage.getItem('t-' + articleId));
-        } catch (e) {
-            return null;
-        }
+    static readJson (key) {
+        return readJson(key);
     }
 
-    static cachedArticleVersion (articleId) {
-        let article = window.localStorage.getItem('t-' + articleId);
-        article = escape(article).replace(/%u/gi, '\\u');
-        article = unescape(article);
-
-        return sha1(article);
+    static storeJson (key, value) {
+        storeJson(key, value);
     }
 
-    static storedCategoryVersion (categoryName) {
-        let category = window.localStorage.getItem(categoryName);
-        category = escape(category).replace(/%u/gi, '\\u');
-        category = unescape(category);
-        
-        //return category;
-        return sha1(category);
-    }
-
-    static savedCategory (category, content) {
-        window.localStorage.setItem(category, JSON.stringify(content));
-    }
-
-    static fetchCategory (category) {
-        return JSON.parse(window.localStorage.getItem(category));
-    }
-
-    static savedDarft (darft) {
-        window.localStorage.setItem('darft', JSON.stringify(darft));
-    }
-
-    static fetchDarft () {
-        return JSON.parse(window.localStorage.getItem('darft'));
+    static isExist (key) {
+        return readData(key) != null;
     }
 }
 
-export default localStorageApi;
+export default store;

@@ -1,12 +1,12 @@
 <template>
     <div id="container">
     <article class="p">
-        <h2 class="p-title many">{{ article.title }}</h2>
+        <h2 class="p-title many">{{ post.title }}</h2>
         <ul class="p-meta">
-            <li><time>{{ article.created_at }}</time></li>
+            <li><time>{{ post.created_at }}</time></li>
         </ul>
-        <div v-if="article.cover != ''" class="cover"><img v-bind:src="article.cover"></div>
-        <div class="p-text" v-html="body | marked"></div>
+        <div v-if="post.cover != ''" class="cover"><img v-bind:src="post.cover"></div>
+        <div class="p-text" v-html="postBody | marked"></div>
     </article>
     <div class="c-wrap clearfix">
         <div class="c-form clearfix">
@@ -16,13 +16,13 @@
                 <input class="c-input" v-model="website" placeholder="http://" />
             </div>
             <textarea class="c-content" v-model="content" placeholder="下面我简短的发表一下意见"></textarea>
-            <a class="c-submit" v-on:click="submitComment">要射了噢</a>
+            <a class="c-submit">要射了噢</a>
         </div>
         <ul class="c-lists">
             <li v-for="comment in comments" class="c-list">
                 <div class="c-post">
                     <a class="user" href="{{ comment.website }}" target="_blank">
-                        <img class="avatar" src="http://gravatar.duoshuo.com/avatar/77f12b0fea29d76a2ccbc5ecb7ed51ae">
+                        <img class="avatar" v-bind:src="comment.avatar">
                         {{ comment.nickname }}
                     </a>
                     <span class="agent">andorid</span>
@@ -39,162 +39,80 @@
 </div>
 </template>
 <script>
-import hljs from '../highlight/highlight.js';
+import data from '../common/data.js';
 import marked from 'marked';
-import blogDataApi from '../vuex/getters.js';
-import blogCtrlApi from '../vuex/actions.js';
-import blogFetchApi from '../common/fetch.js';
-import blogCommonApi from '../common/common.js';
-import localStorageApi from '../common/store.js';
+import hljs from '../lib/highlight/highlight.js';
+import actions from '../vuex/actions.js';
+import getters from '../vuex/getters.js';
 
 export default {
     data () {
         return {
             //文章主体部分
-            articleId: 0,
-            articleIndex: 0,
-            article: false,
-            body: '',
+            post: {}, postId: false, postBody: '',
             //评论
-            comments: '',
+            comments: [],
             //状态
-            isCached: false,
-            isLocalStored: false,
-            hasCommets: false,
-            version: false,
+            isCached: false, isStored: false, hasCommet: false,
             //回复
-            nickname: '',
-            email: '',
-            website: '',
-            content:'',
+            nickname: '', email: '', website: '', content:'',
         };
     },
     methods: {
-        //获取模块api函数
-        fetchArticle: blogFetchApi.fetchData,
-        localStoredArticle: localStorageApi.savedArticle,
-        fetchLocalStoredArticle: localStorageApi.fetchArticle,
-        getLocalStoredArticleVersion: localStorageApi.cachedArticleVersion,
-
-        fetchComments: blogFetchApi.fetchData,
-        sendComment: blogFetchApi.sendData,
-
-        getCurrentDate: blogCommonApi.getCurrentDate,
-        //组件函数
-        submitComment () {
-            if (this.nickname == '') {
-                this.createNewMsgBox(true, '请输入用户名OwO');
-                return false;
-            }
-            if (this.email == '') {
-                this.createNewMsgBox(true, '请输入邮箱OwO');
-                return false;
-            }
-            if (this.content == '') {
-                this.createNewMsgBox(true, '说点什么吧OwO');
-                return false;
-            }
-            let formData = new FormData();
-            formData.append('nickname', this.nickname);
-            formData.append('email', this.email);
-            formData.append('website', this.website);
-            formData.append('articleId', this.articleId);
-            formData.append('content', this.content);
-            this.comments.push({
-                nickname: this.nickname,
-                email: this.email,
-                content: this.content,
-                website: this.website,
-                created_at: this.getCurrentDate(),
-            });
-            this.hasCommets = true;
-            const sendCommentCallback = (response) => {
-                if (response.success) {
-                    this.content = '';
-                    this.createNewMsgBox(true, '发射成功啦~QwQ');
-                } else {
-                    this.comments.pop();
-                    this.comments.length > 0 ? this.hasCommets = true : this.hasCommets = false;
-                    this.createNewMsgBox(true, '发射失败QwQ');
-                }
-            }
-            this.sendComment('comments', formData, sendCommentCallback);
+        readPost () {
+            this.post = this.cachedPosts[`id-${this.postId}`];
+            this.postBody = this.post.body;
         },
+        fetchPost () {
+            const callback = (res) => {
+                this.cachePost(res.post);
+                this.readPost();
+            };
+            this.eventDelegation({
+                model: 'article',
+                method: 'fetchPost',
+                params: { postId: this.postId },
+                callback: callback,
+            });
+        },
+        fetchStoredPost () {
+            const callback = (res) => {
+                this.cachePost(res.post);
+                this.readPost();
+            };
+            this.eventDelegation({
+                model: 'article',
+                method: 'fetchStoredPost',
+                params: { postId: this.postId },
+                callback: callback,
+            });
+        }
     },
     vuex: {
         getters: {
-            fetchCachedArticleStatus: blogDataApi.fetchCachedArticleStatus,
-            fetchCachedArticleInfo: blogDataApi.fetchCachedArticleInfo,
+            cachedPosts: getters.fetchCachedPosts,
         },
         actions: {
-            cachedInfo: blogCtrlApi.updateArticleCachedInfo,
-            cachedStatus: blogCtrlApi.updateArticleCachedStatus,
-            createNewMsgBox: blogCtrlApi.createNewMsgBox,
-        },
+            cachePost: actions.cachePost,
+            createNewMsgbox: actions.createNewMsgbox,
+            eventDelegation: actions.eventDelegation,
+        }
     },
     ready () {
-        //获取必要的信息，文章id，是否缓存，是否本地保存
-        this.articleId = this.$route.params.tid;
-        this.isCached = this.fetchCachedArticleStatus.hasOwnProperty(`id${this.articleId}`);
-        this.isLocalStored = this.fetchLocalStoredArticle(this.articleId) !== null;
-        //如果本地保存了，获取当前本地缓存的版本
-        if (this.isLocalStored) { 
-            this.version = this.getLocalStoredArticleVersion(this.articleId);
-        }
+        this.postId = this.$route.params.tid;
+        const setting = new data({
+            postId: this.postId,
+            storeKey: `id-${this.postId}`,
+        });
+        const status = setting.status;
 
-        //缓存文章方法
-        const cachedArticle = (article) => {
-            this.article = article;
-            this.articleIndex = this.fetchCachedArticleInfo.length;
-            this.body = this.article.body;
-            this.isCached = true;
-            this.cachedInfo(this.article);
-            this.cachedStatus(this.articleId, this.articleIndex);
-        }
+        this.isCached = this.cachedPosts.hasOwnProperty([`id-${this.postId}`]);
+        this.isStored = status.isStored;
 
-        //保存文章方法
-        const storedArticle = (article) => {
-            this.localStoredArticle(this.articleId, this.article);
-        }
-
-        //获取文章(变动小，使用缓存)
-        const fetchArticleCallback = (response) => {
-            cachedArticle(response.data);
-            storedArticle(response.data);
-        };
-        const fetchCachedArticle = () => {
-            this.articleIndex = this.fetchCachedArticleStatus[`id${this.articleId}`];
-            this.article = this.fetchCachedArticleInfo[this.articleIndex];
-            this.body = this.article.body;
-        };
-
-        //获取本地缓存，如果已经缓存在浏览器，则不重复缓存
-        if (this.isLocalStored && !this.isCached) {
-            cachedArticle(this.fetchLocalStoredArticle(this.articleId));
-        }
-        
-        this.isCached
-        ? fetchCachedArticle()
-        : this.fetchArticle(`articles/${this.articleId}`, fetchArticleCallback);
-
-        //获取评论(变动大，不使用缓存)
-        const fetchCommentsCallback = (response) => {
-            this.comments = response.data;
-            this.comments.length > 0 ? this.hasCommets = true : this.hasCommets = false;
-        }
-        this.fetchComments(`comments?article_id=${this.articleId}`, fetchCommentsCallback);
-
-        //最后，当本地存在文章缓存的时候，为避免无法更新数据，需要确认一次版本号
-        const fetchNewVersionArticleCallback = (response) => {
-            if (response.data.version != this.version) {
-                cachedArticle(response.data);
-                storedArticle(response.data);
-            }
-        };
-        if (this.isLocalStored) {
-            this.fetchArticle(`articles/${this.articleId}?version=${this.version}`, fetchNewVersionArticleCallback);
-        }
-        
+        //首先--读取本地资源
+        !this.isCached && this.isStored ? this.fetchStoredPost() : false;
+        //其次--读取在线资源
+        this.fetchPost();
         marked.setOptions({
             highlight: (code) => {
                 return hljs.highlightAuto(code).value
@@ -210,9 +128,7 @@ export default {
         });
     },
     filters: {
-        marked: marked,
+        marked: marked
     },
 }
 </script>
-<style>
-</style>

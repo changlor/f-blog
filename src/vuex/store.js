@@ -1,73 +1,44 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-//告诉 vue "使用" vuex
 Vue.use(Vuex);
 
-//创建一个对象来保存应用启动时的初始状态
 const state = {
+    //定义代理事件数据
+    isBubbled: 0, events: { delegation: [], callback: {} },
     //定义缓存数据
-    
-    category: {
-        daily: [],
-    },
-    article: [],
-    cache: {
-        category: {
-            daily: false,
-        },
-        article: {},
-    },
-    msgbox: {
-        createContents: [],
-        createCount: 0,
-    },
-    shadow: {
-        rightbar: false,
-    },
+    posts: {}, categories: {},
+    //定义弹层数据
+    msgbox: { contents: [], count: 0 },
+    //定义遮罩数据
+    shadow: { rightbar: false, global: false },
+    //切换前后台
     admin: false,
 };
 
-//创建一个对象储存一系列我们解析来要写的 mutation 函数
-
 const mutations = {
-    //mutation 的第一个参数是当前的 state
-    //你可以在函数里修改 state
-    UPDATE_CATEGORY_CACHED_INFO (state, category, newInfo) {
-        switch (category) {
-            case 'daily':
-                state.category.daily = newInfo;
-            break;
-            default:
-                false;
-            break;
-        }
+    //事件代理
+    EVENT_DELEGATION (state, event) {
+        state.isBubbled++;
+        state.events.delegation.push({
+            model: event.model,
+            method: event.method,
+            params: event.params,
+            callback: event.callback,
+        });
     },
-    UPDATE_CATEGORY_CACHED_STATUS (state, category, newStatus) {
-        switch (category) {
-            case 'daily':
-                state.cache.category.daily = newStatus;
-            break;
-            default:
-                false;
-            break;
-        }
+    READED_EVENTS (state) {
+        state.events.delegation = [];
     },
-    UPDATE_ARTICLE_CACHED_INFO (state, newInfo) {
-        state.article.push(newInfo);
+     //保存文章缓存信息内容
+    CACHE_POST (state, post) {
+        state.posts[`id-${post.id}`] = post;
     },
-    UPDATE_ARTICLE_CACHED_STATUS (state, articleId, articleIndex) {
-        state.cache.article[`id${articleId}`] = articleIndex;
+    //保存分类缓存信息内容
+    CACHE_CATEGORY (state, category, info) {
+        state.categories[category] = info;
     },
-    ADD_NEW_TOPIC (state, title, content) {
-        const newTopic = {
-            title: title,
-            tid: 3,
-            created_at: '5月26日',
-            profile: content,
-        }
-        state.daily.push(newTopic);
-    },
+    //显示和关闭弹层
     CREATE_NEW_MSGBOX (state, content) {
         state.msgbox.createCount++;
         state.msgbox.createContents.push({msg: content, isRead: false});
@@ -75,11 +46,15 @@ const mutations = {
     READ_MSGBOX (state, status) {
         state.msgbox.createContents = [];
     },
+    //显示和关闭遮罩
     UPDATE_SHADOW_ACTIVED_STATUS (state, component, status) {
         state.shadow[component] = status;
     },
     UPDATE_ADMIN_STATUS (state, status) {
         state.admin = status;
+    },
+    UPDATE_GLOBAL_SHADOW_STATUS (state, status) {
+        state.shadow.global = status;
     }
 };
 

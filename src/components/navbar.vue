@@ -25,24 +25,19 @@ export default {
             navbarRotate: false,
             navbarArr: [
                 {
-                    icon: 'fa-about',
-                    link: '/about',
-                    desc: '关于',
-                },
-                {
-                    icon: 'fa-daily',
-                    link: '/daily',
-                    desc: '日常',
-                },
-                {
                     icon: 'fa-photo',
                     link: '/photo',
                     desc: '照片',
                 },
                 {
-                    icon: 'fa-code',
-                    link: '/code',
-                    desc: '代码',
+                    icon: 'fa-home',
+                    link: '/home',
+                    desc: '首页',
+                },
+                {
+                    icon: 'fa-daily',
+                    link: '/daily',
+                    desc: '日常',
                 },
                 {
                     icon: 'fa-feel',
@@ -53,6 +48,11 @@ export default {
                     icon: 'fa-board',
                     link: '/board',
                     desc: '留言',
+                },
+                {
+                    icon: 'fa-code',
+                    link: '/code',
+                    desc: '代码',
                 },
                 {
                     icon: 'fa-music',

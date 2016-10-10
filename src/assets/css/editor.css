@@ -20,14 +20,14 @@
     padding-bottom: 0;
     margin-bottom: 0;
 }
-#md-preview {
+.md-preview {
     word-wrap: break-word;
     padding: 20px;
     width: 700px;
     height: 100%;
     float: left;
 }
-#md-preview img {
+.md-preview img {
     width: 700px;
     margin: 0;
 }
@@ -51,29 +51,29 @@
     opacity: 0.1;
 }
 #t-title {
-    background-color: #fafafa;
+    background-color: rgb(225, 232, 237);
     position: absolute;
     top: 95px;
-    left: 300px;
+    left: 420px;
     font-size: 16px;
     outline: none;
     border: 0;
     border-radius: 3px;
     padding: 10px 15px;
-    width: 870px;
+    width: 760px;
     box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
 }
 .group-btn-wrap {
     position: fixed;
     padding: 0 15px;
-    padding-top: 160px;
+    padding-top: 70px;
     padding-bottom: 20px;
-    height: 200px;
-    top: 150px;
-    left: 300px;
+    height: 360px;
+    top: 95px;
+    left: 285px;
     border-radius: 6px;
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
-    background-color: #fafafa;
+    box-shadow: 0px 2px 3px rgb(225, 232, 237);
+    background-color: rgb(225, 232, 237);
 }
 .adjust-btn {
     float: left;
@@ -81,19 +81,16 @@
     margin-top: 20px;
     color: #444;
     cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
 }
-.empty-btn {
-    top: 390px;
-}
-.darft-btn {
-    top: 430px;
-}
-.transparent-btn {
-    top: 470px;
-}
-.cache-btn {
-    top: 510px;
+.preview-switch-btn, .preview-btn {
+    background-color: #000;
+    color: #fff;
 }
 .submit-btn {
-    top: 550px;
+    background-color: #000;
+    color: #fff;
 }

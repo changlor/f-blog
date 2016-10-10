@@ -25,6 +25,27 @@ class blogCommonApi {
         }
         return month + ' ' + day;
     }
-};
+
+    static empty (param) {
+        if (typeof param == 'object') {
+            return param.length == 0 ? true : false;
+        }
+        switch (param) {
+            case Infinity:
+            case -Infinity:
+            return true;
+            break;
+        }
+        if (!param) {
+            return true;
+        }
+        param = param.replace(/[ ]|\n|\r/gi, '');
+        if (param == '') {
+            return true;
+        }
+        return false;
+        
+    }
+}
 
 export default blogCommonApi;

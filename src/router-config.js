@@ -4,11 +4,14 @@ import localStorageApi from './common/store.js';
 export default function (router) {
     //路由路径
     router.map({
-        '/': {
-            component: require('./views/index.vue'),
+        '/home': {
+            component: require('./views/home.vue'),
         },
         '/daily': {
             component: require('./views/daily.vue'),
+        },
+        '/index': {
+            component: require('./views/admin.vue'),
         },
         '/t/:tid': {
             name: 'topic',
@@ -19,6 +22,10 @@ export default function (router) {
         },
         '/new': {
             component: require('./views/new.vue'),
+        },
+        '/edit/:tid': {
+            name: 'edit',
+            component: require('./views/edit.vue'),
         },
         '/contribution': {
             component: require('./views/contribution.vue'),

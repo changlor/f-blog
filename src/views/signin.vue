@@ -20,7 +20,7 @@ export default {
     },
     methods: {
         getToken () {
-            fetch('http://api.blog.rain/auth/login', {
+            fetch('http://api.blog.rain/user', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

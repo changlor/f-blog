@@ -23,35 +23,34 @@ export default {
     data () {
         return {
             posts: [],
-            isStored: false,
-            categoryId: false,
+            isCached: false, isLocalStored: false,
         };
     },
     methods: {
         readPosts () {
-            this.posts = this.cachedPosts.daily;
+            this.posts = this.cachedPosts.home;
         },
         fetchPosts () {
             const callback = (res) => {
-                this.cachePosts('daily', res.posts);
+                this.cachePosts('home', res.posts);
                 this.readPosts();
             };
             this.eventDelegation({
                 model: 'article',
-                method: 'fetchCategoryPosts',
-                params: { categoryId: this.categoryId, category: 'daily' },
+                method: 'fetchPosts',
+                params: { category: 'home' },
                 callback: callback,
             });
         },
         fetchStoredPosts () {
             const callback = (res) => {
-                this.cachePosts('daily', res.category);
+                this.cachePosts('home', res.category);
                 this.readPosts();
             };
             this.eventDelegation({
                 model: 'category',
                 method: 'fetchStoredCategory',
-                params: { category: 'daily' },
+                params: { category: 'home' },
                 callback: callback,
             });
         }
@@ -68,14 +67,14 @@ export default {
     },
     ready () {
         const setting = new data({
-            category: 'daily',
-            storeKey: 'daily',
+            category: 'home',
+            storeKey: 'home',
         });
         const constants = setting.constants;
         const status = setting.status;
 
         this.categoryId = constants.categories.daily.id;
-        this.isCached = this.cachedPosts.hasOwnProperty(['daily']);
+        this.isCached = this.cachedPosts.hasOwnProperty(['home']);
         this.isStored = status.isStored;
 
         //首先--读取本地资源

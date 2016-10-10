@@ -1,5 +1,57 @@
 <template>
 <div id="container">
+    <ul class="clearfix admin-notes">
+        <li>
+            <div class="box">
+                <div class="cell">
+                    <div class="sep5"></div>
+                    <span class="fade"><strong>hello, changle</strong></span>
+                </div>
+                <div class="inner">
+                    <div class="sep5"></div>
+                    <div style="padding: 0 5px;">
+                        <div class="sep5"></div>
+                        欢迎回来！
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="box">
+                <div class="inner">
+                    <div class="sep5"></div>
+                    <div style="padding: 0 5px;">
+                        在此可以发布文章
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="box">
+                <div class="cell">
+                    <div class="sep5"></div>
+                    <span class="fade">文章必要的内容</span>
+                </div>
+                <div class="inner">
+                    <div class="sep5"></div>
+                    <div style="padding: 0 5px;">
+                        <div class="sep5"></div>
+                        标题，封面，简介记号@more，正文
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="box">
+                <div class="inner">
+                    <div class="sep5"></div>
+                    <div style="padding: 0 5px;">
+                        默认以@more为简介分界记号
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
     <div class="editor-wrap clearfix">
         <textarea v-bind:class="['md-editor', { 'md-transparent': isTransparent }]" v-model="input"></textarea>
         <input id="t-title" name="title" placeholder="标题" v-model="title" />
@@ -10,10 +62,10 @@
         -->
         <div class="group-btn-wrap clearfix">
             <a v-on:click="switchTransparent" class="transparent-btn adjust-btn">{{ transparentNotice }}</a>
-            <a v-on:click="publishArticle" class="submit-btn adjust-btn">提交文章</a>
-            <a v-on:click="clearArticle" class="empty-btn adjust-btn">清空内容</a>
             <a v-on:click="savedArticleDarft" class="cache-btn adjust-btn">保存草稿</a>
             <a v-on:click="fetchArticleDarft" class="darft-btn adjust-btn">读取草稿</a>
+            <a v-on:click="publishArticle" class="submit-btn adjust-btn">提交文章</a>
+            <a v-on:click="clearArticle" class="empty-btn adjust-btn">清空内容</a>
         </div>
     </div>
 </div>
@@ -68,7 +120,7 @@ export default {
                     this.createNewMsgbox(true, '失，失败了OoO');
                 }
             };
-            this.sendArticle('articles', headers, formData, sendArticleCallback);
+            this.sendArticle('post', headers, formData, sendArticleCallback);
             this.input = '';
             this.title = '';
         },
