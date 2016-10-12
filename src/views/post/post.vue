@@ -64,13 +64,10 @@ export default {
         },
         getPost () {
             const callback = (res) => {
-                if (res.success) {
+                if (res.success && !res.isNewest) {
                     this.cachePost(res.data);
                     this.readPost();
-                } else {
-                    this.createMsgbox(res.msg);
                 }
-                
             };
             this.eventDelegation({
                 model: 'Article',

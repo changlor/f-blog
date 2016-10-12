@@ -142,23 +142,23 @@ export default {
                     profile: this.profile,
                     body: this.body,
                 },
-                model: 'article',
-                method: 'editPost',
+                model: 'Article',
+                method: 'updatePost',
                 callback: callback,
             });
         },
         fetchPost () {
             const callback = (res) => {
                 [this.title, this.profile, this.body] = [
-                    res.post.title,
-                    res.post.profile,
-                    res.post.body
+                    res.data.title,
+                    res.data.profile,
+                    res.data.body
                 ];
             };
             this.eventDelegation({
                 params: { postId: this.postId },
-                model: 'article',
-                method: 'fetchPost',
+                model: 'Article',
+                method: 'getPost',
                 callback: callback,
             });
         },

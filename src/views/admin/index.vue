@@ -85,16 +85,16 @@ export default {
         };
     },
     methods: {
-        fetchPosts () {
+        getPosts () {
             const callback = (res) => {
-                this.posts = res.posts;
+                this.posts = res.data;
             };
             this.eventDelegation({
                 params: {
                     category: 'index',
                 },
-                model: 'article',
-                method: 'fetchPosts',
+                model: 'Article',
+                method: 'getPosts',
                 callback: callback,
             });
         },
@@ -111,7 +111,7 @@ export default {
     },
     ready () {
         this.switchAdminModes(true);
-        this.fetchPosts();
+        this.getPosts();
     },
 }
 </script>

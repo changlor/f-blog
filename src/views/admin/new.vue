@@ -65,7 +65,7 @@
         <div class="btn-wrap clearfix">
             <a v-on:click="swtichTransparent" class="btn">{{ transparentNotice }}</a>
             <a v-on:click="storeDraft" class="btn">保存草稿</a>
-            <a v-on:click="fetchDraft" class="btn">读取草稿</a>
+            <a v-on:click="getDraft" class="btn">读取草稿</a>
             <a v-on:click="submitPost" class="btn black">提交文章</a>
             <a class="btn">清空内容</a>
         </div>
@@ -111,14 +111,14 @@ export default {
                 callback: callback,
             });
         },
-        fetchDraft () {
+        getDraft () {
             const callback = (res) => {
                 [this.title, this.content] = [res.title, res.content];
                 this.createMsgbox('读取草稿成功OoO');
             };
             this.eventDelegation({
-                model: 'editor',
-                method: 'fetchDraft',
+                model: 'Editor',
+                method: 'getDraft',
                 callback: callback,
             });
         },
@@ -128,7 +128,7 @@ export default {
             };
             this.eventDelegation({
                 params: { title: this.title, content: this.content },
-                model: 'editor',
+                model: 'Editor',
                 method: 'storeDraft',
                 callback: callback,
             });

@@ -1,13 +1,13 @@
 'use strict';
-
-import base from './Base.js';
-import data from '../common/data.js';
+//伪继承基类
+import Base from './Base.js';
+const Parent = new Base();
+//引入配置文件
 import Api from '../common/api.js';
-
-const Parent = new base();
-
+import Data from '../common/data.js';
+//Comment模型类
 class Comment {
-    static sendComment (input, callback) {
+    static createComment (input, callback) {
         //获取所需的变量
         const [postId, nickname, email, website, content] = [
             input.postId,
@@ -46,7 +46,7 @@ class Comment {
     static getComments (input, callback) {
         const [postId] = [input.postId];
         //获取配置信息
-        const setting = new data({ postId: postId });
+        const setting = new Data({ postId: postId });
         //获取接口信息
         const api = new Api({ postId: postId });
         Parent.get(api.getComments, '', (response) => {

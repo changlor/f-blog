@@ -31,26 +31,35 @@ export default {
         readPosts () {
             this.posts = this.cachedPosts.daily;
         },
-        fetchPosts () {
+        getPosts () {
             const callback = (res) => {
-                this.cachePosts('daily', res.posts);
-                this.readPosts();
+                if (res.success && !res.isNewest) {
+                    this.cachePosts('daily', res.data);
+                    this.readPosts();
+                }
             };
             this.eventDelegation({
-                model: 'article',
-                method: 'fetchCategoryPosts',
-                params: { categoryId: this.categoryId, category: 'daily' },
+                model: 'Article',
+                method: 'getCategoryPosts',
+                params: {
+                    categoryId: this.categoryId,
+                    category: 'daily',
+                    config: {
+                        version: true,
+                        store: true,
+                    },
+                },
                 callback: callback,
             });
         },
-        fetchStoredPosts () {
+        getStoredPosts () {
             const callback = (res) => {
-                this.cachePosts('daily', res.category);
+                this.cachePosts('daily', res);
                 this.readPosts();
             };
             this.eventDelegation({
-                model: 'category',
-                method: 'fetchStoredCategory',
+                model: 'Category',
+                method: 'getStoredCategory',
                 params: { category: 'daily' },
                 callback: callback,
             });
@@ -81,9 +90,9 @@ export default {
         //首先--读取缓存资源
         this.isCached ? this.readPosts() : false;
         //其次--读取本地资源
-        !this.isCached && this.isStored ? this.fetchStoredPosts() : false;
+        !this.isCached && this.isStored ? this.getStoredPosts() : false;
         //最后--读取在线资源
-        this.fetchPosts();
+        this.getPosts();
 
         marked.setOptions({
             renderer: new marked.Renderer(),

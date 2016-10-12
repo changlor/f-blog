@@ -1,15 +1,14 @@
 'use strict';
-
-import base from './Base.js';
+//伪继承基类
+import Base from './Base.js';
+const Parent = new Base();
 import Api from '../common/api.js';
 
-const Parent = new base();
-
 class Category {
-    static fetchStoredCategory (input, callback) {
+    static getStoredCategory (input, callback) {
         const [category] = [input.category];
         const res = Parent.read(category);
-        callback({ category:res });
+        callback(res);
     }
 }
 

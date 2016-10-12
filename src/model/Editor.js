@@ -1,12 +1,10 @@
 'use strict';
-
-import base from './Base.js';
-import Api from '../common/api.js';
-
-const Parent = new base();
-
+//伪继承基类
+import Base from './Base.js';
+const Parent = new Base();
+//Editor模型类
 class Editor {
-    static fetchDraft (input, callback) {
+    static getDraft (input, callback) {
         const res = Parent.read('draft');
         callback({ title:res.title, content:res.content });
     }

@@ -11,7 +11,7 @@ export default function (router) {
             component: require('./views/categories/daily.vue'),
         },
         '/index': {
-            component: require('./views/admin/admin.vue'),
+            component: require('./views/admin/index.vue'),
         },
         '/t/:tid': {
             name: 'topic',

@@ -30,26 +30,34 @@ export default {
         readPosts () {
             this.posts = this.cachedPosts.home;
         },
-        fetchPosts () {
+        getPosts () {
             const callback = (res) => {
-                this.cachePosts('home', res.posts);
-                this.readPosts();
+                if (res.success && !res.isNewest) {
+                    this.cachePosts('home', res.data);
+                    this.readPosts();
+                }
             };
             this.eventDelegation({
-                model: 'article',
-                method: 'fetchPosts',
-                params: { category: 'home' },
+                model: 'Article',
+                method: 'getPosts',
+                params: {
+                    category: 'home',
+                    config: {
+                        store: true,
+                        version: true,
+                    }
+                },
                 callback: callback,
             });
         },
-        fetchStoredPosts () {
+        getStoredPosts () {
             const callback = (res) => {
-                this.cachePosts('home', res.category);
+                this.cachePosts('home', res);
                 this.readPosts();
             };
             this.eventDelegation({
-                model: 'category',
-                method: 'fetchStoredCategory',
+                model: 'Category',
+                method: 'getStoredCategory',
                 params: { category: 'home' },
                 callback: callback,
             });
@@ -80,9 +88,9 @@ export default {
         //首先--读取缓存资源
         this.isCached ? this.readPosts() : false;
         //其次--读取本地资源
-        !this.isCached && this.isStored ? this.fetchStoredPosts() : false;
+        !this.isCached && this.isStored ? this.getStoredPosts() : false;
         //最后--读取在线资源
-        this.fetchPosts();
+        this.getPosts();
 
         marked.setOptions({
             renderer: new marked.Renderer(),

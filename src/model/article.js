@@ -85,6 +85,8 @@ class Article {
         Parent.get(api.getPost, version, (res) => {
             if (res.success) {
                 //在获取成功的前提下，如果需要本地缓存保存，保存之
+                res.isNewest = !Parent.empty(res.data.version);
+                config.store = Parent.empty(res.data.version) && config.store;
                 config.store ? Parent.store('id-' + res.data.id, res.data) : false;
             }
             callback(res);
@@ -93,11 +95,8 @@ class Article {
 
     static getCategoryPosts (input, callback) {
         //获取所需数据
-        if (typeof input.config) {
-            input.config = {
-                version: false,
-                store: false,
-            }
+        if (Parent.empty(input.config)) {
+            input.config =  { store: false, version: false };
         }
         const [categoryId, category, config] = [
             input.categoryId,
@@ -105,7 +104,7 @@ class Article {
             input.config,
         ];
         //获取配置信息
-        const setting = new data({ category: category });
+        const setting = new Data({ category: category });
         //如果需要携带版本号，获取之
         const version = config.version ? setting.version.category : '';
         //获取接口信息
@@ -113,6 +112,8 @@ class Article {
         Parent.get(api.getCategoryPosts, version, (res) => {
             if (res.success) {
                 //在获取成功的前提下，如果需要本地缓存保存，保存之
+                res.isNewest = !Parent.empty(res.data.version);
+                config.store = Parent.empty(res.data.version) && config.store;
                 config.store ? Parent.store(category, res.data) : false;
             }
             callback(res);
@@ -120,19 +121,25 @@ class Article {
     }
 
     static getPosts (input, callback) {
+        if (Parent.empty(input.config)) {
+            input.config =  { store: false, version: false };
+        }
+        //获取所需数据
+        const [category, config] = [
+            input.category,
+            input.config,
+        ];
         //获取配置信息
-        const setting = new data({ category: category });
+        const setting = new Data({ category: category });
         //如果需要携带版本号，获取之
         const version = config.version ? setting.version.category : '';
-        //获取所需数据
-        const [category] = [
-            input.category
-        ];
         //获取接口信息
         const api = new Api({});
         Parent.get(api.getPosts, version, (res) => {
             if (res.success) {
                 //在获取成功的前提下，如果需要本地缓存保存，保存之
+                res.isNewest = !Parent.empty(res.data.version);
+                config.store = Parent.empty(res.data.version) && config.store;
                 config.store ? Parent.store(category, res.data) : false;
             }
             callback(res);
@@ -145,7 +152,7 @@ class Article {
             input.postId
         ];
         const res = Parent.read('id-' + postId);
-        callback({ post:res });
+        callback(res);
     }
 }
 
