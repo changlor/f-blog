@@ -5,8 +5,13 @@ const Parent = new Base();
 //引入配置文件
 import Api from '../common/api.js';
 import Data from '../common/data.js';
-//Article类
+//Article模型类
 class Article {
+    //param [array] input --包括三个参数
+    //param [int]              categoryId  --新建文章的分类id
+    //param [string]           title       --新建文章的标题
+    //param (required)[string] content     --新建文章的正文
+    //return [int] res --返回新建文章的id
     static createPost (input, callback) {
         //获取所需的变量
         const [categoryId, title, content] = [
@@ -28,6 +33,7 @@ class Article {
         post.append('content', content);
         //发送数据
         Parent.post(api.createPost, post, (res) => {
+            //回调结果
             callback(res);
         });
     }

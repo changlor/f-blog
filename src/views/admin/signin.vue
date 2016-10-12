@@ -29,7 +29,7 @@ export default {
                     username: this.username,
                     password: this.password,
                 },
-                model: 'user',
+                model: 'Auth',
                 method: 'signin',
                 callback: callback,
             });

@@ -3,7 +3,7 @@
 export default {
     testHost: 'http://api.blog.rain/',
     host: 'http://api.onesan.love/',
-    signin: 'user',
+    signin: 'signin',
     createPost: 'post',
     updatePost: 'post/:id',
     getPost: 'post/:id',

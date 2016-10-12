@@ -1,11 +1,12 @@
 'use strict';
-
-import base from './Base.js';
+//伪继承基类
+import Base from './Base.js';
+const Parent = new Base();
+//引入配置文件
 import Api from '../common/api.js';
-
-const Parent = new base();
-
-class User {
+import Data from '../common/data.js';
+//User模型类
+class Auth {
     static signin (input, callback) {
         const [username, password] = [input.username, input.password];
         //如果username为空，返回不能为空
@@ -21,12 +22,12 @@ class User {
         //获取接口信息
         const api = new Api({});
         //组装数据
-        let formData = new FormData();
-        formData.append('username', username);
-        formData.append('password', password);
+        let user = new FormData();
+        user.append('username', username);
+        user.append('password', password);
         //发送数据
-        Parent.post(api.signin, formData, callback);
+        Parent.post(api.signin, user, callback);
     }
 }
 
-export default User;
+export default Auth;
