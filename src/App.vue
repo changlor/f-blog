@@ -18,6 +18,7 @@ export default {
 <style>
 @import './highlight/default.min.css';
 @import './assets/css/main.css';
+@import './assets/css/post.css';
 @import './assets/css/editor.css';
 @import './assets/css/highlight.css';
 @import './assets/css/navbar.css';

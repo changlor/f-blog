@@ -1,4 +1,6 @@
-class blogCommonApi {
+import sha1 from '../lib/sha1.js';
+
+class commonApi {
     static getCurrentDate () {
         const monthArr = ['January ', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         const cT = new Date();
@@ -46,6 +48,12 @@ class blogCommonApi {
         return false;
         
     }
+
+    static sha1 (code) {
+        code = escape(code).replace(/%u/gi, '\\u');
+        code = unescape(code);
+        return sha1(code);
+    }
 }
 
-export default blogCommonApi;
+export default commonApi;

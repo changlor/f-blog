@@ -54,67 +54,65 @@
     </ul>
     <div class="p-preview-wrap">
         <ul>
-            <li class="p-preview clearfix" v-for="article in articles">
+            <li class="p-preview clearfix" v-for="post in posts">
                 <div class="inner clearfix">
-                    <div class="p-title">{{ article.title }}</div>
-                    <a class="edit-btn" v-link="{ name: 'edit', params: { tid: article.id } }">edit</a>
-                    <a class="scan-btn" v-link="{ name: 'topic', params: { tid: article.id } }">scan</a>
+                    <div class="p-title">{{ post.title }}</div>
+                    <a class="edit-btn" v-link="{ name: 'edit', params: { tid: post.id } }">edit</a>
+                    <a class="scan-btn" v-link="{ name: 'topic', params: { tid: post.id } }">scan</a>
                     <a class="del-btn">del</a>
                 </div>
             </li>
         </ul>
-        <div class="group-btn-wrap clearfix">
-            <a class="previous-btn adjust-btn">查看评论</a>
-            <a class="previous-btn adjust-btn">查看文章</a>
-            <a class="previous-btn adjust-btn">上一页</a>
-            <a class="next-btn adjust-btn">下一页</a>
+        <div class="btn-wrap clearfix">
+            <a class="btn">查看评论</a>
+            <a class="btn">查看文章</a>
+            <a class="btn">上一页</a>
+            <a class="btn">下一页</a>
         </div>
     </div>
 </div>
 </template>
 <script>
 import marked from 'marked';
-import blogCtrlApi from '../vuex/actions.js';
-import blogFetchApi from '../common/fetch.js';
-import localStorageApi from '../common/store.js';
+import hljs from '../../lib/highlight/highlight.js';
+import getters from '../../vuex/getters';
+import actions from '../../vuex/actions';
+
 export default {
     data () {
         return {
-            articles: '',
-        }
+            posts: [],
+        };
     },
     methods: {
-        fetchArticles: blogFetchApi.fetchData,
-    },
-    ready () {
-        this.updateAdminStatus(true);
-        const fetchArticlesCallback = (response) => {
-            console.log(response.data);
-            for (let index in response.data) {
-                this.articles = response.data;
-            }
-        };
-        this.fetchArticles('posts', fetchArticlesCallback)
-        marked.setOptions({
-            renderer: new marked.Renderer(),
-            gfm: true,
-            tables: true,
-            breaks: true,
-            pedantic: false,
-            sanitize: true,
-            smartLists: true,
-            smartypants: false
-        });
-    },
-    filters: {
-        marked: marked
+        fetchPosts () {
+            const callback = (res) => {
+                this.posts = res.posts;
+            };
+            this.eventDelegation({
+                params: {
+                    category: 'index',
+                },
+                model: 'article',
+                method: 'fetchPosts',
+                callback: callback,
+            });
+        },
     },
     vuex: {
-        actions: {
-            createNewMsgbox: blogCtrlApi.createNewMsgbox,
-            updateAdminStatus: blogCtrlApi.updateAdminStatus,
+        getters: {
+            count: getters.getMsgboxCount,
         },
-    }
+        actions: {
+            switchAdminModes: actions.switchAdminModes,
+            eventDelegation: actions.eventDelegation,
+            createMsgbox: actions.createMsgbox,
+        },
+    },
+    ready () {
+        this.switchAdminModes(true);
+        this.fetchPosts();
+    },
 }
 </script>
 <style>

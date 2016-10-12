@@ -1,6 +1,7 @@
 'use strict';
 
-import base from './base.js';
+import base from './Base.js';
+import data from '../common/data.js';
 import Api from '../common/api.js';
 
 const Parent = new base();
@@ -42,6 +43,17 @@ class Comment {
         //发送数据
         Parent.post(api.postComment, formData, callback);
     }
+    static getComments (input, callback) {
+        const [postId] = [input.postId];
+        //获取配置信息
+        const setting = new data({ postId: postId });
+        //获取接口信息
+        const api = new Api({ postId: postId });
+        Parent.get(api.getComments, '', (response) => {
+            const res = response.data;
+            callback({ comments:res });
+        });
+    }
 }
 
-export default Model;
+export default Comment;

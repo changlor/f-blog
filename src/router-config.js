@@ -1,41 +1,41 @@
 'use strict';
-import localStorageApi from './common/store.js';
+import store from './common/store.js';
 
 export default function (router) {
     //路由路径
     router.map({
         '/home': {
-            component: require('./views/home.vue'),
+            component: require('./views/categories/home.vue'),
         },
         '/daily': {
-            component: require('./views/daily.vue'),
+            component: require('./views/categories/daily.vue'),
         },
         '/index': {
-            component: require('./views/admin.vue'),
+            component: require('./views/admin/admin.vue'),
         },
         '/t/:tid': {
             name: 'topic',
-            component: require('./views/viewTopic.vue'),
+            component: require('./views/post/post.vue'),
         },
         '/contribute': {
             component: require('./views/contribute.vue'),
         },
         '/new': {
-            component: require('./views/new.vue'),
+            component: require('./views/admin/new.vue'),
         },
         '/edit/:tid': {
             name: 'edit',
-            component: require('./views/edit.vue'),
+            component: require('./views/admin/edit.vue'),
         },
         '/contribution': {
             component: require('./views/contribution.vue'),
         },
         '/ログイン': {
-            component: require('./views/signin.vue'),
+            component: require('./views/admin/signin.vue'),
         },
         //未匹配路由
         '*': {
-            component: require('./views/notFound.vue'),
+            component: require('./views/error/notFound.vue'),
         },
     });
     
@@ -48,10 +48,10 @@ export default function (router) {
     router.beforeEach((transition) => {
         switch (transition.to.path) {
             case '/unme':
-                localStorageApi.fetchAuthor('changle') ? transition.redirect('/new') : transition.redirect('/contribute');
+                store.read('changle') ? transition.redirect('/new') : transition.redirect('/contribute');
             break;
             case '/new':
-                localStorageApi.fetchAuthor('changle') ? transition.next() : transition.redirect('/login');
+                store.read('changle') ? transition.next() : transition.redirect('/login');
             break;
             default:
                 transition.next();

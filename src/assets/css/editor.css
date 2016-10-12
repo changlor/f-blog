@@ -1,96 +1,11 @@
-.editor-wrap {
-    padding-top: 80px;
-}
-.md-editor {
-    position: fixed;
-    width: 660px;
-    height: 100px;
-    bottom: 100px;
-    background-color: #fafafa;
-    opacity: 0.9;
-    left: 440px;
-    border-right: 0;
-}
-.md-transparent:hover {
-    opacity: 0.2;
-}
-.title-preview {
-    margin-top: 80px;
-    padding: 20px;
-    padding-bottom: 0;
-    margin-bottom: 0;
-}
-.md-preview {
-    word-wrap: break-word;
-    padding: 20px;
-    width: 700px;
-    height: 100%;
-    float: left;
-}
-.md-preview img {
-    width: 700px;
-    margin: 0;
-}
-#md-contrast {
-    opacity: 0.6;
-    background-color: #f6f6f6;
-    border-radius: 10px;
-    padding: 5px;
-    transform: scale(0.3);
-    position: fixed;
-    width: 500px;
-    min-height: 600px;
-    top: -163px;
-    left: 1000px;
-}
-#md-contrast pre {
-    white-space: pre-wrap;
-    word-wrap: break-word;
-}
-#md-contrast:hover {
-    opacity: 0.1;
-}
-#t-title {
-    background-color: rgb(225, 232, 237);
-    position: absolute;
-    top: 95px;
-    left: 420px;
-    font-size: 16px;
-    outline: none;
-    border: 0;
-    border-radius: 3px;
-    padding: 10px 15px;
-    width: 760px;
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
-}
-.group-btn-wrap {
-    position: fixed;
-    padding: 0 15px;
-    padding-top: 70px;
-    padding-bottom: 20px;
-    height: 360px;
-    top: 95px;
-    left: 285px;
-    border-radius: 6px;
-    box-shadow: 0px 2px 3px rgb(225, 232, 237);
-    background-color: rgb(225, 232, 237);
-}
-.adjust-btn {
-    float: left;
-    clear: left;
-    margin-top: 20px;
-    color: #444;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 4px;
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
-}
-.preview-switch-btn, .preview-btn {
-    background-color: #000;
-    color: #fff;
-}
-.submit-btn {
-    background-color: #000;
-    color: #fff;
-}
+/* preview-wrap */
+.preview-wrap{padding-top:140px}
+.preview-wrap h2{margin:0}
+/* editor-wrap */
+.editor-wrap .editor{position:fixed;width:660px;height:100px;bottom:100px;background-color:#fafafa;opacity:0.9;left:440px;border-right:0}
+.editor-wrap .transparent:hover{opacity:0.2}
+.editor-wrap .title{background-color:rgb(225, 232, 237);position:absolute;top:95px;left:420px;font-size:16px;outline:none;border:0;border-radius:3px;padding:10px 15px;width:760px;box-shadow:0px 2px 3px rgba(0, 0, 0, 0.1)}
+/* btn-wrap */
+.btn-wrap{position:fixed;padding:0 15px;padding-top:70px;padding-bottom:20px;height:360px;top:95px;left:285px;border-radius:6px;box-shadow:0px 2px 3px rgb(225, 232, 237);background-color:rgb(225, 232, 237)}
+.btn-wrap .btn{float:left;clear:left;margin-top:20px;color:#444;cursor:pointer;padding:8px;border-radius:4px;box-shadow:0px 2px 3px rgba(0, 0, 0, 0.1);background-color:#f9f9f9;width:64px;text-align:center}
+.btn-wrap .black{background-color:#000;color:#fff}

@@ -8,18 +8,18 @@
 </div>
 </template>
 <script>
-import blogCtrlApi from '../vuex/actions.js';
+import actions from '../vuex/actions.js';
 
 export default {
     methods: {
         backToBlog () {
-            this.updateAdminStatus(false);
+            this.switchAdminModes(false);
             this.$route.router.go('/daily');
         },
     },
     vuex: {
         actions: {
-            updateAdminStatus: blogCtrlApi.updateAdminStatus,
+            switchAdminModes: actions.switchAdminModes,
         },
     }
 }
@@ -58,6 +58,7 @@ export default {
     box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
     position: fixed;
     width: 100%;
+    z-index: 5;
 }
 .admin-navbar li {
     margin: 10px;

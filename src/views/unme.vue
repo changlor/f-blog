@@ -2,10 +2,10 @@
     <div id="container"></div>
 </template>
 <script>
-import localStorageApi from '../common/store.js';
+import store from '../common/store.js';
 export default {
     ready () {
-        localStorageApi.fetchAuthor('changle')
+        store.read('changle')
         ? this.$route.router.go('/new')
         : this.$route.router.go('/contribute');
     }

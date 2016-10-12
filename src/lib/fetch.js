@@ -1,4 +1,5 @@
-class fetchApi {
+//fetch库类
+class Fetch {
     static fetch (input, init, fulfilled, rejected) {
         fetch(input, init)
         .then((response) => {
@@ -15,7 +16,7 @@ class fetchApi {
     }
 
     static get (url, headers, callback) {
-        fetchApi.fetch(url, {
+        Fetch.fetch(url, {
             method: 'GET',
             headers: headers,
         }, callback, (error) => {
@@ -24,7 +25,7 @@ class fetchApi {
     }
 
     static post (url, headers, params, callback) {
-        fetchApi.fetch(url, {
+        Fetch.fetch(url, {
             method: 'POST',
             headers: headers,
             body: params,
@@ -34,7 +35,7 @@ class fetchApi {
     }
 
     static put (url, headers, params, callback) {
-        fetchApi.fetch(url, {
+        Fetch.fetch(url, {
             method: 'PUT',
             headers: headers,
             body: params,
@@ -44,5 +45,5 @@ class fetchApi {
     }
 }
 
-export default fetchApi;
+export default Fetch;
 

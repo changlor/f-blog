@@ -1,40 +1,40 @@
 <template>
 <div class="msgbox-wrap">
-    <div v-for="msgbox in msgboxes" v-if="!msgbox.isRead" transition="msgbox">{{ msgbox.msg }}<a v-on:click="offMsgbox($index)" class="msgbox-close">x</a></div>
+    <div v-for="msgbox in contents" v-if="!msgbox.isRead" transition="msgbox">{{ msgbox.msg }}<a v-on:click="off($index)" class="msgbox-close">x</a></div>
 </div>
 </template>
 <script>
-import blogDataApi from '../vuex/getters.js';
-import blogCtrlApi from '../vuex/actions.js';
+import getters from '../vuex/getters.js';
+import actions from '../vuex/actions.js';
 export default {
     data () {
         return {
-            msgboxes: [],
+            contents: [],
         }
     },
     watch: {
-        msgboxCount: function (val) {
-            this.msgboxes = this.msgboxes.concat(this.msgboxContents);
-            const openMsgboxCount = this.msgboxContents.length;
-            this.readMsgbox();
+        count: function (val) {
+            this.contents = this.contents.concat(this.unreadContents);
+            const openedCount = this.unreadContents.length;
+            this.readed();
             setTimeout(() => {
-                this.msgboxes.splice(0, openMsgboxCount);
+                this.contents.splice(0, openedCount);
             }, 4000);
         }
     },
     methods: {
-        offMsgbox (index) {
-            this.msgboxes[index].isRead = true;
+        off (index) {
+            this.contents[index].isRead = true;
         },
     },
     vuex: {
         getters: {
-            msgboxCount: blogDataApi.getMsgboxCount,
-            msgboxContents: blogDataApi.getMsgboxCreateContents,
+            count: getters.getMsgboxCount,
+            unreadContents: getters.getMsgboxContents,
         },
         actions: {
-            createNewMsgbox: blogCtrlApi.createNewMsgbox,
-            readMsgbox: blogCtrlApi.readMsgbox,
+            create: actions.createMsgbox,
+            readed: actions.readedMsgbox,
         }
     },
 }

@@ -1,11 +1,13 @@
 <template>
-<div id="leftbar" v-if="!isAdmin">
+<div id="funcBar">
     <sandbox></sandbox>
     <shadow></shadow>
-    <amuse></amuse>
     <msgbox></msgbox>
-    <navbar></navbar>
     <delegation></delegation>
+</div>
+<div id="leftbar" v-if="!isAdmin">
+    <amuse></amuse>
+    <navbar></navbar>
     <div class="sidebar">
         <div class="cover-img"></div>
         <div class="bottom-block">
@@ -14,8 +16,6 @@
     </div>
 </div>
 <div id="leftbar" v-else>
-    <msgbox></msgbox>
-    <shadow></shadow>
     <admin-navbar></admin-navbar>
 </div>
 </template>
@@ -27,13 +27,14 @@ import amuse from './amuse.vue';
 import shadow from './shadow.vue';
 import sandbox from './sandbox.vue';
 import adminNavbar from './adminNavbar.vue';
-import blogDataApi from '../vuex/getters';
-import blogCtrlApi from '../vuex/actions';
+
+import getters from '../vuex/getters';
+import actions from '../vuex/actions';
 
 export default {
     vuex: {
         getters: {
-            isAdmin: blogDataApi.getAdminStatus,
+            isAdmin: getters.getAdminStatus,
         },
     },
     components: {

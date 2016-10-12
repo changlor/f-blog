@@ -3,6 +3,9 @@
 export default {
     testHost: 'http://api.blog.rain/',
     host: 'http://api.onesan.love/',
+    signin: 'user',
+    createPost: 'post',
+    updatePost: 'post/:id',
     getPost: 'post/:id',
     getCategoryPosts: 'posts/:id',
     getPosts: 'posts',

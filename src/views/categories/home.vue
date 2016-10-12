@@ -1,57 +1,56 @@
 <template>
 <div id="container">
-    <article class="p" v-for="post in posts">
+    <article class="p-wrap" v-for="post in posts">
         <a v-link="{ name: 'topic', params: { tid: post.id } }">
-            <h2 class="p-title many">{{ post.title }}</h2>
+            <h2 class="p-title">{{ post.title }}</h2>
             <ul class="p-meta">
                 <li><time>{{ post.created_at }}</time></li>
             </ul>
-            <div class="cover"><img v-bind:src="post.cover" class=""></div>
+            <div class="p-cover"><img v-bind:src="post.cover" class=""></div>
         </a>
         <div class="p-text" v-html="post.profile | marked"></div>
     </article>
 </div>
 </template>
 <script>
-import data from '../common/data.js';
+import data from '../../common/data.js';
 import marked from 'marked';
-import hljs from '../lib/highlight/highlight.js';
-import actions from '../vuex/actions.js';
-import getters from '../vuex/getters.js';
+import hljs from '../../lib/highlight/highlight.js';
+import actions from '../../vuex/actions.js';
+import getters from '../../vuex/getters.js';
 
 export default {
     data () {
         return {
             posts: [],
-            isStored: false,
-            categoryId: false,
+            isCached: false, isLocalStored: false,
         };
     },
     methods: {
         readPosts () {
-            this.posts = this.cachedPosts.daily;
+            this.posts = this.cachedPosts.home;
         },
         fetchPosts () {
             const callback = (res) => {
-                this.cachePosts('daily', res.posts);
+                this.cachePosts('home', res.posts);
                 this.readPosts();
             };
             this.eventDelegation({
                 model: 'article',
-                method: 'fetchCategoryPosts',
-                params: { categoryId: this.categoryId, category: 'daily' },
+                method: 'fetchPosts',
+                params: { category: 'home' },
                 callback: callback,
             });
         },
         fetchStoredPosts () {
             const callback = (res) => {
-                this.cachePosts('daily', res.category);
+                this.cachePosts('home', res.category);
                 this.readPosts();
             };
             this.eventDelegation({
                 model: 'category',
                 method: 'fetchStoredCategory',
-                params: { category: 'daily' },
+                params: { category: 'home' },
                 callback: callback,
             });
         }
@@ -62,25 +61,27 @@ export default {
         },
         actions: {
             cachePosts: actions.cacheCategory,
-            createNewMsgbox: actions.createNewMsgbox,
+            createMsgbox: actions.createMsgbox,
             eventDelegation: actions.eventDelegation,
         }
     },
     ready () {
         const setting = new data({
-            category: 'daily',
-            storeKey: 'daily',
+            category: 'home',
+            storeKey: 'home',
         });
         const constants = setting.constants;
         const status = setting.status;
 
         this.categoryId = constants.categories.daily.id;
-        this.isCached = this.cachedPosts.hasOwnProperty(['daily']);
+        this.isCached = this.cachedPosts.hasOwnProperty(['home']);
         this.isStored = status.isStored;
 
-        //首先--读取本地资源
+        //首先--读取缓存资源
+        this.isCached ? this.readPosts() : false;
+        //其次--读取本地资源
         !this.isCached && this.isStored ? this.fetchStoredPosts() : false;
-        //其次--读取在线资源
+        //最后--读取在线资源
         this.fetchPosts();
 
         marked.setOptions({

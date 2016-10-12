@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 const state = {
     //定义代理事件数据
-    isBubbled: 0, events: { delegation: [], callback: {} },
+    isBubbled: 0, events: { delegation: [] },
     //定义缓存数据
     posts: {}, categories: {},
     //定义弹层数据
@@ -39,19 +39,20 @@ const mutations = {
         state.categories[category] = info;
     },
     //显示和关闭弹层
-    CREATE_NEW_MSGBOX (state, content) {
-        state.msgbox.createCount++;
-        state.msgbox.createContents.push({msg: content, isRead: false});
+    CREATE_MSGBOX (state, content) {
+        state.msgbox.count++;
+        state.msgbox.contents.push({msg: content, isReaded: false});
     },
-    READ_MSGBOX (state, status) {
-        state.msgbox.createContents = [];
+    READED_MSGBOX (state, status) {
+        state.msgbox.contents = [];
+    },
+    //
+    SWITCH_ADMIN_MODELS (state, status) {
+        state.admin = status;
     },
     //显示和关闭遮罩
     UPDATE_SHADOW_ACTIVED_STATUS (state, component, status) {
         state.shadow[component] = status;
-    },
-    UPDATE_ADMIN_STATUS (state, status) {
-        state.admin = status;
     },
     UPDATE_GLOBAL_SHADOW_STATUS (state, status) {
         state.shadow.global = status;

@@ -3,6 +3,7 @@
 import store from './store.js';
 import api from '../lib/config/api.js';
 import constants from '../lib/config/constants.js';
+import common from '../common/common.js';
 
 //获取常量
 const [host] = [api.testHost];
@@ -20,14 +21,14 @@ class Config {
             token: token,
             host: host,
             postId: init.postId,
-            categoryId: init.categoryId,
+            category: init.category,
         };
         this.status = {
             isStored: store.isExist(init.storeKey),
         },
         this.version = {
-            //post: store.read(init.postId),
-            //category: store.read(init.categoryId),
+            post: common.sha1(store.read('id-' + init.postId)),
+            category: common.sha1(store.read(init.category)),
         };
         this.store = {
             post: store.readPost(init.postId),

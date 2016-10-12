@@ -18,21 +18,22 @@ class blogCtrlApi {
         dispatch('CACHE_POST', post);
     }
     //显示和关闭弹层
-    static createNewMsgbox ({ dispatch }, content) {
-        dispatch('CREATE_NEW_MSGBOX', content);
+    static createMsgbox ({ dispatch }, content) {
+        dispatch('CREATE_MSGBOX', content);
     }
-    static readMsgbox ({ dispatch }, status) {
-        dispatch('READ_MSGBOX', status);
+    static readedMsgbox ({ dispatch }) {
+        dispatch('READED_MSGBOX');
     }
     //显示和关闭遮罩
     static updateShadowActivedStatus ({ dispatch }, component, status) {
         dispatch('UPDATE_SHADOW_ACTIVED_STATUS', component, status);
     }
-    static updateAdminStatus ({ dispatch }, status) {
-        dispatch('UPDATE_ADMIN_STATUS', status);
-    }
     static updateGlobalShadowStatus ({ dispatch }, status) {
         dispatch('UPDATE_GLOBAL_SHADOW_STATUS', status);
+    }
+    //
+    static switchAdminModes ({ dispatch }, status) {
+        dispatch('SWITCH_ADMIN_MODELS', status);
     }
 };
 
