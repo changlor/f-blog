@@ -38,6 +38,13 @@ class Article {
         });
     }
 
+    //param [array] input --包括四个参数
+    //param [int]              categoryId  --修改文章的分类id
+    //param [int]              categoryId  --修改文章的id
+    //param [string]           title       --修改文章的标题
+    //param (required)[string] profile     --修改文章的简介
+    //param (required)[string] body        --修改文章的正文
+    //return [boolean] res --返回更新成功与否
     static updatePost (input, callback) {
         //获取所需变量
         const [categoryId, postId, title, profile, body] = [
@@ -69,10 +76,15 @@ class Article {
         });
         //发送数据
         Parent.put(api.updatePost, post, (res) => {
+            //回调结果
             callback(res);
         });
     }
 
+    //param [array] input --包括两个参数
+    //param [int]    postId  --需要获取文章的id
+    //param [object] config  --回调配置，是否本地保存或者携带版本号请求头
+    //return [array] res --返回选取的文章
     static getPost (input, callback) {
         //获取所需数据
         if (Parent.empty(input.config)) {
@@ -88,6 +100,7 @@ class Article {
         const version = config.version ? setting.version.post : '';
         //获取接口信息
         const api = new Api({ postId: postId });
+        //获取数据
         Parent.get(api.getPost, version, (res) => {
             if (res.success) {
                 //在获取成功的前提下，如果需要本地缓存保存，保存之
@@ -95,10 +108,16 @@ class Article {
                 config.store = Parent.empty(res.data.version) && config.store;
                 config.store ? Parent.store('id-' + res.data.id, res.data) : false;
             }
+            //回调结果
             callback(res);
         });
     }
 
+    //param [array] input --包括三个参数
+    //param [int]    categoryId --需要获取分类下文章的分类id
+    //param [string] category   --需要获取分类下文章的分类名
+    //param [object] config     --回调配置，是否本地保存或者携带版本号请求头
+    //return [array] res --返回选取分类的文章
     static getCategoryPosts (input, callback) {
         //获取所需数据
         if (Parent.empty(input.config)) {
@@ -115,6 +134,7 @@ class Article {
         const version = config.version ? setting.version.category : '';
         //获取接口信息
         const api = new Api({ categoryId: categoryId });
+        //获取数据
         Parent.get(api.getCategoryPosts, version, (res) => {
             if (res.success) {
                 //在获取成功的前提下，如果需要本地缓存保存，保存之
@@ -122,15 +142,20 @@ class Article {
                 config.store = Parent.empty(res.data.version) && config.store;
                 config.store ? Parent.store(category, res.data) : false;
             }
+            //回调数据
             callback(res);
         });
     }
 
+    //param [array] input --包括两个参数
+    //param [string] category --需要获取分类下文章的分类名
+    //param [object] config   --回调配置，是否本地保存或者携带版本号请求头
+    //return [array] res --返回选取分类的文章
     static getPosts (input, callback) {
+        //获取所需数据
         if (Parent.empty(input.config)) {
             input.config =  { store: false, version: false };
         }
-        //获取所需数据
         const [category, config] = [
             input.category,
             input.config,
@@ -141,6 +166,7 @@ class Article {
         const version = config.version ? setting.version.category : '';
         //获取接口信息
         const api = new Api({});
+        //获取数据
         Parent.get(api.getPosts, version, (res) => {
             if (res.success) {
                 //在获取成功的前提下，如果需要本地缓存保存，保存之
@@ -148,16 +174,21 @@ class Article {
                 config.store = Parent.empty(res.data.version) && config.store;
                 config.store ? Parent.store(category, res.data) : false;
             }
+            //回调结果
             callback(res);
         });
     }
 
+    //param [array] input  --包括一个参数
+    //param [int]   postId --需要获取文章的分类id
+    //return [array] res --返回选取的文章
     static getStoredPost (input, callback) {
         //获取所需数据
         const [postId] = [
             input.postId
         ];
         const res = Parent.read('id-' + postId);
+        //回调结果
         callback(res);
     }
 }

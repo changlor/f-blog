@@ -7,8 +7,16 @@ import Api from '../common/api.js';
 import Data from '../common/data.js';
 //User模型类
 class Auth {
+    //param [array] input --包括两个个参数
+    //param [string] username --登录的用户名
+    //param [string] password --登录的密码
+    //return [string] res --登录成功与否，成功返回授权token
     static signin (input, callback) {
-        const [username, password] = [input.username, input.password];
+        //获取所需变量
+        const [username, password] = [
+            input.username,
+            input.password,
+        ];
         //如果username为空，返回不能为空
         if (Parent.empty(username)) {
             callback({ success: false, msg: '用户名不能为空OoO' });
@@ -26,7 +34,10 @@ class Auth {
         user.append('username', username);
         user.append('password', password);
         //发送数据
-        Parent.post(api.signin, user, callback);
+        Parent.post(api.signin, user, (res) => {
+            //回调数据
+            callback(res);
+        });
     }
 }
 

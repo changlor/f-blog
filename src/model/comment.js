@@ -7,6 +7,13 @@ import Api from '../common/api.js';
 import Data from '../common/data.js';
 //Comment模型类
 class Comment {
+    //param [array] input --包括五个参数
+    //param [int]    postId   --新建评论的文章id
+    //param [string] nickname --评论者的昵称
+    //param [string] email    --评论者的邮箱
+    //param [string] website  --评论者的网址
+    //param [string] content  --评论者的正文
+    //return [boolean] res --返回评论新建成功与否状态
     static createComment (input, callback) {
         //获取所需的变量
         const [postId, nickname, email, website, content] = [
@@ -41,17 +48,28 @@ class Comment {
         formData.append('website', website);
         formData.append('content', content);
         //发送数据
-        Parent.post(api.postComment, formData, callback);
+        Parent.post(api.postComment, formData, (res) => {
+            //回调结果
+            callback(res);
+        });
     }
+
+    //param [array] input --包括一个参数
+    //param [int]    postId --需要获取评论的文章id
+    //return [array] res --返回选取文章的评论
     static getComments (input, callback) {
-        const [postId] = [input.postId];
+        //获取所需的变量
+        const [postId] = [
+            input.postId
+        ];
         //获取配置信息
         const setting = new Data({ postId: postId });
         //获取接口信息
         const api = new Api({ postId: postId });
-        Parent.get(api.getComments, '', (response) => {
-            const res = response.data;
-            callback({ comments:res });
+        //获取数据
+        Parent.get(api.getComments, '', (res) => {
+            //回调结果
+            callback(res);
         });
     }
 }

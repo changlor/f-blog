@@ -96,7 +96,7 @@ export default {
         },
         getComments () {
             const callback = (res) => {
-                this.comments = res.comments;
+                this.comments = res.data;
                 this.hasCommet = this.comments.length != 0;
             };
             this.eventDelegation({
