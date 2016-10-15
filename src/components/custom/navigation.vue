@@ -1,11 +1,6 @@
 <template>
-<div class="navbar-wrap">
-    <!--
-    <div id="admin-entrance">
-        <a class="entrance" v-link="'/unme'">unme の route</a>
-    </div>
-    -->
-    <ul v-bind:class="['navbar-ctrl', 'navbar', isRotate ? navbarRotate : '']">
+<div class="drawer">
+    <ul v-bind:class="['navbar', isRotate ? navbarRotate : '']">
         <li v-for="navbar in navbarArr" v-bind:class="'nav-' + ($index + 1)">
             <div v-bind:class="[ isRotate ? navbarRotateArr[$index] : isRotate ]">
                 <a v-link="navbar.link"  v-on:click="switchNavbar($index)">

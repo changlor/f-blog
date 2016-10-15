@@ -10,7 +10,7 @@
 }
 .editor .title {
     position: absolute;
-    top: 70px;
+    top: 90px;
     left: 240px;
     width: 620px;
 }
@@ -24,6 +24,22 @@
     position: fixed;
     bottom: 60px;
     left: 480px;
+}
+.operate {
+    padding: 60px;
+}
+.operate .preview {
+    position: absolute;
+    top: 150px;
+    left: 340px;
+    width: 640px;
+}
+.dashboard button {
+    display: block;
+    margin: 20px 0;
+    margin-left: -40px;
+    width: 130px;
+    text-align: center;
 }
 .content textarea {
     padding: 15px;
@@ -46,24 +62,15 @@ textarea.transparent:hover {
     bottom: 100px;
     left: 1120px;
 }
-blockquote {
-    font-style: normal;
-}
-blockquote:after {
-    content: none;
-}
-blockquote:before {
-    content: none;
-}
+
 /* admin__index */
 .admin__index .list {
     padding: 0 40px;
 }
-.container {
-    margin-left: 60px;
-    padding: 40px 120px;
+.admin__index {
+    margin: 0;
 }
-/*  */
-.bottom-block a {
-    color:rgb(255, 255, 255);
+.admin__new{
+    margin: 0;
 }
+

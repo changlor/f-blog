@@ -60,7 +60,7 @@ export default function (router) {
     });
 
     router.afterEach((transition) => {
-        
+        scroll(0, 0);
     });
 }
 
