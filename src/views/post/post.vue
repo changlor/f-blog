@@ -1,5 +1,5 @@
 <template>
-    <div id="container">
+    <div class="container">
     <article class="p-wrap clearfix">
         <h2 class="p-title">{{ post.title }}</h2>
         <ul class="p-meta">
@@ -16,7 +16,7 @@
                 <input v-model="website" placeholder="http://" />
             </div>
             <textarea class="content" v-model="content" placeholder="下面我简短的发表一下意见"></textarea>
-            <a class="submit">要射了噢</a>
+            <a v-on:click="createComment" class="submit">要射了噢</a>
         </div>
         <ul class="c-lists clearfix">
             <li v-for="comment in comments">
@@ -106,6 +106,24 @@ export default {
                 callback: callback,
             });
         },
+        createComment () {
+            const callback = (res) => {
+                this.createMsgbox(res.msg);
+                console.log(res);
+            };
+            this.eventDelegation({
+                model: 'Comment',
+                method: 'createComment',
+                params: {
+                    postId: this.postId,
+                    nickname: this.nickname,
+                    email: this.email,
+                    website: this.website,
+                    content: this.content,
+                },
+                callback: callback,
+            });
+        }
     },
     vuex: {
         getters: {
@@ -135,7 +153,9 @@ export default {
         //最后--读取在线文章资源
         this.getPost();
         //读取评论资源
-        this.getComments();
+        setTimeout(()=>{
+            this.getComments();
+        }, 0);
         
         marked.setOptions({
             highlight: (code) => {

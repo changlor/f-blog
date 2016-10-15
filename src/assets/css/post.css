@@ -18,7 +18,8 @@ article a{text-decoration:none}
 .p-text h3{padding:2em 10px 1em;font-size:1.5em}
 .p-text h4{padding:1em 10px 0;font-size:1.3em}
 .p-text h5{font-size:1.5em}
-.p-text p{line-height:2em;padding:1em 0}
+.p-text p{line-height:2em;padding:1em 0;font-size:16px}
+.p-text h2{font-size: 1.5em;margin-bottom:0}
 .p-text img{max-width:100%}
 .p-text p img{max-width:100%;display:block;margin:0em auto;border-radius:.5em}
 .p-text del{color:#999;font-size:.8em}

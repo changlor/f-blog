@@ -1,5 +1,5 @@
 <template>
-<div id="container">
+<div class="container">
     <article class="p-wrap" v-for="post in posts">
         <a v-link="{ name: 'topic', params: { tid: post.id } }">
             <h2 class="p-title">{{ post.title }}</h2>

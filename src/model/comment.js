@@ -26,17 +26,17 @@ class Comment {
         //获取接口信息
         const api = new Api({ postId: postId });
         //如果nickname为空，返回不能为空
-        if (empty(nickname)) {
+        if (Parent.empty(nickname)) {
             callback({ success: false, msg: '请输入用户名OoO' });
             return false;
         }
         //如果email为空，返回不能为空
-        if (empty(email)) {
+        if (Parent.empty(email)) {
             callback({ success: false, msg: '请输入邮箱OoO' });
             return false;
         }
         //如果content为空，返回不能为空
-        if (empty(content)) {
+        if (Parent.empty(content)) {
             callback({ success: false, msg: '说点什么吧OoO' });
             return false;
         }

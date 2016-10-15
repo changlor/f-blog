@@ -49,12 +49,6 @@ p code {
     clear: both;
     visibility: hidden;
 }
-#rightbar {
-    margin-left: 300px;
-}
-#container {
-    padding: 0 120px;
-}
 .sep5 {
     height: 5px;
 }

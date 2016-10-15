@@ -1,44 +1,37 @@
 <template>
-<div id="funcBar">
-    <sandbox></sandbox>
-    <shadow></shadow>
-    <msgbox></msgbox>
     <delegation></delegation>
-</div>
-<div id="leftbar" v-if="!isAdmin">
-    <amuse></amuse>
-    <navbar></navbar>
-    <div class="sidebar">
-        <div class="cover-img"></div>
-        <div class="bottom-block">
-            <a>因雨而生</a>
-        </div>
-    </div>
-</div>
-<div id="leftbar" v-else>
-    <admin-navbar></admin-navbar>
-</div>
+    <admin-banner v-if="isAdmin"></admin-banner>
+    <admin-navigation v-if="isAdmin"></admin-navigation>
+    <banner v-if="!isAdmin"></banner>
+    <navigation v-if="!isAdmin"></navigation>
 </template>
 <script>
-import navbar from './navbar.vue';
+//admin
+import adminBanner from './admin/banner.vue';
+import adminNavigation from './admin/navigation.vue';
+//custom
+import navigation from './custom/navigation.vue';
+import banner from './custom/banner.vue';
+//common
 import delegation from './delegation.vue';
-import msgbox from './msgbox.vue';
-import amuse from './amuse.vue';
-import shadow from './shadow.vue';
-import sandbox from './sandbox.vue';
-import adminNavbar from './adminNavbar.vue';
+import button from './button.vue';
 
 import getters from '../vuex/getters';
 import actions from '../vuex/actions';
 
 export default {
-    vuex: {
-        getters: {
-            isAdmin: getters.getAdminStatus,
-        },
+    data () {
+        return {
+            isAdmin: false,
+        }
     },
     components: {
-        navbar, msgbox, amuse, sandbox, adminNavbar, shadow, delegation
+        //admin
+        adminBanner, adminNavigation,
+        //custom
+        navigation, banner,
+        //common
+        delegation, button
     },
 }
 </script>

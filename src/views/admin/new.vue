@@ -1,73 +1,25 @@
 <template>
-<div id="container">
-    <ul class="clearfix admin-notes">
-        <li>
-            <div class="box">
-                <div class="cell">
-                    <div class="sep5"></div>
-                    <span class="fade"><strong>hello, changle</strong></span>
-                </div>
-                <div class="inner">
-                    <div class="sep5"></div>
-                    <div style="padding: 0 5px;">
-                        <div class="sep5"></div>
-                        欢迎回来！
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="box">
-                <div class="inner">
-                    <div class="sep5"></div>
-                    <div style="padding: 0 5px;">
-                        在此可以发布文章
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="box">
-                <div class="cell">
-                    <div class="sep5"></div>
-                    <span class="fade">文章必要的内容</span>
-                </div>
-                <div class="inner">
-                    <div class="sep5"></div>
-                    <div style="padding: 0 5px;">
-                        <div class="sep5"></div>
-                        标题，封面，简介记号@more，正文
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="box">
-                <div class="inner">
-                    <div class="sep5"></div>
-                    <div style="padding: 0 5px;">
-                        默认以@more为简介分界记号
-                    </div>
-                </div>
-            </div>
-        </li>
-    </ul>
-    <div class="preview-wrap">
-        <h2 class="p-title">{{ title }}</h2>
-        <ul class="p-meta">
-            <li><time>{{ 'sep 2nd' }}</time></li>
-        </ul>
-        <div class="p-text" v-html="content | marked"></div>
+<div class="mdl-layout--fixed-tabs mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+    <div class="mdl-tabs__tab-bar">
+        <a href="#posts-panel" class="mdl-layout__tab mdl-tabs__tab is-active">Edit</a>
+        <a href="#posts-panel" class="mdl-layout__tab mdl-tabs__tab">Preview</a>
     </div>
-    <div class="editor-wrap clearfix">
-        <textarea v-bind:class="['editor', { 'transparent': isTransparent }]" v-model="content"></textarea>
-        <input class="title" placeholder="标题" v-model="title" />
-        <div class="btn-wrap clearfix">
-            <a v-on:click="swtichTransparent" class="btn">{{ transparentNotice }}</a>
-            <a v-on:click="storeDraft" class="btn">保存草稿</a>
-            <a v-on:click="getDraft" class="btn">读取草稿</a>
-            <a v-on:click="submitPost" class="btn black">提交文章</a>
-            <a class="btn">清空内容</a>
+    <div class="mdl-tabs__panel is-active" id="posts-panel">
+        <div class="editor">
+            <div class="mdl-textfield mdl-js-textfield title">
+                <input class="mdl-textfield__input cus-font__family" type="text" id="sample1" v-model="title">
+                <label class="mdl-textfield__label cus-font__family" for="sample1">Title...</label>
+            </div>
+            <div class="preview">
+                <div class="p-title" v-html="title"></div>
+                <div class="p-text" v-html="content | marked"></div>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield content">
+                <button v-on:click="swtichTransparent" class="transparent-btn mdl-button mdl-js-button mdl-button--primary">
+                    {{ transparentNotice }}
+                </button>
+                <textarea v-bind:class="[isTransparent ? 'transparent' : '']" type="text" v-model="content"></textarea>
+            </div>
         </div>
     </div>
 </div>
@@ -86,13 +38,13 @@ export default {
             //
             isTransparent: true,
             //
-            transparentNotice: '不要透明',
+            transparentNotice: 'Untransparent',
         };
     },
     methods: {
         swtichTransparent () {
             this.isTransparent = !this.isTransparent;
-            this.transparentNotice = this.isTransparent ? '不要透明' : '选择透明';
+            this.transparentNotice = this.isTransparent ? 'Untransparent' : 'Transparent';
         },
         submitPost () {
             const callback = (res) => {
@@ -158,6 +110,9 @@ export default {
             sanitize: true,
             smartLists: true,
             smartypants: false
+        });
+        this.$nextTick(()=>{
+            componentHandler.upgradeDom();
         });
     },
     filters: {

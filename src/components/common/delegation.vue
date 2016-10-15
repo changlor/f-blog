@@ -1,11 +1,11 @@
 <script>
-import Article from '../model/Article.js';
-import Comment from '../model/Comment.js';
-import Category from '../model/Category.js';
-import Editor from '../model/Editor.js';
-import Auth from '../model/Auth.js';
-import getters from '../vuex/getters.js';
-import actions from '../vuex/actions.js';
+import Article from '../../model/Article.js';
+import Comment from '../../model/Comment.js';
+import Category from '../../model/Category.js';
+import Editor from '../../model/Editor.js';
+import Auth from '../../model/Auth.js';
+import getters from '../../vuex/getters.js';
+import actions from '../../vuex/actions.js';
 
 const Model = {};
 Model.Article = Article;

@@ -1,0 +1,69 @@
+.cus-font__family {
+    font-family: Monaco, "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
+}
+.cus-list {
+    padding: 0 40px;
+}
+
+.editor {
+    padding: 60px;
+}
+.editor .title {
+    position: absolute;
+    top: 70px;
+    left: 240px;
+    width: 620px;
+}
+.editor .preview {
+    position: absolute;
+    top: 150px;
+    left: 240px;
+    width: 620px;
+}
+.editor .content {
+    position: fixed;
+    bottom: 60px;
+    left: 480px;
+}
+.content textarea {
+    padding: 15px;
+    width: 600px;
+    opacity: 0.7;
+    background-color: #f1f1f1;
+    outline: none;
+    border: 0;
+    border-radius: 5px;
+    box-shadow:0px 1px 3px rgba(0, 0, 0, 0.25);
+    font-size: 15px;
+    height: 100px;
+    resize: none;
+}
+textarea.transparent:hover {
+    opacity: 0.1;
+}
+.content .transparent-btn {
+    position: fixed;
+    bottom: 100px;
+    left: 1120px;
+}
+blockquote {
+    font-style: normal;
+}
+blockquote:after {
+    content: none;
+}
+blockquote:before {
+    content: none;
+}
+/* admin__index */
+.admin__index .list {
+    padding: 0 40px;
+}
+.container {
+    margin-left: 60px;
+    padding: 40px 120px;
+}
+/*  */
+.bottom-block a {
+    color:rgb(255, 255, 255);
+}

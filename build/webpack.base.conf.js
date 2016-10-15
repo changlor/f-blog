@@ -5,7 +5,8 @@ var projectRoot = path.resolve(__dirname, '../')
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: './src/main.js',
+    vendor: 'material-design-lite/material.js',
   },
   output: {
     path: config.build.assetsRoot,
