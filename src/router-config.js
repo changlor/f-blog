@@ -1,5 +1,5 @@
 'use strict';
-import store from './common/store.js';
+import store from './common/Store.js';
 
 export default function (router) {
     //路由路径

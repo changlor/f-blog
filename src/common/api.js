@@ -1,5 +1,3 @@
-'use strict';
-
 import api from '../lib/config/api.js';
 
 class Api {
@@ -15,7 +13,7 @@ class Api {
         this.getCategoryPosts = api.getCategoryPosts.replace(/:id/gi, this.params.categoryId);
         this.getPosts = api.getPosts;
         this.getComments = api.getComments.replace(/:id/gi, this.params.postId);
-        this.postComment = 'comment';
+        this.createComment = api.createComment;
     }
 }
 

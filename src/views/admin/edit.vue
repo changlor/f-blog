@@ -1,85 +1,28 @@
 <template>
 <div id="container">
-    <ul class="clearfix admin-notes">
-        <li>
-            <div class="box">
-                <div class="cell">
-                    <div class="sep5"></div>
-                    <span class="fade"><strong>hello, changle</strong></span>
-                </div>
-                <div class="inner">
-                    <div class="sep5"></div>
-                    <div style="padding: 0 5px;">
-                        <div class="sep5"></div>
-                        欢迎回来！
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="box">
-                <div class="inner">
-                    <div class="sep5"></div>
-                    <div style="padding: 0 5px;">
-                        在此可以对文章，评论进行修改
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="box">
-                <div class="cell">
-                    <div class="sep5"></div>
-                    <span class="fade">文章，评论要求</span>
-                </div>
-                <div class="inner">
-                    <div class="sep5"></div>
-                    <div style="padding: 0 5px;">
-                        <div class="sep5"></div>
-                        只对文本内容进行编辑，而不修改其他必要信息
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="box">
-                <div class="inner">
-                    <div class="sep5"></div>
-                    <div style="padding: 0 5px;">
-                        点击预览修改可以预览
-                    </div>
-                </div>
-            </div>
-        </li>
-    </ul>
     <div class="editor-wrap clearfix">
-        <div class="unpreview-wrap" v-show="!isPreview">
-            <textarea class="t-body" placeholder="内容" v-model="body"></textarea>
-            <textarea class="t-profile" placeholder="简介" v-model="profile"></textarea>
-            <input class="title" name="title" placeholder="标题" v-model="title" />
-        </div>
-        <div class="preview-wrap" v-else>
-            <h2 class="p-title">{{ title }}</h2>
-            <div class="p-text" v-show="!isPreviewProfile" v-html="body | marked"></div>
-            <div class="p-text" v-else v-html="profile | marked"></div>
-        </div>
-        <div class="btn-wrap clearfix">
-            <div class="select-btn-wrap">
-                <a v-on:click="selected(categories)" class="btn">{{ categories.setedValue }}</a>
-                <div v-on:click="cancelSelected(categories)" class="global-shadow"  v-show="categories.selectedStatus"></div>
-                <div class="options-btn-wrap" v-show="categories.selectedStatus">
-                    <span v-on:click="setCategory(option)" v-for="option in categories.options" type="button" >{{ option.value }}</span>
-                </div>
+        <div class="profile-preview mdl-card mdl-shadow--2dp">
+            <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">profile</h2>
             </div>
-            <a class="btn">文章:{{ postId }}</a>
-            <a class="btn" v-on:click="switchPreviewText" v-show="isPreview">{{ switchPreviewTextNotice }}</a>
-            <a class="btn black" v-on:click="switchPreview">{{ switchPreviewNotice }}</a>
-            <a class="btn" v-show="!isPreview">保存草稿</a>
-            <a class="btn" v-show="!isPreview">读取草稿</a>
-            <a class="btn">清空内容</a>
-            <a v-on:click="updatePost" class="btn black">提交修改</a>
+            <textarea class="profile mdl-card__supporting-text" v-html="profile"></textarea>
+            <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    preview
+                </a>
+            </div>
         </div>
-        
+        <div class="body-preview mdl-card mdl-shadow--2dp">
+            <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">body</h2>
+            </div>
+            <textarea class="body mdl-card__supporting-text" v-html="body"></textarea>
+            <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    preview
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 </template>
@@ -197,39 +140,40 @@ export default {
 }
 </script>
 <style>
-.t-profile {
-    position: absolute;
-    height: 90px;
-    width: 750px;
-    top: 155px;
-    left: 420px;
-    background-color: rgb(225, 232, 237);
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
-    font-size: 15px;
+.profile-preview {
+    top: 100px;
+    position: fixed;
+    left: 300px;
+    width: 400px;
+    height: 500px;
+    padding: 10px 20px;
 }
-.t-body {
-    position: absolute;
-    height: 200px;
-    width: 750px;
-    top: 303px;
-    left: 420px;
-    background-color: rgb(225, 232, 237);
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
-    font-size: 15px;
-}
-.options-btn-wrap {
-    z-index: 4;
-    position: absolute;
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+.profile-preview textarea {
+    border: 0;
+    height: 400px;
+    width: 328px;
     background-color: #fafafa;
-    padding: 10px;
-    margin-top: 30px;
-    margin-left: 10px;
+    overflow-y: auto;
+    outline: none;
+    resize: none;
+    border-radius: 5px;
 }
-.options-btn-wrap span {
-    word-break: keep-all;
-    padding: 8px 15px;
-    float: left;
-    clear: left;
+.body-preview {
+    top: 100px;
+    position: fixed;
+    left: 750px;
+    width: 560px;
+    height: 300px;
+    padding: 10px 20px;
+}
+.body-preview textarea {
+    border: 0;
+    height: 200px;
+    width: 488px;
+    background-color: #fafafa;
+    overflow-y: auto;
+    outline: none;
+    resize: none;
+    border-radius: 5px;
 }
 </style>

@@ -1,39 +1,36 @@
-'use strict';
+import Store from './Store';
+import Common from '../common/Common';
+import constants from '../lib/config/constants';
 
-import store from './store.js';
-import api from '../lib/config/api.js';
-import constants from '../lib/config/constants.js';
-import common from '../common/common.js';
+class Data {
+    constructor (init) {
+        [this.postId, this.categoryName, this.storeKey] = [
+            init.postId,
+            init.categoryName,
+            init.storeKey,
+        ];
+        this.initConstants();
+        this.initVariables();
+    }
 
-//获取常量
-const [host] = [api.testHost];
-const [categories] = [constants.categories];
-//获取变量
-const [token] = [store.read('Token')];
-
-class Config {
-    constructor(init) {
+    initConstants () {
         this.constants = {
-            host: host,
-            categories: categories,
-        },
-        this.params = {
-            token: token,
-            host: host,
-            postId: init.postId,
-            category: init.category,
-        };
-        this.status = {
-            isStored: store.isExist(init.storeKey),
-        },
-        this.version = {
-            post: common.sha1(store.read('id-' + init.postId)),
-            category: common.sha1(store.read(init.category)),
-        };
-        this.store = {
-            post: store.readPost(init.postId),
+            host: constants.testHost,
+            categories: constants.categories,
         }
+    }
+
+    initVariables () {
+        this.variables = {
+            token: Store.read('Token'),
+            postId: this.postId,
+            categoryName: this.categoryName,
+            storeKey: this.storeKey,
+            isStored: Store.isExist(this.storeKey),
+            postVersion: Common.createVersion(Store.read('id-' + this.postId)),
+            categoryVersion: Common.createVersion(Store.read(this.category)),
+        };
     }
 }
 
-export default Config;
+export default Data;

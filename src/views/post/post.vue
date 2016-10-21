@@ -1,44 +1,36 @@
 <template>
-    <div class="container">
-    <article class="p-wrap clearfix">
-        <h2 class="p-title">{{ post.title }}</h2>
-        <ul class="p-meta">
-            <li><time>{{ post.created_at }}</time></li>
-        </ul>
-        <div class="p-cover" v-if="post.cover != ''"><img v-bind:src="post.cover"></div>
-        <div class="p-text" v-html="postBody | marked"></div>
-    </article>
-    <div class="c-wrap clearfix">
-        <div class="c-form clearfix">
-            <div class="meta clearfix">
-                <input v-model="nickname" placeholder="小明" />
-                <input v-model="email" placeholder="@xx.com" />
-                <input v-model="website" placeholder="http://" />
-            </div>
-            <textarea class="content" v-model="content" placeholder="下面我简短的发表一下意见"></textarea>
-            <a v-on:click="createComment" class="submit">要射了噢</a>
-        </div>
-        <ul class="c-lists clearfix">
-            <li v-for="comment in comments">
-                <div class="c-list">
-                    <a class="user" href="{{ comment.website }}" target="_blank">
-                        <img class="avatar" src="http://gravatar.duoshuo.com/avatar/b7f6ae83917067e9d8e24233e46b59ef?s=50">
-                    </a>
-                    <p class="content">{{ comment.content }}</p>  
-                    <div class="meta">
-                        <a href="{{ comment.website }}" ><span>{{ comment.nickname }}</span></a>
-                        <time>{{ comment.created_at }}</time>
-                        <span class="reply">reply</span>
+<div class="container">
+    <div class="row">
+        <div id="post" role="main">
+            <article class="post" itemscope="" itemtype="http://schema.org/BlogPosting">
+                <h2 class="post-title" itemprop="name headline">{{ post.title }}</h2>
+                <ul class="post-meta">
+                    <li><time datetime="2016-09-04T16:45:00+08:00" itemprop="datePublished">09 月 04 日 2016 年</time></li>
+                    <li> • 阅读: 374</li>
+                    <li> • <a href="https://hran.me/category/nichijou/">日常</a></li>
+                </ul>
+                <p class="cover" v-if="post.cover != ''"><img v-bind:src="post.cover"></p>
+                <div class="post-content" itemprop="articleBody">
+                    <p></p>
+                    <div v-html="postBody | marked"></div>
+                </div>
+                <div class="tags">
+                    <div class="dkeywords">
+                        <div itemprop="keywords" class="keywords">标签: <a href="https://hran.me/tag/Apple-Store/">Apple Store</a>, <a href="https://hran.me/tag/%E5%94%AE%E5%90%8E/">售后</a></div>
                     </div>
                 </div>
-            </li>
-            <li v-if="!hasCommet"><blockquote><p>沙发还留着qwq</p></blockquote></li>
-        </ul>
+                <div class="post-buttons">
+                    <a id="toggle-archives" href="https://hran.me/archives.html">返回文章列表</a>
+                    <a id="toggle-post-qr-code">文章二维码</a>
+                    <a id="toggle-reward-qr-code">打赏</a>
+                </div>
+            </article>
+        </div>
     </div>
 </div>
 </template>
 <script>
-import data from '../../common/data.js';
+import Data from '../../common/Data.js';
 import marked from 'marked';
 import hljs from '../../lib/highlight/highlight.js';
 import actions from '../../vuex/actions.js';
@@ -137,14 +129,13 @@ export default {
     },
     ready () {
         this.postId = this.$route.params.tid;
-        const setting = new data({
+        const setting = new Data({
             postId: this.postId,
             storeKey: `id-${this.postId}`,
         });
-        const status = setting.status;
 
         this.isCached = this.cachedPosts.hasOwnProperty([`id-${this.postId}`]);
-        this.isStored = status.isStored;
+        this.isStored = setting.variables.isStored;
 
         //首先--读取缓存资源
         this.isCached ? this.readPost() : false;

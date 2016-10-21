@@ -1,6 +1,6 @@
 <template>
-    <banner></banner>
-    <navigation></navigation>
+<banner></banner>
+<navigation></navigation>
 </template>
 <script>
 import banner from './admin/banner.vue';

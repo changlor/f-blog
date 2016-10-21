@@ -1,24 +1,18 @@
-class storeApi {
-    static storeJson (key, value) {
-        window.localStorage.setItem(key, JSON.stringify(value));
-    }
-
-    static readJson (key) {
-        try {
-            return JSON.parse(window.localStorage.getItem(key));
-        } catch (e) {
-            return null;
-        }
-    }
-
-    static storeData (key, value) {
+/*
+ * @description: Store接口基类，提供对localstorage操作的底层接口
+ * @author: Changle
+ * @update: Changle (2016-10-21 15:32)
+ */
+class Store {
+    //保存数据到localstorage
+    static store (key, value) {
         window.localStorage.setItem(key, value);
     }
-
-    static readData (key) {
+    //读取localstorage数据
+    static read (key) {
         return window.localStorage.getItem(key);
     }
 }
 
-export default storeApi;
+export default Store;
 

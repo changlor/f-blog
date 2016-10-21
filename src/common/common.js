@@ -1,7 +1,14 @@
-import sha1 from '../lib/sha1.js';
+//加载依赖模块
+import sha1 from '../lib/sha1';
 
-class commonApi {
-    static getCurrentDate () {
+/*
+ * @description: Common接口类，提供各种通用方法函数
+ * @author: Changle
+ * @update: Changle (2016-10-21 15:32)
+ */
+class Common {
+    //生成month day格式的当前日期
+    static date () {
         const monthArr = ['January ', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         const cT = new Date();
         const month = monthArr[cT.getMonth()];
@@ -27,7 +34,7 @@ class commonApi {
         }
         return month + ' ' + day;
     }
-
+    //判断变量是否为空，包括各种意义上的空白符均被认为是空
     static empty (param) {
         if (typeof param == 'object') {
             return param.length == 0 ? true : false;
@@ -41,6 +48,12 @@ class commonApi {
         if (!param) {
             return true;
         }
+        if (typeof param == 'boolean') {
+            return true;
+        }
+        if (typeof param == 'number') {
+            return false;
+        }
         param = param.replace(/[ ]|\n|\r/gi, '');
         if (param == '') {
             return true;
@@ -48,12 +61,12 @@ class commonApi {
         return false;
         
     }
-
-    static sha1 (code) {
+    //生成版本号
+    static createVersion (code) {
         code = escape(code).replace(/%u/gi, '\\u');
         code = unescape(code);
         return sha1(code);
     }
 }
 
-export default commonApi;
+export default Common;

@@ -1,38 +1,36 @@
-import storeApi from '../lib/store.js';
-//注册接口函数
-const readJson = storeApi.readJson;
-const storeJson = storeApi.storeJson;
-const readData = storeApi.readData;
-const storeData = storeApi.storeData;
+//加载父模块
+import Parent from '../lib/Store';
 
-class store {
+/*
+ * @description: Store接口类，提供对localstorage的操作接口
+ * @author: Changle
+ * @update: Changle (2016-10-21 15:32)
+ */
+class Store {
+    //直接读取localstorage数据
     static read (key) {
-        return readData(key);
+        return Parent.read(key);
     }
-
+    //直接保存数据到localstorage
     static store (key, value) {
-        storeData(key, value);
+        Parent.store(key, value);
     }
-
-    static readPost (postId) {
-        return readJson('id-' + postId);
-    }
-
-    static storePost (postId, article) {
-        storeJson('id-' + postId, article);
-    }
-
+    //以读取json的方式读取localstorage数据
     static readJson (key) {
-        return readJson(key);
+        try {
+            return JSON.parse(Parent.read(key));
+        } catch (e) {
+            return null;
+        }
     }
-
+    //以json格式保存数据到localstorage
     static storeJson (key, value) {
-        storeJson(key, value);
+        Parent.store(key, JSON.stringify(value));
     }
-
+    //判断localstorage是否保存某数据
     static isExist (key) {
-        return readData(key) != null;
+        return Parent.read(key) != null;
     }
 }
 
-export default store;
+export default Store;

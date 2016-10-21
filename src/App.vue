@@ -1,43 +1,38 @@
 <template>
 <div>
-    <div v-if="isAdmin" class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-        <admin></admin>
-        <main class="mdl-layout__content">
+    <common></common>
+    <div class="wrap">
+        <custom></custom>
+        <main class="body">
             <router-view></router-view>
         </main>
+        <bottom></bottom>
     </div>
-    <div class="wrap" v-if="!isAdmin">
-        <custom></custom>
-        <router-view></router-view>
-    </div>
-    <common></common>
 </div>
 </template>
-<style src="material-design-lite/material.css"></style>
-<style src="material-design-icons/iconfont/material-icons.css"></style>
 <script>
 import store from './vuex/store.js';
 import admin from './components/admin.vue';
+import bottom from './components/bottom.vue';
 import custom from './components/custom.vue';
 import common from './components/common.vue';
 
 export default {
     data () {
         return {
-            isAdmin: true,
+            isAdmin: false,
         };
     },
     components: {
-        admin, custom, common
+        admin, custom, common, bottom
     },
     store,
 };
 </script>
 <style>
 @import './assets/css/main/main.css';
-@import './assets/css/components/post.css';
+@import './assets/css/main/style.css';
+@import './assets/css/main/blog.css';
 @import './assets/css/components/navbar.css';
-@import './assets/css/components/highlight.css';
-@import './assets/css/nouser/custom.css';
 </style>
 

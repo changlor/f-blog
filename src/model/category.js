@@ -1,18 +1,27 @@
-'use strict';
-//伪继承基类
-import Base from './Base.js';
+//加载父模块
+import Base from './Base';
 const Parent = new Base();
-import Api from '../common/api.js';
-//Category模型类
+//加载依赖模块
+import Api from '../common/Api';
+import Data from '../common/Data';
+
+/*
+ * @description: Category模型类，提供对分类的curd操作的接口
+ * @author: Changle
+ * @update: Changle (2016-10-20 20:32)
+ */
 class Category {
-    //param [array] input --包括一个参数
-    //param [string] category --分类名
-    //return [array] res --该分类下所包含的数据
+    /*
+     * @description: 获取分类缓存
+     * param [array] input --包括一个参数
+     * param [string] category --分类名
+     * return [array] res --该分类下所包含的数据
+     */
     static getStoredCategory (input, callback) {
         //获取所需的变量
         const [category] = [input.category];
-        //调用基类本地缓存读取函数
-        const res = Parent.read(category);
+        //调用父类本地缓存读取函数
+        const res = Parent.readJson(category);
         //回调结果
         callback(res);
     }

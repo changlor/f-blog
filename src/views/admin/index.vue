@@ -1,20 +1,31 @@
 <template>
-<div class="container admin__index">
-    <div class="mdl-layout--fixed-tabs mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-        <div class="mdl-tabs__tab-bar">
-            <a href="#posts-panel" class="mdl-layout__tab mdl-tabs__tab is-active">Posts</a>
+<div class="main">
+    <div class="feature">
+        <div class="title">
+            <span>Recently</span>
         </div>
-        <div class="mdl-tabs__panel is-active" id="posts-panel">
-            <div class="list">
-                <ul class="mdl-list">
-                    <li v-for="post in posts" class="mdl-list__item">
-                        <span class="mdl-list__item-primary-content">
-                            {{ post.title }}
+    </div>
+    <div class="content">
+        <div class="row">
+            <div class="module col-mb-12 col-tb-4">
+                <ul class="module-lists">
+                    <li class="title"><span>posts</span></li>
+                    <li v-for="post in posts">
+                        <span>
+                            <time>10-16</time>:
                         </span>
-                        <button class="mdl-button mdl-js-button mdl-button--raised">
-                            Update
-                        </button>
+                        <a>{{ post.title }}</a>
                     </li>
+                </ul>
+            </div>
+            <div class="module col-mb-12 col-tb-4">
+                <ul class="module-lists">
+                    <li class="title"><span>comments</span></li>
+                </ul>
+            </div>
+            <div class="module col-mb-12 col-tb-4">
+                <ul class="module-lists">
+                    <li class="title"><span>notices</span></li>
                 </ul>
             </div>
         </div>
@@ -35,9 +46,6 @@ export default {
         getPosts () {
             const callback = (res) => {
                 this.posts = res.data;
-                this.$nextTick(()=>{
-                    componentHandler.upgradeDom();
-                });
             };
             this.eventDelegation({
                 params: {
@@ -62,9 +70,6 @@ export default {
     ready () {
         this.switchAdminModes(true);
         this.getPosts();
-        this.$nextTick(()=>{
-            componentHandler.upgradeDom();
-        });
     },
 }
 </script>

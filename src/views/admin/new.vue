@@ -1,48 +1,32 @@
 <template>
-<div class="container admin__new">
-<div class="mdl-layout--fixed-tabs mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-    <div class="mdl-tabs__tab-bar">
-        <a href="#posts-panel" class="mdl-layout__tab mdl-tabs__tab is-active">Edit</a>
-        <a href="#operate-panel" class="mdl-layout__tab mdl-tabs__tab">Operate</a>
+<div class="container admin">
+    <div class="title">
+        <h3>撰写新文章</h3>
     </div>
-    <div class="mdl-tabs__panel is-active" id="posts-panel">
-        <div class="editor">
-            <div class="mdl-textfield mdl-js-textfield title">
-                <input class="mdl-textfield__input cus-font__family" type="text" id="sample1" v-model="title">
-                <label class="mdl-textfield__label cus-font__family" for="sample1">Title...</label>
+    <div class="main">
+        <div class="grid">
+            <div class="new-post grid-cell grid-cell--9-col">
+                <div class="brief"><span>标题: </span></div>
+                <div class="title">
+                    <input type="text" v-model="title" />
+                </div>
+                <div class="brief"><span>文章: </span></div>
+                <div class="editor grid">
+                    <div class="editor-wrap">
+                        <textarea v-model="content"></textarea>
+                    </div>
+                </div>
+                <div class="edit">
+                    <div class="row">
+                        <div class="spacer"></div>
+                        <button>保存草稿</button>
+                        <button class="primary">发布文章</button>
+                    </div>
+                </div>
             </div>
-            <div class="preview">
-                <div class="p-title" v-html="title"></div>
-                <div class="p-text" v-html="content | marked"></div>
-            </div>
-            <div class="mdl-textfield mdl-js-textfield content">
-                <button v-on:click="swtichTransparent" class="transparent-btn mdl-button mdl-js-button mdl-button--primary">
-                    {{ transparentNotice }}
-                </button>
-                <textarea v-bind:class="[isTransparent ? 'transparent' : '']" type="text" v-model="content"></textarea>
-            </div>
+            <div class="grid-cell grid-cell--3-col"></div>
         </div>
     </div>
-    <div class="mdl-tabs__panel" id="operate-panel">
-        <div class="operate">
-            <div class="dashboard">
-                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised">
-                    draft: get
-                </button>
-                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised">
-                    draft: save
-                </button>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-                    publish
-                </button>
-            </div>
-            <div class="preview">
-                <div class="p-title" v-html="title"></div>
-                <div class="p-text" v-html="content | marked"></div>
-            </div>
-        </div>
-    </div>
-</div>
 </div>
 </template>
 <script>
@@ -131,9 +115,6 @@ export default {
             sanitize: true,
             smartLists: true,
             smartypants: false
-        });
-        this.$nextTick(()=>{
-            componentHandler.upgradeDom();
         });
     },
     filters: {
