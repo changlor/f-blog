@@ -1,22 +1,22 @@
 <template>
 <div class="container">
     <div class="row">
-        <div id="post" role="main">
-            <article class="post" itemscope="" itemtype="http://schema.org/BlogPosting">
-                <h2 class="post-title" itemprop="name headline">{{ post.title }}</h2>
+        <div id="post">
+            <article class="post">
+                <h2 class="post-title">{{ post.title }}</h2>
                 <ul class="post-meta">
-                    <li><time datetime="2016-09-04T16:45:00+08:00" itemprop="datePublished">09 月 04 日 2016 年</time></li>
+                    <li><time>{{ post.created_at }}</time></li>
                     <li> • 阅读: 374</li>
                     <li> • <a href="https://hran.me/category/nichijou/">日常</a></li>
                 </ul>
                 <p class="cover" v-if="post.cover != ''"><img v-bind:src="post.cover"></p>
-                <div class="post-content" itemprop="articleBody">
+                <div class="post-content">
                     <p></p>
-                    <div v-html="postBody | marked"></div>
+                    <div v-html="postBody | parseMarkdown"></div>
                 </div>
                 <div class="tags">
                     <div class="dkeywords">
-                        <div itemprop="keywords" class="keywords">标签: <a href="https://hran.me/tag/Apple-Store/">Apple Store</a>, <a href="https://hran.me/tag/%E5%94%AE%E5%90%8E/">售后</a></div>
+                        <div class="keywords">标签: <a href="https://hran.me/tag/Apple-Store/">Apple Store</a>, <a href="https://hran.me/tag/%E5%94%AE%E5%90%8E/">售后</a></div>
                     </div>
                 </div>
                 <div class="post-buttons">
@@ -28,13 +28,63 @@
         </div>
     </div>
 </div>
+<div id="body-bottom">
+    <div class="container">
+        <div id="comments">
+            <span class="widget-title text-center" style="padding-bottom: 15px;">评论列表</span>
+            <div class="comment-wrap">
+                <div class="row comment-info">
+                    <div class="col-mb-12 col-tb-4">
+                        <input v-model="nickname" placeholder="小明" />
+                    </div>
+                    <div class="col-mb-12 col-tb-4">
+                        <input v-model="email" placeholder="@gmail.com" />
+                    </div>
+                    <div class="col-mb-12 col-tb-4">
+                        <input v-model="website" placeholder="http://" />
+                    </div>
+                </div>
+                <div class="comment-editor">
+                    <textarea v-model="content" placeholder="说点什么吧OoO"></textarea>
+                </div>
+                <div class="comment-toolbar">
+                    <button v-on:click="createComment" v-bind:class="['post-button', isCommitting ? 'committing' : '']" type="submit">{{ commit }}</button>
+                </div>
+                <div class="comment-analysis">
+                    <ul class="post-meta">
+                        <li><a>{{ commentsCount }}条评论</a></li>
+                        <li> • <time>{{ post.created_at }}</time></li>
+                    </ul>
+                </div>
+                <div v-if="hasComment" class="comment">
+                    <ul>
+                        <li v-for="comment in comments" class="comment-item clearfloat">
+                            <div class="avatar">
+                                <a><img src="https://avatar.duoshuo.com/avatar-100/664/255040.jpg" alt="CAISIDUO"></a>
+                            </div>
+                            <div class="content">
+                                <p>{{ comment.content }}</p>
+                                <ul class="post-meta">
+                                    <li><a>{{ comment.nickname }}</a></li>
+                                    <li> • <time>{{ comment.created_at | formatTime }}</time></li>
+                                </ul>
+                            <div>
+                        </li>
+                    </ul>
+                    <pagination v-bind:record-count="commentsCount" v-bind:current-page="currentPage" v-on:skip-page="skipPage"></pagination>
+                </div>
+                <p class="no-comment" v-else>还没有评论，来抢个沙发吧</p>
+            </div>
+        </div>
+    </div>
+</div>
 </template>
 <script>
-import Data from '../../common/Data.js';
-import marked from 'marked';
-import hljs from '../../lib/highlight/highlight.js';
-import actions from '../../vuex/actions.js';
-import getters from '../../vuex/getters.js';
+import Data from '../../common/Data';
+import Common from '../../common/Common';
+import pagination from '../../components/common/pagination';
+import actions from '../../vuex/actions';
+import getters from '../../vuex/getters';
 
 export default {
     data () {
@@ -44,9 +94,11 @@ export default {
             //评论
             comments: [],
             //状态
-            isCached: false, isStored: false, hasCommet: false,
+            isCached: false, isStored: false, hasComment: false, isCommitting: false,
             //回复
-            nickname: '', email: '', website: '', content:'',
+            commit: '发布', nickname: '', email: '', website: '', content:'',
+            //分页链接
+            commentsCount: 0, pageSize: 6, currentPage: 1,
         };
     },
     methods: {
@@ -88,20 +140,43 @@ export default {
         },
         getComments () {
             const callback = (res) => {
-                this.comments = res.data;
-                this.hasCommet = this.comments.length != 0;
+                this.comments = res.data.comments;
+                this.commentsCount = res.data.commentsCount;
+                this.hasComment = this.commentsCount != 0;
             };
             this.eventDelegation({
                 model: 'Comment',
                 method: 'getComments',
-                params: { postId: this.postId },
+                params: {
+                    postId: this.postId,
+                    currentPage: this.currentPage,
+                },
                 callback: callback,
             });
         },
         createComment () {
-            const callback = (res) => {
-                this.createMsgbox(res.msg);
-                console.log(res);
+            if (this.isCommitting) {
+                return false;
+            }
+            const callback = {};
+            callback.before = (res) => {
+                if (res.success) {
+                    this.commit = '评论正在发射中...';
+                    this.isCommitting = true;
+                } else {
+                    this.createMsgbox(res.msg);
+                }
+            };
+            callback.after = (res) => {
+                this.commit = '发布';
+                this.isCommitting = false;
+                if (res.success) {
+                    this.comments = res.data.comments;
+                    this.commentCount = res.data.commentCount;
+                    this.content = '';
+                } else {
+                    this.createMsgbox(res.msg);
+                }
             };
             this.eventDelegation({
                 model: 'Comment',
@@ -115,7 +190,13 @@ export default {
                 },
                 callback: callback,
             });
-        }
+        },
+        skipPage (number) {
+            this.currentPage = number;
+            this.$nextTick(() => {
+                this.triggerHookFunc('comment');
+            });
+        },
     },
     vuex: {
         getters: {
@@ -125,7 +206,11 @@ export default {
             cachePost: actions.cachePost,
             createMsgbox: actions.createMsgbox,
             eventDelegation: actions.eventDelegation,
+            triggerHookFunc: actions.triggerHookFunc,
         }
+    },
+    components: {
+        pagination,
     },
     ready () {
         this.postId = this.$route.params.tid;
@@ -147,23 +232,34 @@ export default {
         setTimeout(()=>{
             this.getComments();
         }, 0);
-        
-        marked.setOptions({
-            highlight: (code) => {
-                return hljs.highlightAuto(code).value
-            },
-            renderer: new marked.Renderer(),
-            gfm: true,
-            tables: true,
-            breaks: true,
-            pedantic: false,
-            sanitize: true,
-            smartLists: true,
-            smartypants: false
-        });
     },
     filters: {
-        marked: marked
+        parseMarkdown: Common.parseMarkdown,
+        formatTime: Common.formatTime,
     },
+    watch: {
+        currentPage: function () {
+            this.getComments();
+        }
+    }
 }
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

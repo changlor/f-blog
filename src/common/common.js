@@ -1,5 +1,8 @@
 //加载依赖模块
+import marked from 'marked';
+import hljs from '../lib/highlight/highlight';
 import sha1 from '../lib/sha1';
+import moment from 'moment';
 
 /*
  * @description: Common接口类，提供各种通用方法函数
@@ -66,6 +69,41 @@ class Common {
         code = escape(code).replace(/%u/gi, '\\u');
         code = unescape(code);
         return sha1(code);
+    }
+    //转化时间为m d Y格式
+    static formatTime (time) {
+        return moment.unix(time).format('MM 月 DD 日 YYYY 年');
+    }
+    //渲染md为html
+    static parseMarkdown (md, config) {
+        if (Common.empty(config)) {
+            config = {
+                highlight: (code) => {
+                    return hljs.highlightAuto(code).value
+                },
+                renderer: new marked.Renderer(),
+                gfm: true,
+                tables: true,
+                breaks: true,
+                pedantic: false,
+                sanitize: true,
+                smartLists: true,
+                smartypants: false
+            };
+        }
+        marked.setOptions(config);
+        if (Common.empty(md)) {
+            md = '';
+        }
+        return marked(md);
+    }
+    //首字母大写
+    static ucfirst (str) {
+        const charFirst = str.charAt(0);
+        if (/[A-Za-z]/g.test(charFirst)) {
+            return str.replace(charFirst, charFirst.toUpperCase(0));
+        }
+        return false;
     }
 }
 

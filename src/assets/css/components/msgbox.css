@@ -1,0 +1,39 @@
+/* 弹层 */
+@keyframes msgBoxOn
+{
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+@keyframes msgBoxOff
+{
+  to {opacity: 0;}
+}
+.msgbox-wrap {
+  position: fixed;
+  right: 0;
+  top: 40px;
+  z-index: 100;
+}
+.msgbox-transition {
+  width: 230px;
+  min-height: 40px;
+  color: #fff;
+  padding: 15px 10px;
+  margin: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #222;
+}
+.msgbox-enter {
+  animation: msgBoxOn 1.5s 1;
+}
+.msgbox-leave {
+  animation: msgBoxOff 1.5s 1;
+}
+.msgbox-close {
+  position: absolute;
+  left: 210px;
+  cursor: pointer;
+  padding: 5px;
+  padding-top: 0px;
+}

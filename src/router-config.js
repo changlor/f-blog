@@ -1,5 +1,5 @@
 'use strict';
-import store from './common/Store.js';
+import Store from './common/Store';
 
 export default function (router) {
     //路由路径
@@ -48,10 +48,10 @@ export default function (router) {
     router.beforeEach((transition) => {
         switch (transition.to.path) {
             case '/unme':
-                store.read('changle') ? transition.redirect('/new') : transition.redirect('/contribute');
+                Store.read('changle') ? transition.redirect('/new') : transition.redirect('/contribute');
             break;
             case '/new':
-                store.read('changle') ? transition.next() : transition.redirect('/login');
+                Store.read('changle') ? transition.next() : transition.redirect('/login');
             break;
             default:
                 transition.next();

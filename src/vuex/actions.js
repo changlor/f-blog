@@ -1,4 +1,11 @@
 class blogCtrlApi {
+    //通用功能函数
+    static triggerHookFunc ({ dispatch }, func) {
+        dispatch('TRIGGER_HOOK_FUNC', func);
+    }
+    static readedFuncs ({dispatch}) {
+        dispatch('READED_FUNCS');
+    }
     //事件代理
     static eventDelegation ({ dispatch }, event) {
         dispatch('EVENT_DELEGATION', event);

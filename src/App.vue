@@ -30,9 +30,11 @@ export default {
 };
 </script>
 <style>
+@import './assets/css/main/grid.css';
 @import './assets/css/main/main.css';
 @import './assets/css/main/style.css';
 @import './assets/css/main/blog.css';
 @import './assets/css/components/navbar.css';
+@import './assets/css/components/msgbox.css';
 </style>
 

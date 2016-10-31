@@ -32,19 +32,20 @@ class Comment {
         ];
         //如果nickname为空，返回不能为空
         if (Parent.empty(nickname)) {
-            callback({ success: false, msg: '请输入用户名OoO' });
+            callback.before(Parent.response([false, '请输入用户名OoO']));
             return false;
         }
         //如果email为空，返回不能为空
         if (Parent.empty(email)) {
-            callback({ success: false, msg: '请输入邮箱OoO' });
+            callback.before(Parent.response([false, '请输入邮箱OoO']));
             return false;
         }
         //如果content为空，返回不能为空
         if (Parent.empty(content)) {
-            callback({ success: false, msg: '说点什么吧OoO' });
+            callback.before(Parent.response([false, '说点什么吧OoO']));
             return false;
         }
+        callback.before(Parent.response([true]));
         //组装数据
         let comment = {
             postId: postId,
@@ -59,27 +60,36 @@ class Comment {
         //调用父类post方法发送post数据
         Parent.post(uri, comment, (res) => {
             //回调结果
-            callback(res);
+            callback.after(res);
         });
     }
 
     /*
      * param [array] input --包括一个参数
-     * param [int]    postId --需要获取评论的文章id
+     * param [int] postId --需要获取评论的文章id
+     * param [int] currentPage --需要获取评论的页码
+     * param [int] pageSize --需要获取评论页码评论显示数
      * return [array] res --返回选取文章的评论
      */
     static getComments (input, callback) {
         //获取所需的变量
-        const [postId] = [
-            input.postId
+        const [postId, currentPage, pageSize] = [
+            input.postId,
+            input.currentPage,
+            input.pageSize,
         ];
+        //组装携带参数
+        const params = {
+            currentPage: currentPage,
+            pageSize: pageSize,
+        };
         //获取配置信息
         const setting = new Data({ postId: postId });
         //获取接口信息
         const api = new Api({ postId: postId });
         const uri = api.getComments;
         //调用父类get方法获取get数据
-        Parent.get(uri, '', (res) => {
+        Parent.get(uri, params, (res) => {
             //回调结果
             callback(res);
         });

@@ -4,8 +4,9 @@
 </div>
 </template>
 <script>
-import getters from '../vuex/getters.js';
-import actions from '../vuex/actions.js';
+import getters from '../../vuex/getters';
+import actions from '../../vuex/actions';
+
 export default {
     data () {
         return {

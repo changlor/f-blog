@@ -1,4 +1,4 @@
-import api from '../lib/config/api.js';
+import api from '../lib/config/api';
 
 class Api {
     constructor(init) {

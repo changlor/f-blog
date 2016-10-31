@@ -16,6 +16,9 @@ class blogDataApi {
     //
     static fetchCachedCategories = state => state.categories;
     static fetchCachedPosts = state => state.posts;
+    //
+    static getHookListener = state => state.isTriggered;
+    static readHookFuncs = state => state.hook;
 }
 
 export default blogDataApi;

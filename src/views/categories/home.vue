@@ -6,7 +6,7 @@
                 <div class="post" id="index-post">
                     <a v-link="{ name: 'topic', params: { tid: post.id } }"><h2 class="post-title" itemprop="headline">{{ post.title }}</h2></a>
                     <div class="post-info">
-                        <span itemprop="datePublished">09 月 04 日 2016 年 • </span>
+                        <span itemprop="datePublished">{{ post.created_at }} • </span>
                         <span itemprop="categoryPublished"><a href="https://hran.me/category/nichijou/">日常</a> • </span>
                         <span class="comments"><a href="https://hran.me/archives/repair-iphone-at-apple-store.html#comments"><span class="ds-thread-count" data-thread-key="628" data-count-type="comments">20条评论</span></a></span>
                     </div>

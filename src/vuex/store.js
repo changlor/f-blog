@@ -4,6 +4,8 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const state = {
+    //定义钩子函数组件
+    isTriggered: 0, hook: { subscription: [] },
     //定义代理事件数据
     isBubbled: 0, events: { delegation: [] },
     //定义缓存数据
@@ -17,6 +19,14 @@ const state = {
 };
 
 const mutations = {
+    //通用功能
+    TRIGGER_HOOK_FUNC (state, subscription) {
+        state.isTriggered++;
+        state.hook.subscription.push(subscription);
+    },
+    READED_FUNCS (state) {
+        state.hook.subscription = [];
+    },
     //事件代理
     EVENT_DELEGATION (state, event) {
         state.isBubbled++;

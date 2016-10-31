@@ -126,7 +126,7 @@ class Article {
                 //如果文章数据不是最新版本并且配置为true，则本地缓存
                 config.store = !res.isNewest && config.store;
                 //如果需要本地缓存保存，保存之
-                config.store ? Parent.store('id-' + res.data.id, res.data) : false;
+                config.store ? Parent.storeJson('id-' + res.data.id, res.data) : false;
             }
             //回调结果
             callback(res);
