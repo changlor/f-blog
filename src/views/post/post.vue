@@ -12,7 +12,7 @@
                 <p class="cover" v-if="post.cover != ''"><img v-bind:src="post.cover"></p>
                 <div class="post-content">
                     <p></p>
-                    <div v-html="postBody | parseMarkdown"></div>
+                    <div v-html="post.body"></div>
                 </div>
                 <div class="tags">
                     <div class="dkeywords">
@@ -48,7 +48,7 @@
                     <textarea v-model="content" placeholder="说点什么吧OoO"></textarea>
                 </div>
                 <div class="comment-toolbar">
-                    <button v-on:click="createComment" v-bind:class="['post-button', isCommitting ? 'committing' : '']" type="submit">{{ commit }}</button>
+                    <button v-bind:class="['post-button', isCommitting ? 'committing' : '']" type="submit">{{ commit }}</button>
                 </div>
                 <div class="comment-analysis">
                     <ul class="post-meta">
@@ -66,7 +66,7 @@
                                 <p>{{ comment.content }}</p>
                                 <ul class="post-meta">
                                     <li><a>{{ comment.nickname }}</a></li>
-                                    <li> • <time>{{ comment.created_at | formatTime }}</time></li>
+                                    <li> • <time>{{ comment.created_at }}</time></li>
                                 </ul>
                             <div>
                         </li>
@@ -80,186 +80,44 @@
 </div>
 </template>
 <script>
-import Data from '../../common/Data';
-import Common from '../../common/Common';
 import pagination from '../../components/common/pagination';
 import actions from '../../vuex/actions';
-import getters from '../../vuex/getters';
 
 export default {
     data () {
         return {
             //文章主体部分
-            post: {}, postId: false, postBody: '',
+            post: {},
             //评论
-            comments: [],
-            //状态
-            isCached: false, isStored: false, hasComment: false, isCommitting: false,
-            //回复
-            commit: '发布', nickname: '', email: '', website: '', content:'',
-            //分页链接
-            commentsCount: 0, pageSize: 6, currentPage: 1,
+            comments: [], hasComment: false, commentsCount: 0, pageSize: 6, currentPage: 1,
         };
-    },
-    methods: {
-        readPost () {
-            this.post = this.cachedPosts[`id-${this.postId}`];
-            this.postBody = this.post.body;
-        },
-        getPost () {
-            const callback = (res) => {
-                if (res.success && !res.isNewest) {
-                    this.cachePost(res.data);
-                    this.readPost();
-                }
-            };
-            this.eventDelegation({
-                model: 'Article',
-                method: 'getPost',
-                params: {
-                    postId: this.postId,
-                    config: {
-                        version: true,
-                        store: true,
-                    },
-                },
-                callback: callback,
-            });
-        },
-        getStoredPost () {
-            const callback = (res) => {
-                this.cachePost(res);
-                this.readPost();
-            };
-            this.eventDelegation({
-                model: 'Article',
-                method: 'getStoredPost',
-                params: { postId: this.postId },
-                callback: callback,
-            });
-        },
-        getComments () {
-            const callback = (res) => {
-                this.comments = res.data.comments;
-                this.commentsCount = res.data.commentsCount;
-                this.hasComment = this.commentsCount != 0;
-            };
-            this.eventDelegation({
-                model: 'Comment',
-                method: 'getComments',
-                params: {
-                    postId: this.postId,
-                    currentPage: this.currentPage,
-                },
-                callback: callback,
-            });
-        },
-        createComment () {
-            if (this.isCommitting) {
-                return false;
-            }
-            const callback = {};
-            callback.before = (res) => {
-                if (res.success) {
-                    this.commit = '评论正在发射中...';
-                    this.isCommitting = true;
-                } else {
-                    this.createMsgbox(res.msg);
-                }
-            };
-            callback.after = (res) => {
-                this.commit = '发布';
-                this.isCommitting = false;
-                if (res.success) {
-                    this.comments = res.data.comments;
-                    this.commentCount = res.data.commentCount;
-                    this.content = '';
-                } else {
-                    this.createMsgbox(res.msg);
-                }
-            };
-            this.eventDelegation({
-                model: 'Comment',
-                method: 'createComment',
-                params: {
-                    postId: this.postId,
-                    nickname: this.nickname,
-                    email: this.email,
-                    website: this.website,
-                    content: this.content,
-                },
-                callback: callback,
-            });
-        },
-        skipPage (number) {
-            this.currentPage = number;
-            this.$nextTick(() => {
-                this.triggerHookFunc('comment');
-            });
-        },
-    },
-    vuex: {
-        getters: {
-            cachedPosts: getters.fetchCachedPosts,
-        },
-        actions: {
-            cachePost: actions.cachePost,
-            createMsgbox: actions.createMsgbox,
-            eventDelegation: actions.eventDelegation,
-            triggerHookFunc: actions.triggerHookFunc,
-        }
     },
     components: {
         pagination,
     },
-    ready () {
-        this.postId = this.$route.params.tid;
-        const setting = new Data({
-            postId: this.postId,
-            storeKey: `id-${this.postId}`,
-        });
-
-        this.isCached = this.cachedPosts.hasOwnProperty([`id-${this.postId}`]);
-        this.isStored = setting.variables.isStored;
-
-        //首先--读取缓存资源
-        this.isCached ? this.readPost() : false;
-        //其次--读取本地文章资源
-        !this.isCached && this.isStored ? this.getStoredPost() : false;
-        //最后--读取在线文章资源
-        this.getPost();
-        //读取评论资源
-        setTimeout(()=>{
-            this.getComments();
-        }, 0);
-    },
-    filters: {
-        parseMarkdown: Common.parseMarkdown,
-        formatTime: Common.formatTime,
-    },
-    watch: {
-        currentPage: function () {
-            this.getComments();
+    vuex: {
+        actions: {
+            bubbleDelegation: actions.bubbleDelegation,
+            triggerHook: actions.triggerHook,
         }
-    }
+    },
+    methods: {
+        bubble (event) {
+            this.bubbleDelegation(event, this);
+        },
+        trigger (subscription) {
+            this.triggerHook(subscription, this);
+        },
+        skipPage (number) {
+            this.currentPage = number;
+            this.bubble('skippage');
+            this.$nextTick(() => {
+                this.triggerHook('skippage');
+            });
+        },
+    },
+    ready () {
+        this.bubble('viewpost');
+    },
 }
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

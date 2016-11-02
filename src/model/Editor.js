@@ -2,8 +2,6 @@
 import Base from './Base';
 const Parent = new Base();
 //加载依赖模块
-import Api from '../common/Api';
-import Data from '../common/Data';
 
 /*
  * @description: Editor模型类，提供对编辑器操作方法的接口

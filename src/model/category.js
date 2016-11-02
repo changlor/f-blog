@@ -2,8 +2,6 @@
 import Base from './Base';
 const Parent = new Base();
 //加载依赖模块
-import Api from '../common/Api';
-import Data from '../common/Data';
 
 /*
  * @description: Category模型类，提供对分类的curd操作的接口

@@ -26,7 +26,6 @@
 </div> 
 </template>
 <script>
-import Data from '../../common/Data';
 import marked from 'marked';
 import hljs from '../../lib/highlight/highlight';
 import actions from '../../vuex/actions';
@@ -51,7 +50,7 @@ export default {
                     this.readPosts();
                 }
             };
-            this.eventDelegation({
+            this.bubble({
                 model: 'Article',
                 method: 'getCategoryPosts',
                 params: {
@@ -70,7 +69,7 @@ export default {
                 this.cachePosts('daily', res);
                 this.readPosts();
             };
-            this.eventDelegation({
+            this.bubble({
                 model: 'Category',
                 method: 'getStoredCategory',
                 params: { category: 'daily' },
@@ -85,40 +84,12 @@ export default {
         actions: {
             cachePosts: actions.cacheCategory,
             createMsgbox: actions.createMsgbox,
-            eventDelegation: actions.eventDelegation,
+            bubble: actions.bubbleDelegation,
         }
     },
     ready () {
-        const setting = new Data({
-            categoryName: 'daily',
-            storeKey: 'daily',
-        });
-
-        this.categoryId = setting.constants.categories.daily.id;
-        this.isCached = this.cachedPosts.hasOwnProperty(['daily']);
-        this.isStored = setting.variables.isStored;
-        
-        //首先--读取缓存资源
-        this.isCached ? this.readPosts() : false;
-        //其次--读取本地资源
-        !this.isCached && this.isStored ? this.getStoredPosts() : false;
-        //最后--读取在线资源
-        this.getPosts();
-
-        marked.setOptions({
-            renderer: new marked.Renderer(),
-            gfm: true,
-            tables: true,
-            breaks: true,
-            pedantic: false,
-            sanitize: true,
-            smartLists: true,
-            smartypants: false,
-        });
-    },
-    filters: {
-        marked: marked
-    },
+    
+    }
 }
 </script>
 <style>

@@ -1,18 +1,7 @@
 <script>
-import Article from '../../model/Article.js';
-import Comment from '../../model/Comment.js';
-import Category from '../../model/Category.js';
-import Editor from '../../model/Editor.js';
-import Auth from '../../model/Auth.js';
-import getters from '../../vuex/getters.js';
-import actions from '../../vuex/actions.js';
-
-const Model = {};
-Model.Article = Article;
-Model.Comment = Comment;
-Model.Editor = Editor;
-Model.Category = Category;
-Model.Auth = Auth;
+import delegation from '../../model/load';
+import getters from '../../vuex/getters';
+import actions from '../../vuex/actions';
 
 export default {
     data () {
@@ -22,34 +11,33 @@ export default {
     },
     vuex: {
         getters: {
-            unreadEvents: getters.readEvents,
-            isBubbled: getters.getEventListener,
-            cachedPosts: getters.fetchCachedPosts,
+            unresolvedEvents: getters.getDelegationEvents,
+            isBubbled: getters.getDelegationListener,
         },
         actions: {
-            readedEvents: actions.readedEvents,
-            cachePost: actions.cachePost,
-            handledEvent: actions.handledEvent,
+            resolveEvents: actions.resolveDelegationEvents,
         }
     },
     methods: {
+        bubble (subscription, input) {
+            delegation.bubble(subscription, input);
+        },
         handle () {
-            this.events.unresolved = this.events.unresolved.concat(this.unreadEvents.delegation);
-            this.readedEvents();
+            this.events.unresolved = this.events.unresolved.concat(this.unresolvedEvents);
+            this.resolveEvents();
             const length = this.events.unresolved.length;
             for (let i = 0; i < length; i++) {
                 const event = this.events.unresolved.shift();
-                const [model, method, params, callback] = [event.model, event.method, event.params, event.callback];
-                this.call(model, method, params, callback);
+                this.call(event.subscription, event.input);
                 this.events.resolved.push(event);
             }
         },
-        call (model, method, params, callback) {
-            Model[model][method](params, callback);
+        call (subscription, input) {
+            this.bubble(subscription, input);
         },
     },
     watch: {
-        isBubbled: function (val) {
+        isBubbled: function () {
             this.handle();
         }
     },

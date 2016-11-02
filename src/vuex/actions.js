@@ -1,20 +1,17 @@
 class blogCtrlApi {
     //通用功能函数
-    static triggerHookFunc ({ dispatch }, func) {
-        dispatch('TRIGGER_HOOK_FUNC', func);
+    static triggerHook ({ dispatch }, subscription) {
+        dispatch('TRIGGER_HOOK', subscription);
     }
-    static readedFuncs ({dispatch}) {
-        dispatch('READED_FUNCS');
+    static resolveHookSubscriptions ({dispatch}) {
+        dispatch('RESOLVE_HOOK_SUBSCRIPTIONS');
     }
     //事件代理
-    static eventDelegation ({ dispatch }, event) {
-        dispatch('EVENT_DELEGATION', event);
+    static bubbleDelegation ({ dispatch }, subscription, input) {
+        dispatch('BUBBLE_DELEGATION', subscription, input);
     }
-    static readedEvents ({ dispatch }) {
-        dispatch('READED_EVENTS');
-    }
-    static handledEvent ({ dispatch }, component, id) {
-        dispatch('HANDLED_EVENT', component, id);
+    static resolveDelegationEvents ({ dispatch }) {
+        dispatch('RESOLVE_DELEGATION_EVENTS');
     }
     //保存分类缓存信息内容
     static cacheCategory ({ dispatch }, category, info) {

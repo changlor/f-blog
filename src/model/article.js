@@ -2,8 +2,7 @@
 import Base from './Base';
 const Parent = new Base();
 //加载依赖模块
-import Api from '../common/Api';
-import Data from '../common/Data';
+import { Api, Func } from '../common';
 
 /*
  * @description: Articel模型类，提供对文章的curd操作的接口
@@ -101,32 +100,17 @@ class Article {
      * @param [object] config  --回调配置，是否本地保存或者携带版本号请求头
      * @return [array] --返回选取的文章
      */
-    static getPost (input, callback) {
-        //获取文章配置项，是否缓存和是否携带版本号，如果没有配置，默认都为false
-        if (Parent.empty(input.config)) {
-            input.config =  { store: false, version: false };
-        }
-        //获取所需数据
-        const [postId, config] = [
-            input.postId,
-            input.config,
-        ];
-        //获取配置信息
-        const setting = new Data({ postId: postId });
-        //如果需要携带版本号，获取之
-        const version = config.version ? setting.variables.postVersion : '';
+    static getPost (input) {
+        //获取文章id
+        const postId = input.$route.params.tid;
         //获取接口信息
         const api = new Api({ postId: postId });
         const uri = api.getPost;
         //调用父模块get方法获取get数据
-        Parent.get(uri, version, (res) => {
+        Parent.get(uri, '', (res) => {
             if (res.success) {
-                //如果获取到的结果具体版本号而且非空，则说明当前环境下的文章数据是最新的
-                res.isNewest = !Parent.empty(res.data.version);
-                //如果文章数据不是最新版本并且配置为true，则本地缓存
-                config.store = !res.isNewest && config.store;
-                //如果需要本地缓存保存，保存之
-                config.store ? Parent.storeJson('id-' + res.data.id, res.data) : false;
+                input.post = res.data;
+                input.post.body = Parent.parseMarkdown(input.post.body)
             }
             //回调结果
             callback(res);

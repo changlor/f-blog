@@ -1,5 +1,4 @@
 'use strict';
-import Store from './common/Store';
 
 export default function (router) {
     //路由路径
@@ -46,17 +45,7 @@ export default function (router) {
 
     //路由限制
     router.beforeEach((transition) => {
-        switch (transition.to.path) {
-            case '/unme':
-                Store.read('changle') ? transition.redirect('/new') : transition.redirect('/contribute');
-            break;
-            case '/new':
-                Store.read('changle') ? transition.next() : transition.redirect('/login');
-            break;
-            default:
-                transition.next();
-            break;
-        }
+        //
     });
 
     router.afterEach((transition) => {

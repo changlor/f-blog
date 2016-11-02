@@ -1,19 +1,36 @@
-import api from '../lib/config/api';
+const host = 'http://api.blog.rain/';
 
 class Api {
     constructor(init) {
+        //给成员函数绑定this指向
+        ::this.post; ::this.comment; ::this.auth;
+        //初始化成员变量
         this.params = {
             postId: init.postId,
-            categoryId: init.categoryId,
+            pageId: init.pageId,
         };
-        this.signin = api.signin;
-        this.createPost = api.createPost;
-        this.updatePost = api.updatePost.replace(/:id/gi, this.params.postId);
-        this.getPost = api.getPost.replace(/:id/gi, this.params.postId);
-        this.getCategoryPosts = api.getCategoryPosts.replace(/:id/gi, this.params.categoryId);
-        this.getPosts = api.getPosts;
-        this.getComments = api.getComments.replace(/:id/gi, this.params.postId);
-        this.createComment = api.createComment;
+        //auth
+        this.signin = '';
+        //post
+        this.createPost = ''; this.updatePost = ''; this.getPost = ''; this.getPosts = '';
+        //comment
+        this.getComments = ''; this.createComment = '';
+    }
+
+    post () {
+        this.createPost = `post`;
+        this.updatePost = `post/${this.params.postId}`;
+        this.getPost = `post/${this.params.postId}`;
+        this.getPosts = `post/${this.params.pageId}`;
+    }
+
+    comment () {
+        this.createComment = 'comment';
+        this.getComments = `comments/${this.params.postId}`;
+    }
+
+    auth () {
+        this.signin = 'signin';
     }
 }
 

@@ -1,5 +1,5 @@
 //加载依赖模块
-import Common from '../common/Common';
+import Common from '../common/Func';
 import config from './config';
 
 /*
@@ -45,8 +45,10 @@ class Plugin {
 
     addHooks () {
         const trigger = (subscription) => {
-            for (let i = 0; i < this.subscription[subscription].length; i++) {
-                this.subscription[subscription][i](subscription);
+            if (this.subscription.hasOwnProperty(subscription)) {
+                for (let i = 0; i < this.subscription[subscription].length; i++) {
+                    this.subscription[subscription][i](subscription);
+                }
             }
         };
         this.hooks = {

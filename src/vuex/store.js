@@ -5,9 +5,9 @@ Vue.use(Vuex);
 
 const state = {
     //定义钩子函数组件
-    isTriggered: 0, hook: { subscription: [] },
+    isTriggered: 0, hook: { subscriptions: [] },
     //定义代理事件数据
-    isBubbled: 0, events: { delegation: [] },
+    isBubbled: 0, delegation: { events: [] },
     //定义缓存数据
     posts: {}, categories: {},
     //定义弹层数据
@@ -20,25 +20,23 @@ const state = {
 
 const mutations = {
     //通用功能
-    TRIGGER_HOOK_FUNC (state, subscription) {
+    TRIGGER_HOOK (state, subscription) {
         state.isTriggered++;
-        state.hook.subscription.push(subscription);
+        state.hook.subscriptions.push(subscription);
     },
-    READED_FUNCS (state) {
-        state.hook.subscription = [];
+    RESOLVE_HOOK_SUBSCRIPTION (state) {
+        state.hook.subscriptions = [];
     },
     //事件代理
-    EVENT_DELEGATION (state, event) {
+    BUBBLE_DELEGATION (state, subscription, input) {
         state.isBubbled++;
-        state.events.delegation.push({
-            model: event.model,
-            method: event.method,
-            params: event.params,
-            callback: event.callback,
+        state.delegation.events.push({
+            subscription: subscription,
+            input: input,
         });
     },
-    READED_EVENTS (state) {
-        state.events.delegation = [];
+    RESOLVE_DELEGATION_EVENTS (state) {
+        state.delegation.events = [];
     },
      //保存文章缓存信息内容
     CACHE_POST (state, post) {

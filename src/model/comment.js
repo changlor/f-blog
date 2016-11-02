@@ -2,8 +2,6 @@
 import Base from './Base';
 const Parent = new Base();
 //加载依赖模块
-import Api from '../common/Api';
-import Data from '../common/Data';
 
 /*
  * @description: Comment模型类，提供对评论curd操作的接口

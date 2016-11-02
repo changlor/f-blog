@@ -1,15 +1,20 @@
 //加载依赖模块
 import marked from 'marked';
-import hljs from '../lib/highlight/highlight';
-import sha1 from '../lib/sha1';
 import moment from 'moment';
+import sha1 from '../lib/sha1';
+import hljs from '../lib/highlight/highlight';
+import Store from '../lib/Store';
 
 /*
- * @description: Common接口类，提供各种通用方法函数
+ * @description: Func通用函数类，提供各种通用方法函数
  * @author: Changle
  * @update: Changle (2016-10-21 15:32)
  */
-class Common {
+class Func {
+    //读取localstorage
+    static read (key) {
+        return Store.read(key);
+    }
     //生成month day格式的当前日期
     static date () {
         const monthArr = ['January ', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -107,4 +112,4 @@ class Common {
     }
 }
 
-export default Common;
+export default Func;

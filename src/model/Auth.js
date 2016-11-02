@@ -2,8 +2,6 @@
 import Base from './Base';
 const Parent = new Base();
 //加载依赖模块
-import Api from '../common/Api';
-import Data from '../common/Data';
 
 /*
  * @description: Auth模型类，提供对用户获取授权操作的接口

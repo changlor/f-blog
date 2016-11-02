@@ -26,7 +26,6 @@
 </div>
 </template>
 <script>
-import Data from '../../common/Data.js';
 import marked from 'marked';
 import hljs from '../../lib/highlight/highlight.js';
 import actions from '../../vuex/actions.js';
@@ -87,32 +86,7 @@ export default {
         }
     },
     ready () {
-        const setting = new Data({
-            categoryName: 'home',
-            storeKey: 'home',
-        });
 
-        this.categoryId = setting.constants.categories.daily.id;
-        this.isCached = this.cachedPosts.hasOwnProperty(['home']);
-        this.isStored = setting.variables.isStored;
-
-        //首先--读取缓存资源
-        this.isCached ? this.readPosts() : false;
-        //其次--读取本地资源
-        !this.isCached && this.isStored ? this.getStoredPosts() : false;
-        //最后--读取在线资源
-        this.getPosts();
-
-        marked.setOptions({
-            renderer: new marked.Renderer(),
-            gfm: true,
-            tables: true,
-            breaks: true,
-            pedantic: false,
-            sanitize: true,
-            smartLists: true,
-            smartypants: false,
-        });
     },
     filters: {
         marked: marked

@@ -11,13 +11,11 @@ export default {
     },
     methods: {
         handle () {
-            this.subscription.unresolved = this.subscription.unresolved.concat(this.unresolvedHooks.subscription);
-            this.readedFuncs();
-            console.log(this.subscription.unresolved);
+            this.subscription.unresolved = this.subscription.unresolved.concat(this.unresolvedSubscription.subscription);
+            this.resolveSubscription();
             const length = this.subscription.unresolved.length;
             for (let i = 0; i < length; i++) {
                 const subscription = this.subscription.unresolved.shift();
-                console.log(subscription)
                 this.call(subscription);
                 this.subscription.resolved.push(subscription);
             }
@@ -29,11 +27,10 @@ export default {
     vuex: {
         getters: {
             isTriggered: getters.getHookListener,
-            unresolvedHooks: getters.readHookFuncs,
+            unresolvedSubscriptions: getters.getHookSubscriptions,
         },
         actions: {
-            readedFuncs: actions.readedFuncs,
-            triggerHookFunc: actions.triggerHookFunc,
+            resolveSubscriptions: actions.resolveHookSubscriptions,
         }
     },
     watch: {

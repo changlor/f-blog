@@ -1,8 +1,6 @@
 //加载依赖模块
-import Fetch from '../common/Fetch';
-import Store from '../common/Store';
-import Common from '../common/Common';
-
+import { Fetch } from '../common';
+console.log(Fetch)
 /*
 * @description: Base模型类，提供对子类的各种底层操作方法接口
 * @author: Changle
@@ -11,23 +9,11 @@ import Common from '../common/Common';
 class Base {
     //初始化各种子类需要的方法函数
     constructor() {
-        //公共函数
-        [this.empty, this.formatTime] = [
-            Common.empty,
-            Common.formatTime,
-        ];
         //通信函数
         [this.get, this.post, this.put] = [
             Fetch.get,
             Fetch.post,
             Fetch.put,
-        ];
-        //本地缓存函数
-        [this.read, this.store, this.readJson, this.storeJson] = [
-            Store.read,
-            Store.store,
-            Store.readJson,
-            Store.storeJson,
         ];
     }
     //返回格式化数据方法

@@ -1,18 +1,15 @@
 //加载父模块
 import Parent from '../lib/Fetch';
-//加载依赖模块
-import Data from './Data';
-//定义常用变量
-const setting = new Data({});
-const host = setting.constants.host;
-const token = setting.variables.token;
-
+import { Func } from './';
+console.log(Func)
 /*
  * @description: Fetch接口类，提供服务器通信操作的get，post，put接口
  * @author: Changle
  * @update: Changle (2016-10-21 15:32)
  */
 class Fetch {
+    //token
+    //static token = Func.read('token');
     //post通信方法
     static post (uri, params, callback) {
         //将数据转换成formdata类型
@@ -23,7 +20,7 @@ class Fetch {
         //添加header头信息
         let headers = new Headers();
         //post操作需要权限，因而需要在header添加token
-        headers.append('Auth-Token', token);
+        headers.append('Auth-Token', Fetch.token);
         //调用父类方法发送post请求
         Parent.post(host + uri, headers, formData, callback);
     }
@@ -36,7 +33,7 @@ class Fetch {
         //put操作需要权限并且发送json数据，因而需要在header添加token和json头
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
-        headers.append('Auth-Token', token);
+        headers.append('Auth-Token', Fetch.token);
         //调用父类方法发送put请求
         Parent.put(host + uri, headers, params, callback);
     }

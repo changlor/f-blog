@@ -11,14 +11,14 @@ class blogDataApi {
     //
     static getAdminStatus = state => state.admin;
     //
-    static readEvents = state => state.events;
-    static getEventListener = state => state.isBubbled;
-    //
     static fetchCachedCategories = state => state.categories;
     static fetchCachedPosts = state => state.posts;
     //
+    static getDelegationListener = state => state.isBubbled;
+    static getDelegationEvents = state => state.delegation.events;
+    //
     static getHookListener = state => state.isTriggered;
-    static readHookFuncs = state => state.hook;
+    static getHookSubscriptions = state => state.hook.subscriptions;
 }
 
 export default blogDataApi;
