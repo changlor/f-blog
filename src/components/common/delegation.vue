@@ -1,5 +1,5 @@
 <script>
-import delegation from '../../model/load';
+import delegation from '../../model/load/';
 import getters from '../../vuex/getters';
 import actions from '../../vuex/actions';
 

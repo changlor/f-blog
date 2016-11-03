@@ -6,18 +6,18 @@ import hooks from '../../plugin/plugin';
 export default {
     data () {
         return {
-            subscription: { unresolved: [], resolved: [] },
+            subscriptions: { unresolved: [], resolved: [] },
         };
     },
     methods: {
         handle () {
-            this.subscription.unresolved = this.subscription.unresolved.concat(this.unresolvedSubscription.subscription);
-            this.resolveSubscription();
-            const length = this.subscription.unresolved.length;
+            this.subscriptions.unresolved = this.subscriptions.unresolved.concat(this.unresolvedSubscriptions);
+            this.resolveSubscriptions();
+            const length = this.subscriptions.unresolved.length;
             for (let i = 0; i < length; i++) {
-                const subscription = this.subscription.unresolved.shift();
+                const subscription = this.subscriptions.unresolved.shift();
                 this.call(subscription);
-                this.subscription.resolved.push(subscription);
+                this.subscriptions.resolved.push(subscription);
             }
         },
         call (method) {

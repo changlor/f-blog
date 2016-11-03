@@ -1,7 +1,6 @@
 //加载父模块
-import Parent from '../lib/Fetch';
-import { Func } from './';
-console.log(Func)
+import Func from '../../lib/load';
+
 /*
  * @description: Fetch接口类，提供服务器通信操作的get，post，put接口
  * @author: Changle
@@ -9,9 +8,9 @@ console.log(Func)
  */
 class Fetch {
     //token
-    //static token = Func.read('token');
+    static token = Func.read('token');
     //post通信方法
-    static post (uri, params, callback) {
+    static post (url, params, callback) {
         //将数据转换成formdata类型
         let formData = new FormData();
         for (let key in params) {
@@ -22,10 +21,10 @@ class Fetch {
         //post操作需要权限，因而需要在header添加token
         headers.append('Auth-Token', Fetch.token);
         //调用父类方法发送post请求
-        Parent.post(host + uri, headers, formData, callback);
+        Func.post(url, headers, formData, callback);
     }
     //put通信方法
-    static put (uri, params, callback) {
+    static put (url, params, callback) {
         //将数据转换成jsonData类型
         const jsonData = JSON.stringify(params);
         //添加header头信息
@@ -35,10 +34,10 @@ class Fetch {
         headers.append('Content-Type', 'application/json');
         headers.append('Auth-Token', Fetch.token);
         //调用父类方法发送put请求
-        Parent.put(host + uri, headers, params, callback);
+        Func.put(url, headers, params, callback);
     }
     //get通信方法
-    static get (uri, params, callback) {
+    static get (url, params, callback) {
         //添加header头信息
         let headers = new Headers();
         //get操作可能需要携带一些请求参数，拼装之
@@ -57,7 +56,7 @@ class Fetch {
             request = '';
         }
         //调用父类方法发送get请求
-        Parent.get(host + uri + request, headers, callback);
+        Func.get(url + request, headers, callback);
     }
 }
 

@@ -1,5 +1,4 @@
-//加载依赖模块
-import Common from '../common/Func';
+//加载依赖模块    
 import config from './config';
 
 /*

@@ -110,9 +110,9 @@ export default {
         },
         skipPage (number) {
             this.currentPage = number;
-            this.bubble('skippage');
+            this.bubble('commentsturnpage');
             this.$nextTick(() => {
-                this.triggerHook('skippage');
+                this.trigger('commentsturnpage');
             });
         },
     },

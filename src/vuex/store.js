@@ -24,7 +24,7 @@ const mutations = {
         state.isTriggered++;
         state.hook.subscriptions.push(subscription);
     },
-    RESOLVE_HOOK_SUBSCRIPTION (state) {
+    RESOLVE_HOOK_SUBSCRIPTIONS (state) {
         state.hook.subscriptions = [];
     },
     //事件代理

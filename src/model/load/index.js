@@ -18,7 +18,7 @@ class Load {
     loadModels () {
         for (let i = 0; i < this.models.length; i++) {
             const model = this.models[i];
-            this.subscriber[model] = require('./' + model)['default'];
+            this.subscriber[model] = require('../' + model)['default'];
         }
     }
 
