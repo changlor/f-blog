@@ -15,7 +15,7 @@
                         <p></p>
                         <div v-html="post.profile"></div>
                         <p class="more">
-                            <a v-link="{ name: 'topic', params: { tid: post.id } }" title="{{ post.title }}">阅读全文</a>
+                            <a v-link="{ name: 'topic', params: { id: post.id } }" title="{{ post.title }}">阅读全文</a>
                         </p>
                         <p></p>
                     </div>

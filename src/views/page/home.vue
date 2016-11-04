@@ -15,7 +15,7 @@
                         <p></p>
                         <div v-html="post.profile"></div>
                         <p class="more">
-                            <a v-link="{ name: 'topic', params: { tid: post.id } }" title="{{ post.title }}">阅读全文</a>
+                            <a v-link="{ name: 'topic', params: { id: post.id } }" title="{{ post.title }}">阅读全文</a>
                         </p>
                         <p></p>
                     </div>
@@ -23,9 +23,11 @@
             </article>
         </div>
     </div>
+    <trick></trick>
 </div>
 </template>
 <script>
+import trick from '../../components/common/trick';
 import actions from '../../vuex/actions.js';
 import getters from '../../vuex/getters.js';
 
@@ -49,6 +51,10 @@ export default {
     },
     ready () {
         this.bubble('viewposts');
+        this.bubble('requestadmin');
     },
+    components: {
+        trick,
+    }
 }
 </script>

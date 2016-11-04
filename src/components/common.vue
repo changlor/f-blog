@@ -10,7 +10,7 @@ import hook from './common/hook';
 
 export default {
     components: {
-        delegation, msgbox, hook
+        delegation, msgbox, hook,
     },
 }
 </script>

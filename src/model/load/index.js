@@ -8,6 +8,7 @@ import config from './config';
  */
 class Load {
     constructor () {
+        ::this.loadModels; ::this.addSubscription; ::this.addBubbles;
         this.models = config.models; this.delegation = {};
         this.subscriber = {}; this.subscription = {};
         this.loadModels();

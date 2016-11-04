@@ -110,14 +110,18 @@ export default {
         },
         skipPage (number) {
             this.currentPage = number;
-            this.bubble('commentsturnpage');
-            this.$nextTick(() => {
-                this.trigger('commentsturnpage');
-            });
         },
     },
     ready () {
         this.bubble('viewpost');
     },
+    watch: {
+        currentPage: function () {
+            this.bubble('commentsturnpage');
+            this.$nextTick(() => {
+                this.trigger('commentsturnpage');
+            });
+        }
+    }
 }
 </script>

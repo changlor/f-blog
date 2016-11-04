@@ -15,7 +15,7 @@ class blogDataApi {
     static fetchCachedPosts = state => state.posts;
     //
     static getDelegationListener = state => state.isBubbled;
-    static getDelegationEvents = state => state.delegation.events;
+    static getDelegationSubscriptions = state => state.delegation.subscriptions;
     //
     static getHookListener = state => state.isTriggered;
     static getHookSubscriptions = state => state.hook.subscriptions;

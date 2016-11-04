@@ -7,7 +7,7 @@ const state = {
     //定义钩子函数组件
     isTriggered: 0, hook: { subscriptions: [] },
     //定义代理事件数据
-    isBubbled: 0, delegation: { events: [] },
+    isBubbled: 0, delegation: { subscriptions: [] },
     //定义缓存数据
     posts: {}, categories: {},
     //定义弹层数据
@@ -28,15 +28,15 @@ const mutations = {
         state.hook.subscriptions = [];
     },
     //事件代理
-    BUBBLE_DELEGATION (state, subscription, input) {
+    BUBBLE_DELEGATION (state, subscription, page) {
         state.isBubbled++;
-        state.delegation.events.push({
+        state.delegation.subscriptions.push({
             subscription: subscription,
-            input: input,
+            page: page,
         });
     },
-    RESOLVE_DELEGATION_EVENTS (state) {
-        state.delegation.events = [];
+    RESOLVE_DELEGATION_SUBSCRIPTIONS (state) {
+        state.delegation.subscriptions = [];
     },
      //保存文章缓存信息内容
     CACHE_POST (state, post) {

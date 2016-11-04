@@ -7,7 +7,7 @@ export default function (router) {
         '/daily': {
             component: require('../views/page/daily.vue'),
         },
-        '/index': {
+        '/feel': {
             component: require('../views/admin/index.vue'),
         },
         '/t/:id': {

@@ -6,7 +6,7 @@
 .navbar li div a span{padding-left:1em;color:#58c5c7;font-weight:400;}
 .navbar li div a.v-link-active span{color:red}
 /* 导航栏图标 */
-.fa {
+.b-fa {
   position: absolute;
   width: 80px;
   height: 80px;
@@ -14,28 +14,28 @@
   background-color: #fff;
   border-radius: 40px;
 }
-.fa-home {
+.b-fa-home {
   background-image: url('../../img/navbar/me.jpg');
 }
-.fa-daily {
+.b-fa-daily {
   background-image: url('../../img/navbar/nichijou.svg');
 }
-.fa-photo {
+.b-fa-photo {
   background-image: url('../../img/navbar/photo.svg');
 }
-.fa-code {
+.b-fa-code {
   background-image: url('../../img/navbar/code.svg');
 }
-.fa-feel {
+.b-fa-feel {
   background-image: url('../../img/navbar/feel.svg');
 }
-.fa-board {
+.b-fa-board {
   background-image: url('../../img/navbar/vsco.svg');
 }
-.fa-music {
+.b-fa-music {
   background-image: url('../../img/navbar/music.svg');
 }
-.fa-project {
+.b-fa-project {
   background-image: url('../../img/navbar/link.svg');
 }
 /* 导航栏动画 */

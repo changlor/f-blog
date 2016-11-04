@@ -6,34 +6,34 @@ import actions from '../../vuex/actions';
 export default {
     data () {
         return {
-            events: { unresolved: [], resolved: [] },
+            subscriptions: { unresolved: [], resolved: [] },
         }
     },
     vuex: {
         getters: {
-            unresolvedEvents: getters.getDelegationEvents,
+            unresolvedSubscriptions: getters.getDelegationSubscriptions,
             isBubbled: getters.getDelegationListener,
         },
         actions: {
-            resolveEvents: actions.resolveDelegationEvents,
+            resolveSubscriptions: actions.resolveDelegationSubscriptions,
         }
     },
     methods: {
-        bubble (subscription, input) {
-            delegation.bubble(subscription, input);
+        bubble (subscription, page) {
+            delegation.bubble(subscription, page);
         },
         handle () {
-            this.events.unresolved = this.events.unresolved.concat(this.unresolvedEvents);
-            this.resolveEvents();
-            const length = this.events.unresolved.length;
+            this.subscriptions.unresolved = this.subscriptions.unresolved.concat(this.unresolvedSubscriptions);
+            this.resolveSubscriptions();
+            const length = this.subscriptions.unresolved.length;
             for (let i = 0; i < length; i++) {
-                const event = this.events.unresolved.shift();
-                this.call(event.subscription, event.input);
-                this.events.resolved.push(event);
+                const subscription = this.subscriptions.unresolved.shift();
+                this.call(subscription.subscription, subscription.page);
+                this.subscriptions.resolved.push(subscription);
             }
         },
-        call (subscription, input) {
-            this.bubble(subscription, input);
+        call (subscription, page) {
+            this.bubble(subscription, page);
         },
     },
     watch: {

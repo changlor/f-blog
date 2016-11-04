@@ -4,7 +4,7 @@
         <li v-for="navbar in navbarArr" v-bind:class="'nav-' + ($index + 1)">
             <div v-bind:class="[ isRotate ? navbarRotateArr[$index] : isRotate ]">
                 <a v-link="navbar.link"  v-on:click="switchNavbar($index)">
-                    <i v-bind:class="['fa', navbar.icon]"></i>
+                    <i v-bind:class="['b-fa', navbar.icon]"></i>
                     <span>{{ navbar.desc }}</span>
                 </a>
             </div>
@@ -22,42 +22,42 @@ export default {
             navbarRotate: false,
             navbarArr: [
                 {
-                    icon: 'fa-photo',
+                    icon: 'b-fa-photo',
                     link: '/photo',
                     desc: '照片',
                 },
                 {
-                    icon: 'fa-home',
+                    icon: 'b-fa-home',
                     link: '/home',
                     desc: '首页',
                 },
                 {
-                    icon: 'fa-daily',
+                    icon: 'b-fa-daily',
                     link: '/daily',
                     desc: '日常',
                 },
                 {
-                    icon: 'fa-feel',
+                    icon: 'b-fa-feel',
                     link: '/feel',
                     desc: '随感',
                 },
                 {
-                    icon: 'fa-board',
+                    icon: 'b-fa-board',
                     link: '/board',
                     desc: '留言',
                 },
                 {
-                    icon: 'fa-code',
+                    icon: 'b-fa-code',
                     link: '/code',
                     desc: '代码',
                 },
                 {
-                    icon: 'fa-music',
+                    icon: 'b-fa-music',
                     link: '/music',
                     desc: '音乐',
                 },
                 {
-                    icon: 'fa-project',
+                    icon: 'b-fa-project',
                     link: '/project',
                     desc: '作品',
                 },

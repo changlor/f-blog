@@ -10,8 +10,8 @@ class blogCtrlApi {
     static bubbleDelegation ({ dispatch }, subscription, input) {
         dispatch('BUBBLE_DELEGATION', subscription, input);
     }
-    static resolveDelegationEvents ({ dispatch }) {
-        dispatch('RESOLVE_DELEGATION_EVENTS');
+    static resolveDelegationSubscriptions ({ dispatch }) {
+        dispatch('RESOLVE_DELEGATION_SUBSCRIPTIONS');
     }
     //保存分类缓存信息内容
     static cacheCategory ({ dispatch }, category, info) {
