@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import routerConfig from './config/router';
+import { routerConfig } from './vendor/route';
 
 //装载vue-router
 Vue.use(VueRouter);

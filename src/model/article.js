@@ -7,6 +7,37 @@ import { Parent, Func, Api } from './Base';
  * @update: Changle (2016-10-20 20:32)
  */
 class Article {
+    static createPost (page) {
+        //获取所属页面id
+        const pageId = page.pageId;
+        //获取文章标题
+        const title = page.title;
+        //获取文章正文
+        const content = page.content;
+        //如果正文为空或者空字符，打回
+        if (Func.empty(Func.trim(content))) {
+            console.log('正文不能为空OoO');
+            return false;
+        }
+        //获取文章标签
+        const tags = page.tags;
+        //组装数据
+        const post = {
+            pageId: pageId,
+            title: title,
+            content: content,
+            tags: tags,
+        };
+        //获取接口信息
+        const api = new Api({
+            pageId: pageId,
+        });
+        const url = api.createPost;
+        Parent.post(url, post, (res) => {
+            console.log(res);
+        });
+    }
+
     /*
      * @description: 获取文章
      * @subscription: viewpost
@@ -22,8 +53,6 @@ class Article {
         Parent.get(url, '', (res) => {
             if (res.success) {
                 page.post = res.data;
-                //对文章正文进行渲染
-                page.post.body = Func.parseMarkdown(page.post.body);
             }
         });
     }
@@ -43,8 +72,6 @@ class Article {
         Parent.get(url, '', (res) => {
             if (res.success) {
                 page.posts = res.data;
-                //对文章正文进行渲染
-                //input.post.body = Func.parseMarkdown(input.post.body);
             }
         });
     }
