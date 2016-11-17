@@ -1,7 +1,6 @@
 <script>
-import getters from '../vuex/getters';
-import actions from '../vuex/actions';
 import hooks from '../plugin';
+import { actions, getters } from '../vuex';
 
 export default {
     data () {

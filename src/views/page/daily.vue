@@ -26,7 +26,8 @@
 </div> 
 </template>
 <script>
-import { Func, actions } from '../../vendor';
+import { Func } from '../../vendor';
+import { actions } from '../../vendor/vuex';
 
 export default {
     data () {

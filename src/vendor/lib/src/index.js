@@ -1,33 +1,36 @@
-//加载依赖模块
-import communication from './communication';
-import encrypt from './encrypt';
-import system from './system';
+import Fetch from './communication/Fetch';
+import Store from './communication/Store';
+import empty from 'locutus/php/var/empty';
+import trim from 'locutus/php/strings/trim';
+import ucfirst from 'locutus/php/strings/ucfirst';
+import time from 'locutus/php/datetime/time';
+import explode from 'locutus/php/strings/explode';
 
-/*
- * @description: Func通用函数类，提供各种通用方法函数
- * @author: Changle
- * @update: Changle (2016-10-21 15:32)
- */
-class Lib {
-    constructor () {
-        ::this.assignment;
-        ::this.traversal;
-        this.func = {};
-        this.assignment();
-    }
+const read = function (key) {
+    return Store.read(key);
+};
+const store = function (key, value) {
+    Store.store(key, value);
+};
+const get = function (url, headers, callback) {
+    Fetch.get(url, headers, callback);
+};
+const post = function (url, headers, params, callback) {
+    Fetch.post(url, headers, params, callback)
+};
+const put = function (url, headers, params, callback) {
+    Fetch.put(url, headers, params, callback)
+};
 
-    assignment () {
-        this.traversal(communication);
-        this.traversal(encrypt);
-        this.traversal(system);
-    }
-
-    traversal (object) {
-        for (let [key, value] of Object.entries(object)) {
-            this.func[key] = value;
-        }
-    }
-}
-
-const lib = new Lib();
-export default lib.func;
+export default {
+    time: time,
+    trim: trim,
+    empty: empty,
+    ucfirst: ucfirst,
+    explode: explode,
+    read: read,
+    store: store,
+    get: get,
+    post: post,
+    put: put,
+};

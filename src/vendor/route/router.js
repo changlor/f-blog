@@ -1,3 +1,4 @@
+import Func from '../lib';
 import config from './config';
 
 export default function (router) {
@@ -11,7 +12,17 @@ export default function (router) {
 
     //路由限制
     router.beforeEach((transition) => {
-        transition.next();
+        if (config.admin.hasOwnProperty(transition.to.path)) {
+            let userInfo = Func.read('userInfo');
+            try {
+                userInfo = JSON.parse(userInfo);
+            } catch (e) {
+                userInfo = {};
+            }
+            userInfo.isLogin ? transition.next() : transition.redirect('/home');
+        } else {
+            transition.next();
+        }
     });
 
     router.afterEach((transition) => {

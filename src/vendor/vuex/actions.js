@@ -1,4 +1,6 @@
-class blogCtrlApi {
+import vuexConfig from '../../config/vuex';
+
+class actions {
     //通用功能函数
     static triggerHook ({ dispatch }, subscription) {
         dispatch('TRIGGER_HOOK', subscription);
@@ -13,17 +15,12 @@ class blogCtrlApi {
     static resolveDelegationSubscriptions ({ dispatch }) {
         dispatch('RESOLVE_DELEGATION_SUBSCRIPTIONS');
     }
-    //显示和关闭弹层
-    static createMsgbox ({ dispatch }, content) {
-        dispatch('CREATE_MSGBOX', content);
-    }
-    static readedMsgbox ({ dispatch }) {
-        dispatch('READED_MSGBOX');
-    }
     //
     static switchAdminModes ({ dispatch }, status) {
         dispatch('SWITCH_ADMIN_MODELS', status);
     }
 };
 
-export default blogCtrlApi;
+Object.assign(actions, vuexConfig.actions);
+
+export default actions;

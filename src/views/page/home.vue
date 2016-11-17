@@ -23,10 +23,13 @@
             </article>
         </div>
     </div>
+    <trick></trick>
 </div>
 </template>
 <script>
-import { Func, actions } from '../../vendor';
+import { Func } from '../../vendor';
+import { actions } from '../../vendor/vuex';
+import trick from '../../components/trick';
 
 export default {
     data () {
@@ -48,6 +51,9 @@ export default {
     },
     filters: {
         formatTime: Func.formatTime,
+    },
+    components: {
+        trick,
     },
     ready () {
         this.bubble('viewposts');

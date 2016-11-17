@@ -2,7 +2,7 @@
 <p class="trick-input" v-if="isTrick">{{ trickWords }}</p>
 </template>
 <script>
-import actions from '../vuex/actions';
+import actions from '../vendor/vuex/actions';
 
 export default {
     data () {
@@ -27,37 +27,43 @@ export default {
             this.triggerHook(subscription, this);
         },
         listenTrick () {
-            addEventListener('keydown', (e) => {
-                if (e.keyCode == 8) {
-                    if (this.inputType == 'username') {
-                        this.username = this.username.substring(0, this.username.length - 1);
-                        this.trickWords = this.username;
-                    }
-                    if (this.inputType == 'password') {
-                        this.password = this.password.substring(0, this.password.length - 1);
-                        this.trickWords = this.password.length;
-                    }
-                    if (this.inputType == 'trick') {
-                        this.trickInput = this.trickInput.substring(0, this.trickInput.length - 1);
-                        this.trickWords = this.trickInput.charAt(this.trickInput.length - 1);
-                    }
+            window.addEventListener('keydown', this.keydownEvent);
+            window.addEventListener('keypress', this.keypressEvent);
+        },
+        removeListenTrick () {
+            window.removeEventListener('keydown', this.keydownEvent);
+            window.removeEventListener('keypress', this.keypressEvent);  
+        },
+        keydownEvent (e) {
+            if (e.keyCode == 8) {
+                if (this.inputType == 'username') {
+                    this.username = this.username.substring(0, this.username.length - 1);
+                    this.trickWords = this.username;
                 }
-            });
-            addEventListener('keypress', (e) => {
-                if (e.keyCode != 13 && this.inputType == 'trick') {
-                    this.inputTrick(e);
-                    this.startTrick(e);
+                if (this.inputType == 'password') {
+                    this.password = this.password.substring(0, this.password.length - 1);
+                    this.trickWords = this.password.length;
                 }
-                if (e.keyCode != 13 && this.inputType == 'password') {
-                    this.inputPassword(e);
+                if (this.inputType == 'trick') {
+                    this.trickInput = this.trickInput.substring(0, this.trickInput.length - 1);
+                    this.trickWords = this.trickInput.charAt(this.trickInput.length - 1);
                 }
-                if (e.keyCode != 13 && this.inputType == 'username') {
-                    this.inputUsername(e);
-                }
-                if (e.keyCode == 13) {
-                    this.enter(e);
-                }
-            });
+            }
+        },
+        keypressEvent (e) {
+            if (e.keyCode != 13 && this.inputType == 'trick') {
+                this.inputTrick(e);
+                this.startTrick(e);
+            }
+            if (e.keyCode != 13 && this.inputType == 'password') {
+                this.inputPassword(e);
+            }
+            if (e.keyCode != 13 && this.inputType == 'username') {
+                this.inputUsername(e);
+            }
+            if (e.keyCode == 13) {
+                this.enter(e);
+            }
         },
         inputUsername (e) {
             this.username += e.key;
@@ -135,5 +141,8 @@ export default {
     ready () {
         this.listenTrick();
     },
+    beforeDestroy () {
+        this.removeListenTrick();
+    }
 }
 </script>

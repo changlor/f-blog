@@ -80,7 +80,8 @@
 </div>
 </template>
 <script>
-import { Func, actions } from '../../vendor';
+import { Func } from '../../vendor';
+import { actions } from '../../vendor/vuex';
 import pagination from '../../components/pagination';
 
 export default {

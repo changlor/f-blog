@@ -11,7 +11,13 @@ class Base {
     //初始化各种子类需要的方法函数
     constructor() {
         //通信函数
-        this.token = 'asd';
+        let userInfo = Func.read('userInfo');
+        try {
+            userInfo = JSON.parse(userInfo);
+        } catch (e) {
+            userInfo = {};
+        }
+        this.token = userInfo.token;
     }
     //post通信方法
     post (url, params, callback) {
@@ -20,7 +26,7 @@ class Base {
         //添加header头信息
         let headers = new Headers();
         //post操作需要权限，因而需要在header添加token
-        headers.append('Auth-Token', Fetch.token);
+        headers.append('Auth-Token', this.token);
         //发射json数据需要添加json头信息
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
@@ -36,7 +42,7 @@ class Base {
         //put操作需要权限并且发送json数据，因而需要在header添加token和json头
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
-        headers.append('Auth-Token', Fetch.token);
+        headers.append('Auth-Token', this.token);
         //调用父类方法发送put请求
         Func.put(url, headers, params, callback);
     }

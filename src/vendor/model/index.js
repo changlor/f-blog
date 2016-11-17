@@ -40,10 +40,10 @@ class Load {
     }
 
     addBubbles () {
-        const bubble = (subscription, input) => {
+        const bubble = (subscription, page, component) => {
             if (this.subscription.hasOwnProperty(subscription)) {
                 for (let i = 0; i < this.subscription[subscription].length; i++) {
-                    this.subscription[subscription][i](input);
+                    this.subscription[subscription][i](page, component);
                 }
             }
         };

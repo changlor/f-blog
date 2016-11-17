@@ -17,5 +17,8 @@ export default {
         'signin': {
             Auth: 'signin',
         },
+        'signout': {
+            Auth: 'signout',
+        }
     },
 }

@@ -37,17 +37,27 @@ class Config {
     }
 
     setAdmin () {
-        this.config.admin.map((value, key) => {
-            const dir = Func.explode('/', value);
-            Func.storeClassification(this.admin, dir, key);
+        const admin = {};
+        this.config.admin.map((value) => {
+            admin[value] = admin[value] || '';
         });
+        for (let [key, value] of Object.entries(this.config.router)) {
+            if (admin.hasOwnProperty(value)) {
+                this.admin[key] = this.admin[key] || '';
+            }
+        }
     }
 
     setCustom () {
-        this.config.custom.map((value, key) => {
-            const dir = Func.explode('/', value);
-            Func.storeClassification(this.custom, dir, key);
+        const custom = {};
+        this.config.custom.map((value) => {
+            custom[value] = custom[value] || '';
         });
+        for (let [key, value] of Object.entries(this.config.router)) {
+            if (custom.hasOwnProperty(value)) {
+                this.custom[key] = this.custom[key] || '';
+            }
+        }
     }
 }
 

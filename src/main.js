@@ -11,7 +11,7 @@ let router = new VueRouter({
     saveScrollPosition: true,
 });
 
-let app = Vue.extend(require('./App.vue'));
+let app = Vue.extend(require('./vendor/components/App.vue'));
 routerConfig(router);
 
 router.start(app, '#app');

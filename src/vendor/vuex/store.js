@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import vuexConfig from '../../config/vuex';
 
 Vue.use(Vuex);
 
@@ -8,12 +9,6 @@ const state = {
     isTriggered: 0, hook: { subscriptions: [] },
     //定义代理事件数据
     isBubbled: 0, delegation: { subscriptions: [] },
-    //定义缓存数据
-    posts: {}, categories: {},
-    //定义弹层数据
-    msgbox: { contents: [], count: 0 },
-    //定义遮罩数据
-    shadow: { rightbar: false, global: false },
     //切换前后台
     admin: false,
 };
@@ -38,27 +33,14 @@ const mutations = {
     RESOLVE_DELEGATION_SUBSCRIPTIONS (state) {
         state.delegation.subscriptions = [];
     },
-     //保存文章缓存信息内容
-    CACHE_POST (state, post) {
-        state.posts[`id-${post.id}`] = post;
-    },
-    //保存分类缓存信息内容
-    CACHE_CATEGORY (state, category, info) {
-        state.categories[category] = info;
-    },
-    //显示和关闭弹层
-    CREATE_MSGBOX (state, content) {
-        state.msgbox.count++;
-        state.msgbox.contents.push({msg: content, isReaded: false});
-    },
-    READED_MSGBOX (state, status) {
-        state.msgbox.contents = [];
-    },
     //
     SWITCH_ADMIN_MODELS (state, status) {
         state.admin = status;
     },
 };
+
+Object.assign(mutations, vuexConfig.store.mutations);
+Object.assign(state, vuexConfig.store.state);
 
 //整合初始状态和变更函数，我们就得到了我们所需的 stroe
 //至此，这个 store 就可以连接到我们的应用中

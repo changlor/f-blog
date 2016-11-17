@@ -1,9 +1,16 @@
 import Func from './vendor/lib/src';
 
 import marked from 'marked';
-import hljs from './vendor/lib/src/highlight/highlight';
 import moment from 'moment';
+import hljs from './vendor/lib/src/highlight/highlight';
+import sha1 from './vendor/lib/src/encrypt/sha1';
 
+//生成版本号
+const createVersion = function (code) {
+    code = escape(code).replace(/%u/gi, '\\u');
+    code = unescape(code);
+    return sha1(code);
+};
 //无限分类赋值
 const storeClassification = function (object, dir, value, index = 0) {
     if (index == 0 && dir.length == 1) {

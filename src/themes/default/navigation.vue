@@ -13,12 +13,14 @@
 </div>
 </template>
 <script>
-import { Func, getters } from '../../vendor';
+import { Func } from '../../vendor';
+import { actions, getters } from '../../vendor/vuex';
 
 export default {
     data () {
         return {
-            isRotate: false, navbarRotate: false,
+            routes: [], path: '',
+            isMove: false, isRotate: false, navbarRotate: false,
             custom: [
                 {
                     icon: 'b-fa-photo',
@@ -122,7 +124,7 @@ export default {
     methods: {
         adaptation () {
             this.navbarArr.map((navbar, index) => {
-                if (navbar.link == this.$route.path) {
+                if (navbar.link == this.path) {
                     if (index >= 1 && index <= 4) {
                         this.switchNavbar(index)
                     } else {
@@ -133,11 +135,13 @@ export default {
                 }
             });
         },
-        switchNavbar (navbarId) {
-            if (this.isRotate) {
-                return false;
+        rotate () {
+            if (!this.isMove && this.routes.length > 0) {
+                this.path = this.routes.shift();
+                this.adaptation();
             }
-            this.isRotate = false;
+        },
+        switchNavbar (navbarId) {
             switch (navbarId) {
                 case 2:
                     this.navbarRotateArr = [
@@ -151,10 +155,14 @@ export default {
                         'nav-to-9',
                     ];
                     this.isRotate = true;
+                    this.isMove = true;
                     this.navbarRotate = 'navbar-clockwise-1';
                     setTimeout(() => {
                         this.navbarArr.unshift(this.navbarArr.pop());
                         this.isRotate = false;
+                        setTimeout(() => {
+                            this.isMove = false;
+                        }, 100)
                     }, 700);
                 break;
                 case 1:
@@ -169,11 +177,15 @@ export default {
                         'nav-to-10',
                     ];
                     this.isRotate = true;
+                    this.isMove = true;
                     this.navbarRotate = 'navbar-clockwise-2';
                     setTimeout(() => {
                         this.navbarArr.unshift(this.navbarArr.pop());
                         this.navbarArr.unshift(this.navbarArr.pop());
                         this.isRotate = false;
+                        setTimeout(() => {
+                            this.isMove = false;
+                        }, 100)
                     }, 700);
                 break;
                 case 4:
@@ -188,10 +200,14 @@ export default {
                         'nav-to-7',
                     ];
                     this.isRotate = true;
+                    this.isMove = true;
                     this.navbarRotate = 'navbar-eastern-1';
                     setTimeout(() => {
                         this.navbarArr.push(this.navbarArr.shift());
                         this.isRotate = false;
+                        setTimeout(() => {
+                            this.isMove = false;
+                        }, 100)
                     }, 700);
                 break;
                 default :
@@ -200,17 +216,26 @@ export default {
         },
     },
     vuex: {
+        actions: {
+            bubbleDelegation: actions.bubbleDelegation,
+            triggerHook: actions.triggerHook,
+        },
         getters: {
             isAdmin: getters.getAdminStatus,
         },
     },
     ready () {
-        this.navbarArr = this.custom;
-        this.adaptation();
+        this.navbarArr = this.isAdmin ? this.admin : this.custom;
+        this.routes.push(this.$route.path);
+        this.rotate();
     },
     watch: {
         '$route.path': function () {
-            this.adaptation();
+            this.routes.push(this.$route.path);
+            this.rotate();
+        },
+        isMove: function () {
+            this.rotate();
         },
         isAdmin: function () {
             this.navbarArr = this.isAdmin ? this.admin : this.custom;
