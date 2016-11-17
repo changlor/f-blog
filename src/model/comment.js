@@ -1,6 +1,5 @@
 //基础父模块
 import { Parent, Func, Api } from './Base';
-
 /*
  * @description: Comment模型类，提供对评论curd操作的接口
  * @author: Changle
@@ -10,31 +9,29 @@ class Comment {
     /*
      * @description: 创建一个新评论
      */
-    static createComment (input, callback) {
-        //获取所需的变量
-        const [postId, nickname, email, website, content] = [
-            input.postId,
-            input.nickname,
-            input.email,
-            input.website,
-            input.content,
-        ];
+    static createComment (page, components) {
+        //获取文章id
+        const postId = page.$route.params.id;
+        //获取评论昵称
+        const nickname = typeof page.nickname == 'string' ? page.nickname.trim() : '';
         //如果nickname为空，返回不能为空
-        if (Parent.empty(nickname)) {
-            callback.before(Parent.response([false, '请输入用户名OoO']));
-            return false;
+        if (Func.empty(nickname)) {
+            return console.log('请输入用户名OoO');
         }
+        //获取评论邮箱
+        const email = typeof page.email == 'string' ? page.email.trim() : '';
         //如果email为空，返回不能为空
-        if (Parent.empty(email)) {
-            callback.before(Parent.response([false, '请输入邮箱OoO']));
-            return false;
+        if (Func.empty(email)) {
+            return console.log('请输入邮箱OoO');
         }
+        //获取评论网址
+        const website = page.website;
+        //获取评论正文
+        const content = typeof page.content == 'string' ? page.content.trim() : '';
         //如果content为空，返回不能为空
-        if (Parent.empty(content)) {
-            callback.before(Parent.response([false, '说点什么吧OoO']));
-            return false;
+        if (Func.empty(content)) {
+            return console.log('说点什么吧OoO');
         }
-        callback.before(Parent.response([true]));
         //组装数据
         let comment = {
             postId: postId,
@@ -46,10 +43,21 @@ class Comment {
         //获取接口信息
         const api = new Api({ postId: postId });
         const uri = api.createComment;
+        //修改页面正在提交状态为true
+        page.isCommitting = true;
         //调用父类post方法发送post数据
         Parent.post(uri, comment, (res) => {
             //回调结果
-            callback.after(res);
+            if (res.success) {
+                page.comments = res.data.comments;
+                page.commentsCount = res.data.commentsCount;
+                page.hasComment = res.data.comments.length > 0;
+                page.isCommitting = false;
+                page.content = '';
+                page.$nextTick(() => {
+                    page.trigger('commentsturnpage');
+                })
+            }
         });
     }
 

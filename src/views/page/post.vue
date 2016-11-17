@@ -48,19 +48,19 @@
                     <textarea v-model="content" placeholder="说点什么吧OoO"></textarea>
                 </div>
                 <div class="comment-toolbar">
-                    <button v-bind:class="['post-button', isCommitting ? 'committing' : '']" type="submit">{{ commit }}</button>
+                    <button @click="submitComment" :class="['post-button', isCommitting ? 'committing' : '']" type="submit">{{ commit }}</button>
                 </div>
                 <div class="comment-analysis">
                     <ul class="post-meta">
                         <li><a>{{ commentsCount }}条评论</a></li>
-                        <li> • <time>{{ post.created_at }}</time></li>
+                        <li> • <time>{{ post.created_at | formatTime }}</time></li>
                     </ul>
                 </div>
                 <div v-if="hasComment" class="comment">
                     <ul>
                         <li v-for="comment in comments" class="comment-item clearfloat">
                             <div class="avatar">
-                                <a><img src="https://avatar.duoshuo.com/avatar-100/664/255040.jpg" alt="CAISIDUO"></a>
+                                <a><img :src="'https://secure.gravatar.com/avatar/' + comment.avatar + '?s=100&r=G&d='" alt="CAISIDUO"></a>
                             </div>
                             <div class="content">
                                 <p>{{ comment.content }}</p>
@@ -89,7 +89,9 @@ export default {
         return {
             //文章主体部分
             post: {},
-            //评论
+            //发布评论
+            nickname: '', email: '',website: '', content: '', isCommitting: false,
+            //评论列表
             comments: [], hasComment: false, commentsCount: 0, pageSize: 6, currentPage: 1,
         };
     },
@@ -112,6 +114,9 @@ export default {
         skipPage (number) {
             this.currentPage = number;
         },
+        submitComment () {
+            this.bubble('submitcomment');
+        }
     },
     filters: {
         parseMarkdown: Func.parseMarkdown,

@@ -71,7 +71,7 @@ export default {
                 },
                 {
                     icon: 'b-fa-home',
-                    link: '/home',
+                    link: '/index',
                     desc: '首页',
                 },
                 {

@@ -11,6 +11,9 @@ export default {
         'submitpost': {
             Article: 'createPost',
         },
+        'submitcomment': {
+            Comment: 'createComment',
+        },
         'commentsturnpage': {
             Comment: 'getComments',
         },
