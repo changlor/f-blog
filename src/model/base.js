@@ -17,7 +17,7 @@ class Base {
         } catch (e) {
             userInfo = {};
         }
-        this.token = userInfo.token;
+        this.token = userInfo.token || '';
     }
     //post通信方法
     post (url, params, callback) {
