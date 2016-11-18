@@ -1,6 +1,7 @@
 import Func from '../lib';
-import config from './config';
-export default function (router) {
+import setting from './config';
+export default function (router, history) {
+    const config = new setting({ history: history });
     //路由路径
     router.map(config.router);
     

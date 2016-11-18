@@ -2,7 +2,8 @@ import Func from '../lib';
 import routerConfig from '../../config/router';
 
 class Config {
-    constructor () {
+    constructor (init) {
+        this.history = init.history;
         ::this.loadViews; ::this.setRouter; ::this.initialize
         this.initialize(); this.loadViews();
         this.setRouter(); this.setAdmin(); this.setCustom();
@@ -61,6 +62,4 @@ class Config {
     }
 }
 
-const config = new Config();
-
-export default config;
+export default Config;

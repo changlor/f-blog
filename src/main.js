@@ -6,12 +6,13 @@ import { routerConfig } from './vendor/route';
 Vue.use(VueRouter);
 
 //实例化vue-router
+const history = false;
 let router = new VueRouter({
-    history: true,
+    history: history,
     saveScrollPosition: true,
 });
 
 let app = Vue.extend(require('./vendor/components/App.vue'));
-routerConfig(router);
+routerConfig(router, history);
 
 router.start(app, '#app');

@@ -2,6 +2,7 @@ import Fetch from './communication/Fetch';
 import Store from './communication/Store';
 import empty from 'locutus/php/var/empty';
 import trim from 'locutus/php/strings/trim';
+import ltrim from 'locutus/php/strings/ltrim';
 import ucfirst from 'locutus/php/strings/ucfirst';
 import time from 'locutus/php/datetime/time';
 import explode from 'locutus/php/strings/explode';
@@ -25,6 +26,7 @@ const put = function (url, headers, params, callback) {
 export default {
     time: time,
     trim: trim,
+    ltrim: ltrim,
     empty: empty,
     ucfirst: ucfirst,
     explode: explode,
