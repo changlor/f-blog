@@ -25,6 +25,7 @@ class Auth {
         } catch (e) {
             userInfo = {};
         }
+        userInfo = userInfo || {};
         userInfo.token = userInfo.token || '';
         //如果存在token，则请求验证
         if (userInfo.isLogin || userInfo.token.length == 40) {

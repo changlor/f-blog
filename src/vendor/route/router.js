@@ -17,6 +17,7 @@ export default function (router) {
         } catch (e) {
             userInfo = {};
         }
+        userInfo = userInfo || {};
         if (config.admin.hasOwnProperty(transition.to.path)) {
             userInfo.isLogin ? transition.next() : transition.redirect('/home');
         } else {

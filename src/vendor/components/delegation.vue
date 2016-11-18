@@ -30,6 +30,7 @@ const delegation = {
             } catch (e) {
                 userInfo = {};
             }
+            userInfo = userInfo || {};
             if (!userInfo.isLogin && this.isAdmin) {
                 this.bubble('signout', this, this);
             }
