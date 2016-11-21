@@ -1,4 +1,4 @@
-const host = 'http://v-blog.api.kotori.love/';
+const host = 'http://api.blog.rain/';
 const page = {
     'daily': 3,
     'home': 1,

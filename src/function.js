@@ -59,9 +59,23 @@ const formatTime = function (time) {
     return moment.unix(time).format('MM 月 DD 日 YYYY 年');
 }
 
+const readUserInfo = function () {
+    let userInfo = Func.read('userInfo');
+    try {
+        userInfo = JSON.parse(userInfo);
+    } catch (e) {
+        userInfo = {};
+    }
+    userInfo = userInfo || {};
+    userInfo.token = typeof userInfo.token == 'string' ? userInfo.token : '';
+    userInfo.username = typeof userInfo.username == 'string' ? userInfo.username : '';
+    return userInfo;
+}
+
 export default {
     formatTime: formatTime,
     parseMarkdown: parseMarkdown,
     storeClassification: storeClassification,
     readClassification: readClassification,
+    readUserInfo: readUserInfo,
 }

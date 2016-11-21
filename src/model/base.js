@@ -11,13 +11,7 @@ class Base {
     //初始化各种子类需要的方法函数
     constructor() {
         //通信函数
-        let userInfo = Func.read('userInfo');
-        try {
-            userInfo = JSON.parse(userInfo);
-        } catch (e) {
-            userInfo = {};
-        }
-        userInfo = userInfo || {};
+        const userInfo = Func.readUserInfo();
         this.token = userInfo.token;
     }
     //post通信方法

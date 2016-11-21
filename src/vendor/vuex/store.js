@@ -9,8 +9,6 @@ const state = {
     isTriggered: 0, hook: { subscriptions: [] },
     //定义代理事件数据
     isBubbled: 0, delegation: { subscriptions: [] },
-    //切换前后台
-    admin: false,
 };
 
 const mutations = {

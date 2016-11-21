@@ -15,10 +15,6 @@ class actions {
     static resolveDelegationSubscriptions ({ dispatch }) {
         dispatch('RESOLVE_DELEGATION_SUBSCRIPTIONS');
     }
-    //
-    static switchAdminModes ({ dispatch }, status) {
-        dispatch('SWITCH_ADMIN_MODELS', status);
-    }
 };
 
 Object.assign(actions, vuexConfig.actions);

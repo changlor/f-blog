@@ -2,8 +2,6 @@ import vuexConfig from '../../config/vuex';
 
 class getters {
     //
-    static getAdminStatus = state => state.admin;
-    //
     static getDelegationListener = state => state.isBubbled;
     static getDelegationSubscriptions = state => state.delegation.subscriptions;
     //

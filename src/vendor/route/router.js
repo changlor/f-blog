@@ -11,13 +11,7 @@ export default function (router) {
 
     //路由限制
     router.beforeEach((transition) => {
-        let userInfo = Func.read('userInfo');
-        try {
-            userInfo = JSON.parse(userInfo);
-        } catch (e) {
-            userInfo = {};
-        }
-        userInfo = userInfo || {};
+        const userInfo = Func.readUserInfo();
         if (config.admin.hasOwnProperty(transition.to.path)) {
             userInfo.isLogin ? transition.next() : transition.redirect('/home');
         } else {

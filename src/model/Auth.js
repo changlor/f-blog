@@ -1,38 +1,19 @@
 //加载父模块
 import { Parent, Func, Api } from './Base';
 
-/*
- * @description: Auth模型类，提供对用户获取授权操作的接口
- * @author: Changle
- * @update: Changle (2016-10-20 20:32)
- */
 class Auth {
-    /*
-     * @description: 登录并获得授权token
-     * @param [array] input --包括两个个参数
-     * @param [string] username --登录的用户名
-     * @param [string] password --登录的密码
-     * @return [string] --登录成功返回授权token
-     */
     static signin (page, component) {
         //获取接口信息
         const api = new Api({});
         const uri = api.signin;
         //获取用户信息
-        let userInfo = Func.read('userInfo');
-        try {
-            userInfo = JSON.parse(userInfo);
-        } catch (e) {
-            userInfo = {};
-        }
-        userInfo = userInfo || {};
-        userInfo.token = userInfo.token || '';
+        const userInfo = Func.readUserInfo();
         //如果存在token，则请求验证
         if (userInfo.isLogin || userInfo.token.length == 40) {
             Parent.post(uri, '', (res) => {
                 //回调数据
                 if (res.success) {
-                    component.signin();
+                    component.siginin();
                     userInfo.username = res.data.username;
                     userInfo.isLogin = true;
                     Func.store('userInfo', JSON.stringify(userInfo));
@@ -83,12 +64,7 @@ class Auth {
     }
 
     static signout (page, component) {
-        let userInfo = Func.read('userInfo');
-        try {
-            userInfo = JSON.parse(userInfo);
-        } catch (e) {
-            userInfo = {};
-        }
+        const userInfo = Func.readUserInfo();
         userInfo.isLogin = false;
         Func.store('userInfo', JSON.stringify(userInfo));
         component.signout();

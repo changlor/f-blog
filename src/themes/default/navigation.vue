@@ -19,7 +19,7 @@ import { actions, getters } from '../../vendor/vuex';
 export default {
     data () {
         return {
-            routes: [], path: '',
+            isAdmin: false, routes: [], path: '',
             isMove: false, isRotate: false, navbarRotate: false,
             custom: [
                 {
@@ -39,8 +39,8 @@ export default {
                 },
                 {
                     icon: 'b-fa-feel',
-                    link: '/feel',
-                    desc: '随感',
+                    link: '/log',
+                    desc: '日志',
                 },
                 {
                     icon: 'b-fa-board',
@@ -214,17 +214,19 @@ export default {
                 break;
             }
         },
+        bubble (event) {
+            this.bubbleDelegation(event, this);
+        },
     },
     vuex: {
         actions: {
             bubbleDelegation: actions.bubbleDelegation,
             triggerHook: actions.triggerHook,
         },
-        getters: {
-            isAdmin: getters.getAdminStatus,
-        },
     },
     ready () {
+        const userInfo = Func.readUserInfo();
+        this.isAdmin = userInfo.isLogin;
         this.navbarArr = this.isAdmin ? this.admin : this.custom;
         this.routes.push(this.$route.path);
         this.rotate();
@@ -232,7 +234,15 @@ export default {
     watch: {
         '$route.path': function () {
             this.routes.push(this.$route.path);
-            this.rotate();
+            const userInfo = Func.readUserInfo();
+            if (this.isAdmin == userInfo.isLogin) {
+                this.rotate();
+            } else {
+                this.isAdmin = userInfo.isLogin;
+                this.$nextTick(() => {
+                    this.rotate();
+                });
+            }
         },
         isMove: function () {
             this.rotate();

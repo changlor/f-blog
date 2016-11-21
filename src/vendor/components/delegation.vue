@@ -15,35 +15,12 @@ const delegation = {
         getters: {
             unresolvedSubscriptions: getters.getDelegationSubscriptions,
             isBubbled: getters.getDelegationListener,
-            isAdmin: getters.getAdminStatus,
         },
         actions: {
-            switchAdminModes: actions.switchAdminModes,
             resolveSubscriptions: actions.resolveDelegationSubscriptions,
         }
     },
     methods: {
-        validate () {
-            let userInfo = Func.read('userInfo');
-            try {
-                userInfo = JSON.parse(userInfo);
-            } catch (e) {
-                userInfo = {};
-            }
-            userInfo = userInfo || {};
-            if (!userInfo.isLogin && this.isAdmin) {
-                this.bubble('signout', this, this);
-            }
-            if (userInfo.isLogin && !this.isAdmin) {
-                this.bubble('signin', this, this);
-            }
-        },
-        signin () {
-            this.switchAdminModes(true);
-        },
-        signout () {
-            this.switchAdminModes(false);
-        },
         bubble (subscription, page, component) {
             subscribers.bubble(subscription, page, component);
         },
@@ -65,12 +42,6 @@ const delegation = {
         isBubbled: function () {
             this.handle();
         },
-        '$route.path': function () {
-            this.validate();
-        },
-    },
-    ready () {
-        this.validate();
     },
 }
 
