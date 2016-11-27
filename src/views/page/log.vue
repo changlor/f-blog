@@ -14,13 +14,20 @@
                         <li>修复导航栏前后台切换动画导致的导航栏图标消失的错误</li>
                     </ol>
                 </li>
+                <li class="logs-item">
+                    <h3>2016-11-27 更新</h3>
+                    <ol>
+                        <li>更换更好的lib库js文件export方式</li>
+                        <li>改写了库的fetch方法，合并get，post，put，delete</li>
+                    </ol>
+                </li>
             </ul>
         </div>
     </div>
 </div>
 </template>
 <script>
-import { Func } from '../../vendor';
+import { Func } from '../../vendor/lib';
 import { actions } from '../../vendor/vuex';
 
 export default {
@@ -47,6 +54,20 @@ export default {
     filters: {
         parseMarkdown: Func.parseMarkdown,
         formatTime: Func.formatTime,
+    },
+    ready () {
+        const base = function (input, init) {
+            return fetch(input, init)
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+            })
+        };
+        base()
+        .then((response) => {
+
+        });
     },
 }
 </script>

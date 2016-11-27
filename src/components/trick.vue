@@ -2,7 +2,7 @@
 <p class="trick-input" v-if="isTrick">{{ trickWords }}</p>
 </template>
 <script>
-import actions from '../vendor/vuex/actions';
+import { actions } from '../vendor/vuex';
 
 export default {
     data () {

@@ -1,5 +1,5 @@
 //加载父模块
-import { Parent, Func, Api } from './Base';
+import { Parent, Func, Php, Api } from './Base';
 
 /*
  * @description: Articel模型类，提供对文章的curd操作的接口
@@ -13,9 +13,9 @@ class Article {
         //获取文章标题
         const title = page.title;
         //获取文章正文
-        const content = page.content;
+        const content = typeof page.content == 'string' ? page.content.trim() : '';
         //如果正文为空或者空字符，打回
-        if (Func.empty(Func.trim(content))) {
+        if (Php.empty(content)) {
             console.log('正文不能为空OoO');
             return false;
         }
@@ -33,7 +33,7 @@ class Article {
             pageId: pageId,
         });
         const url = api.createPost;
-        Parent.post(url, post, (res) => {
+        Parent.fetch(url, 'post', post).then((res) => {
             console.log(res);
         });
     }
@@ -50,7 +50,7 @@ class Article {
         const api = new Api({ postId: postId });
         const url = api.getPost;
         //调用父模块get方法
-        Parent.get(url, '', (res) => {
+        Parent.fetch(url, 'get').then((res) => {
             if (res.success) {
                 page.post = res.data;
             }
@@ -69,7 +69,7 @@ class Article {
         const api = new Api({ pageName: pageName });
         const url = api.getPosts;
         //调用父模块get方法
-        Parent.get(url, '', (res) => {
+        Parent.fetch(url, 'get').then((res) => {
             if (res.success) {
                 page.posts = res.data;
             }

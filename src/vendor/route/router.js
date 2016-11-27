@@ -1,4 +1,4 @@
-import Func from '../lib';
+import { Func } from '../lib';
 import config from './config';
 export default function (router) {
     //路由路径

@@ -5,11 +5,11 @@
  */
 class Store {
     //保存数据到localstorage
-    static store (key, value) {
+    static set (key, value) {
         window.localStorage.setItem(key, value);
     }
     //读取localstorage数据
-    static read (key) {
+    static get (key) {
         return window.localStorage.getItem(key);
     }
 }

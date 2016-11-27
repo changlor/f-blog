@@ -1,5 +1,6 @@
 ///加载依赖模块
-import custom from '../../function';
-import system from './src';
-
-export default Object.assign(custom, system);
+export Func from '../../function';
+export Php from './src/system/php';
+export Xhr from './src/communication/xhr';
+export Session from './src/storage/session';
+export Store from './src/storage/store';

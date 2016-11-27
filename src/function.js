@@ -1,16 +1,9 @@
-import Func from './vendor/lib/src';
+import { Php, Store } from './vendor/lib';
 
 import marked from 'marked';
 import moment from 'moment';
 import hljs from './vendor/lib/src/highlight/highlight';
-import sha1 from './vendor/lib/src/encrypt/sha1';
 
-//生成版本号
-const createVersion = function (code) {
-    code = escape(code).replace(/%u/gi, '\\u');
-    code = unescape(code);
-    return sha1(code);
-};
 //无限分类赋值
 const storeClassification = function (object, dir, value, index = 0) {
     if (index == 0 && dir.length == 1) {
@@ -32,11 +25,11 @@ const readClassification = function (object, dir, index = 0) {
 }
 //渲染md为html
 const parseMarkdown = function (md, config) {
-    if (Func.empty(md)) {
+    if (Php.empty(md)) {
         md = '';
     }
 
-    if (Func.empty(config)) {
+    if (Php.empty(config)) {
         config = {
             highlight: (code) => {
                 return hljs.highlightAuto(code).value
@@ -60,7 +53,7 @@ const formatTime = function (time) {
 }
 
 const readUserInfo = function () {
-    let userInfo = Func.read('userInfo');
+    let userInfo = Store.get('userInfo');
     try {
         userInfo = JSON.parse(userInfo);
     } catch (e) {

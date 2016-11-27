@@ -1,1 +1,0 @@
-export Func from './lib';

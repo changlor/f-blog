@@ -1,5 +1,5 @@
 //基础父模块
-import { Parent, Func, Api } from './Base';
+import { Parent, Php,Func, Store, Api } from './Base';
 /*
  * @description: Comment模型类，提供对评论curd操作的接口
  * @author: Changle
@@ -15,13 +15,13 @@ class Comment {
         //获取评论昵称
         const nickname = typeof page.nickname == 'string' ? page.nickname.trim() : '';
         //如果nickname为空，返回不能为空
-        if (Func.empty(nickname)) {
+        if (Php.empty(nickname)) {
             return console.log('请输入用户名OoO');
         }
         //获取评论邮箱
         const email = typeof page.email == 'string' ? page.email.trim() : '';
         //如果email为空，返回不能为空
-        if (Func.empty(email)) {
+        if (Php.empty(email)) {
             return console.log('请输入邮箱OoO');
         }
         //获取评论网址
@@ -29,7 +29,7 @@ class Comment {
         //获取评论正文
         const content = typeof page.content == 'string' ? page.content.trim() : '';
         //如果content为空，返回不能为空
-        if (Func.empty(content)) {
+        if (Php.empty(content)) {
             return console.log('说点什么吧OoO');
         }
         //组装数据
@@ -46,7 +46,7 @@ class Comment {
         //修改页面正在提交状态为true
         page.isCommitting = true;
         //调用父类post方法发送post数据
-        Parent.post(uri, comment, (res) => {
+        Parent.fetch(uri, 'post', comment).then((res) => {
             //回调结果
             if (res.success) {
                 page.comments = res.data.comments;
@@ -82,7 +82,7 @@ class Comment {
         const api = new Api({ postId: postId });
         const uri = api.getComments;
         //调用父类get方法
-        Parent.get(uri, params, (res) => {
+        Parent.fetch(uri, 'get', params).then((res) => {
             if (res.success) {
                 page.comments = res.data.comments;
                 page.commentsCount = res.data.commentsCount;

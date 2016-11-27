@@ -1,4 +1,4 @@
-import Func from '../lib';
+import { Php, Func } from '../lib';
 import routerConfig from '../../config/router';
 
 class Config {
@@ -17,19 +17,19 @@ class Config {
     loadViews () {
         for (let [key, value] of Object.entries(this.config.router)) {
             const view = require('../../views/' + value);
-            const dir = Func.explode('/', value);
+            const dir = Php.explode('/', value);
             Func.storeClassification(this.views, dir, view);
         }
     }
 
     setRouter () {
         for (let [key, value] of Object.entries(this.config.router)) {
-            const dir = Func.explode('/', value);
+            const dir = Php.explode('/', value);
             if (/[^]\([a-z_][a-z0-9_]+\)/gi.test(key)) {
                 const matches = key.match(/\([a-z_][a-z0-9_]+\)/gi);
                 key = key.replace(/([^])\([a-z_][a-z0-9_]+\).*/i, '$1');
                 this.router[key] = this.router[key] || {};
-                this.router[key]['name'] = Func.trim(matches[0], '()');
+                this.router[key]['name'] = Php.trim(matches[0], '()');
             }
             this.router[key] = this.router[key] || {};
             this.router[key]['component'] = Func.readClassification(this.views, dir);

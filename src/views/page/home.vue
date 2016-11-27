@@ -27,7 +27,7 @@
 </div>
 </template>
 <script>
-import { Func } from '../../vendor';
+import { Func } from '../../vendor/lib';
 import { actions } from '../../vendor/vuex';
 import trick from '../../components/trick';
 

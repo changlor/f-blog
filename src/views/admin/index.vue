@@ -70,7 +70,7 @@
 </template>
 <script>
 import list from '../../components/list';
-import { Func } from '../../vendor';
+import { Func, Php } from '../../vendor/lib';
 import { actions } from '../../vendor/vuex';
 
 export default {
@@ -108,8 +108,8 @@ export default {
             this.bubble('submitpost');
         },
         addTag () {
-            this.tag = Func.trim(this.tag);
-            if (!Func.empty(this.tag)) {
+            this.tag = typeof this.tag == 'string' ? this.tag.trim() : '';
+            if (!Php.empty(this.tag)) {
                 this.tags.push(this.tag);
             }
             this.tag = '';
@@ -130,7 +130,7 @@ export default {
         list,
     },
     ready () {
-        this.created_at = Func.time();
+        this.created_at = Php.time();
     },
 }
 </script>

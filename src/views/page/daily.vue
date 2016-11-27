@@ -26,7 +26,7 @@
 </div> 
 </template>
 <script>
-import { Func } from '../../vendor';
+import { Func } from '../../vendor/lib';
 import { actions } from '../../vendor/vuex';
 
 export default {
