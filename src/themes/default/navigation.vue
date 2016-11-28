@@ -1,255 +1,107 @@
 <template>
 <div class="drawer">
-    <ul v-bind:class="['navbar', isRotate ? navbarRotate : '']">
-        <li v-for="navbar in navbarArr" v-bind:class="'nav-' + ($index + 1)">
-            <div v-bind:class="[ isRotate ? navbarRotateArr[$index] : isRotate ]">
-                <a v-link="navbar.link">
-                    <i v-bind:class="['b-fa', navbar.icon]"></i>
-                    <span>{{ navbar.desc }}</span>
-                </a>
+    <div :class="['Yuki-navbar', isPush ? 'Yuki-navbar__push' : '']">
+        <h1 class="Yuki-navbar__title">因雨而生</h1>
+        <div class="Yuki-navbar__info">
+            <p class="Yuki-navbar__desc">水能载舟，亦可..亦可赛艇？</p>
+            <div class="Yuki-navbar__avatar">
+                <a></a>
             </div>
-        </li>
-    </ul>
+            <ul class="Yuki-navbar__links">
+                <li><a v-link="'/home'">首页</a></li>
+                <li><a v-link="'/daily'">日常</a></li>
+                <li><a v-link="'/feel'">随感</a></li>
+                <li><a v-link="'/log'">更新日志</a></li>
+                <li><a v-link="'/board'">留言板</a></li>
+            </ul>
+        </div>
+        <a class="Yuki-navbar__btn" @click="toggle"></a>
+    </div>
 </div>
 </template>
 <script>
-import { Func } from '../../vendor/lib';
-import { actions, getters } from '../../vendor/vuex';
-
 export default {
     data () {
         return {
-            isAdmin: false, routes: [], path: '',
-            isMove: false, isRotate: false, navbarRotate: false,
-            custom: [
-                {
-                    icon: 'b-fa-photo',
-                    link: '/photo',
-                    desc: '照片',
-                },
-                {
-                    icon: 'b-fa-home',
-                    link: '/home',
-                    desc: '首页',
-                },
-                {
-                    icon: 'b-fa-daily',
-                    link: '/daily',
-                    desc: '日常',
-                },
-                {
-                    icon: 'b-fa-feel',
-                    link: '/log',
-                    desc: '日志',
-                },
-                {
-                    icon: 'b-fa-board',
-                    link: '/board',
-                    desc: '留言',
-                },
-                {
-                    icon: 'b-fa-code',
-                    link: '/code',
-                    desc: '代码',
-                },
-                {
-                    icon: 'b-fa-music',
-                    link: '/music',
-                    desc: '音乐',
-                },
-                {
-                    icon: 'b-fa-project',
-                    link: '/project',
-                    desc: '作品',
-                },
-            ],
-            admin: [
-                {
-                    icon: 'b-fa-photo',
-                    link: '/photo',
-                    desc: '照片',
-                },
-                {
-                    icon: 'b-fa-home',
-                    link: '/index',
-                    desc: '首页',
-                },
-                {
-                    icon: 'b-fa-daily',
-                    link: '/write',
-                    desc: '撰写',
-                },
-                {
-                    icon: 'b-fa-feel',
-                    link: '/feel',
-                    desc: '随感',
-                },
-                {
-                    icon: 'b-fa-board',
-                    link: '/board',
-                    desc: '留言',
-                },
-                {
-                    icon: 'b-fa-code',
-                    link: '/code',
-                    desc: '代码',
-                },
-                {
-                    icon: 'b-fa-music',
-                    link: '/music',
-                    desc: '音乐',
-                },
-                {
-                    icon: 'b-fa-project',
-                    link: '/project',
-                    desc: '作品',
-                },
-            ],
-            navbarArr: [],
-            navbarRotateArr: [
-                'nav-to-1',
-                'nav-to-2',
-                'nav-to-3',
-                'nav-to-4',
-                'nav-to-5',
-                'nav-to-6',
-                'nav-to-7',
-                'nav-to-8',
-                'nav-to-9',
-                'nav-to-10',
-                'nav-to-11',
-            ],
-        }
+            isPush: false,
+        };
     },
     methods: {
-        adaptation () {
-            this.navbarArr.map((navbar, index) => {
-                if (navbar.link == this.path) {
-                    if (index >= 1 && index <= 4) {
-                        this.switchNavbar(index)
-                    } else {
-                        this.switchNavbar(1);
-                        this.navbarArr = this.navbarArr.concat(this.navbarArr.splice(0, index));
-                        this.navbarArr.unshift(this.navbarArr.pop());
-                    }
-                }
-            });
-        },
-        rotate () {
-            if (!this.isMove && this.routes.length > 0) {
-                this.path = this.routes.shift();
-                this.adaptation();
-            }
-        },
-        switchNavbar (navbarId) {
-            switch (navbarId) {
-                case 2:
-                    this.navbarRotateArr = [
-                        'nav-to-2',
-                        'nav-to-3',
-                        'nav-to-4',
-                        'nav-to-5',
-                        'nav-to-6',
-                        'nav-to-7',
-                        'nav-to-8',
-                        'nav-to-9',
-                    ];
-                    this.isRotate = true;
-                    this.isMove = true;
-                    this.navbarRotate = 'navbar-clockwise-1';
-                    setTimeout(() => {
-                        this.navbarArr.unshift(this.navbarArr.pop());
-                        this.isRotate = false;
-                        setTimeout(() => {
-                            this.isMove = false;
-                        }, 100)
-                    }, 700);
-                break;
-                case 1:
-                    this.navbarRotateArr = [
-                        'nav-to-3',
-                        'nav-to-4',
-                        'nav-to-5',
-                        'nav-to-6',
-                        'nav-to-7',
-                        'nav-to-8',
-                        'nav-to-9',
-                        'nav-to-10',
-                    ];
-                    this.isRotate = true;
-                    this.isMove = true;
-                    this.navbarRotate = 'navbar-clockwise-2';
-                    setTimeout(() => {
-                        this.navbarArr.unshift(this.navbarArr.pop());
-                        this.navbarArr.unshift(this.navbarArr.pop());
-                        this.isRotate = false;
-                        setTimeout(() => {
-                            this.isMove = false;
-                        }, 100)
-                    }, 700);
-                break;
-                case 4:
-                    this.navbarRotateArr = [
-                        'nav-to-0',
-                        'nav-to-1',
-                        'nav-to-2',
-                        'nav-to-3',
-                        'nav-to-4',
-                        'nav-to-5',
-                        'nav-to-6',
-                        'nav-to-7',
-                    ];
-                    this.isRotate = true;
-                    this.isMove = true;
-                    this.navbarRotate = 'navbar-eastern-1';
-                    setTimeout(() => {
-                        this.navbarArr.push(this.navbarArr.shift());
-                        this.isRotate = false;
-                        setTimeout(() => {
-                            this.isMove = false;
-                        }, 100)
-                    }, 700);
-                break;
-                default :
-                break;
-            }
-        },
-        bubble (event) {
-            this.bubbleDelegation(event, this);
+        toggle () {
+            this.isPush = !this.isPush;
         },
     },
-    vuex: {
-        actions: {
-            bubbleDelegation: actions.bubbleDelegation,
-            triggerHook: actions.triggerHook,
-        },
-    },
-    ready () {
-        const userInfo = Func.readUserInfo();
-        this.isAdmin = userInfo.isLogin;
-        this.navbarArr = this.isAdmin ? this.admin : this.custom;
-        this.routes.push(this.$route.path);
-        this.rotate();
-    },
-    watch: {
-        '$route.path': function () {
-            this.routes.push(this.$route.path);
-            const userInfo = Func.readUserInfo();
-            if (this.isAdmin == userInfo.isLogin) {
-                this.rotate();
-            } else {
-                this.isAdmin = userInfo.isLogin;
-                this.$nextTick(() => {
-                    this.rotate();
-                });
-            }
-        },
-        isMove: function () {
-            this.rotate();
-        },
-        isAdmin: function () {
-            this.navbarArr = this.isAdmin ? this.admin : this.custom;
-        }
-    }
 }
 </script>
+<style>
+.drawer {
+    position: fixed;
+    z-index: 10;
+}
+.Yuki-navbar {
+    transition: left 0.4s ease-in-out;
+    position: fixed;
+    left: -285px;
+    top: 0;
+    width: 285px;
+    height: 100%;
+    background-color: rgb(51, 46, 57);
+}
+.Yuki-navbar__push {
+    left: 0;
+}
+.Yuki-navbar:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 285px;
+    height: 100%;
+    background-image: url('../../assets/img/navbar/bg.png');
+    opacity: 0.06;
+    z-index: -1;
+}
+.Yuki-navbar__title {
+    font-weight: 300;
+    text-align: center;
+    padding-top: 30px;
+}
+.Yuki-navbar__desc {
+    font-size: 18px;
+    margin: 15px 10%;
+}
+.Yuki-navbar__avatar {
+    text-align: center;
+    padding: 15px 0;
+    width: 80%;
+    margin: 10px 10%;
+    border-top: 2px dashed rgba(255,255,255,.2);
+    border-bottom: 2px dashed rgba(255,255,255,.2);
+}
+.Yuki-navbar__avatar a {
+    width: 90px;
+    height: 90px;
+    background-image: url('../../assets/img/navbar/me.jpeg');
+    background-size: 90px;
+    display: inline-block;
+    border-radius: 60px;
+    box-shadow: 2px 2px 2px rgb(51, 46, 57) inset;
+}
+.Yuki-navbar__links {
+    padding: 5px 16px;
+    margin: 25px 10%;
+}
+.Yuki-navbar__links a {
+    font-size: 22px;
+}
+.Yuki-navbar__btn {
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border: 3px solid #000;
+    border-radius: 16px;
+    position: absolute;
+    left: 300px;
+    bottom: 30px;
+}
+</style>

@@ -21,6 +21,13 @@
                         <li>改写了库的fetch方法，合并get，post，put，delete</li>
                     </ol>
                 </li>
+                <li class="logs-item">
+                    <h3>2016-11-28 更新</h3>
+                    <ol>
+                        <li>更换了一下导航栏</li>
+                        <li>修改了一下日志页面的样式</li>
+                    </ol>
+                </li>
             </ul>
         </div>
     </div>
@@ -85,6 +92,7 @@ export default {
     text-align: center;
 }
 .logs-item {
+    margin-bottom: 50px;
     list-style: none;
 }
 .logs-item h3 {
