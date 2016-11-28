@@ -31,6 +31,11 @@ export default {
             this.isPush = !this.isPush;
         },
     },
+    watch: {
+        '$route.path': function () {
+            this.isPush = false;
+        }
+    }
 }
 </script>
 <style>
