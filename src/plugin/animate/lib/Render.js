@@ -42,7 +42,7 @@ class Animate {
     }
     //渲染更新后的帧
     draw () {
-        this.func(this.progress);
+        this.func(this.progress, this.frameNumber);
     }
     //更新每一帧的偏移量
     update () {

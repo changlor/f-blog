@@ -50,6 +50,7 @@ class Frame {
             const rate = after - before;
             return rate;
         }
+        return 0;
     }
     //自定义函数动画类型
      customAnimation (frame, frameCount) {

@@ -1,5 +1,5 @@
 //加载依赖模块
-import { Func, Xhr, Store, Php } from '../vendor/lib';
+import { Func, Xhr, Store, Php, Session } from '../vendor/lib';
 import Api from '../config/Api';
 
 /*
@@ -40,4 +40,4 @@ class Base {
 
 const Parent = new Base();
 
-export { Parent, Func, Php, Store, Api };
+export { Parent, Func, Php, Store, Session, Api };

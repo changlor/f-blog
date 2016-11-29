@@ -78,7 +78,20 @@
         </div>
     </div>
 </div>
+<div class="loading"></div>
 </template>
+<style>
+.loading {
+    background: url('../../assets/img/blog/loading.png') no-repeat;
+    background-size: 136px;
+    width: 68px;
+    height: 40px;
+    background-position: 0px;
+    position: fixed;
+    left: 200px;
+    top: 500px;
+}
+</style>
 <script>
 import { Func } from '../../vendor/lib';
 import { actions } from '../../vendor/vuex';
@@ -124,6 +137,7 @@ export default {
     },
     ready () {
         this.bubble('viewpost');
+        this.trigger('loadingstart');
     },
     watch: {
         currentPage: function () {

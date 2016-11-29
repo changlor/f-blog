@@ -1,5 +1,5 @@
 //加载父模块
-import { Parent, Func, Php, Store, Api } from './Base';
+import { Parent, Func, Php, Store, Api, Session } from './Base';
 
 class Auth {
     static signin (page, component) {
@@ -16,7 +16,7 @@ class Auth {
                     component.siginin();
                     userInfo.username = res.data.username;
                     userInfo.isLogin = true;
-                    Store.set('userInfo', JSON.stringify(userInfo));
+                    Session.set('userInfo', JSON.stringify(userInfo));
                     page.$nextTick(() => {
                         page.$router.go('/write');
                     });
@@ -24,7 +24,7 @@ class Auth {
                     component.signout();
                     userInfo.isLogin = false;
                     userInfo.token = '';
-                    Store.set('userInfo', JSON.stringify(userInfo));
+                    Session.set('userInfo', JSON.stringify(userInfo));
                 }
             });
             return false;
@@ -55,7 +55,7 @@ class Auth {
                 component.signin();
                 userInfo.token = res.data.token;
                 userInfo.isLogin = true;
-                Store.set('userInfo', JSON.stringify(userInfo));
+                Session.set('userInfo', JSON.stringify(userInfo));
                 page.$nextTick(() => {
                     page.$router.go('/write');
                 });
@@ -66,7 +66,7 @@ class Auth {
     static signout (page, component) {
         const userInfo = Func.readUserInfo();
         userInfo.isLogin = false;
-        Store.set('userInfo', JSON.stringify(userInfo));
+        Session.set('userInfo', JSON.stringify(userInfo));
         component.signout();
         page.$nextTick(() => {
             page.$router.go('/home');

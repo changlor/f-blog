@@ -1,4 +1,4 @@
-import { Php, Store } from './vendor/lib';
+import { Php, Store, Session } from './vendor/lib/src';
 
 import marked from 'marked';
 import moment from 'moment';
@@ -53,7 +53,7 @@ const formatTime = function (time) {
 }
 
 const readUserInfo = function () {
-    let userInfo = Store.get('userInfo');
+    let userInfo = Session.get('userInfo');
     try {
         userInfo = JSON.parse(userInfo);
     } catch (e) {

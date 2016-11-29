@@ -1,6 +1,6 @@
 <template>
 <span class="dropdown-list">
-    <a class="select" :class="{ 'selected': isSelected }" @click="selected">选择类别</a>
+    <a class="select" :class="{ 'selected': isSelected }" @click="selected">{{ type }}</a>
     <ul class="options" :style="selectList" v-show="isSelected">
         <li v-for="option in options" @click="select(option)">{{ option.value }}</li>
     </ul>
@@ -10,6 +10,7 @@
 export default {
     data () {
         return {
+            type: '选择类别',
             isSelected: false,
             selectList: {
                 position: 'absolute',
@@ -25,6 +26,7 @@ export default {
         },
         select (option) {
             this.isSelected = false;
+            this.type = option.value;
             this.$emit('select', option);
         }
     },

@@ -29,6 +29,13 @@
                         <li>修复导航栏点击之后不退回影响体验因素</li>
                     </ol>
                 </li>
+                <li class="logs-item">
+                    <h3>2016-11-29 更新</h3>
+                    <ol>
+                        <li>将所有的无效路由根据登陆与否跳转到不同首页</li>
+                        <li>将储存登陆状态改成sessionstorage</li>
+                    </ol>
+                </li>
             </ul>
         </div>
     </div>
@@ -63,20 +70,6 @@ export default {
         parseMarkdown: Func.parseMarkdown,
         formatTime: Func.formatTime,
     },
-    ready () {
-        const base = function (input, init) {
-            return fetch(input, init)
-            .then((response) => {
-                if (response.ok) {
-                    return response.json();
-                }
-            })
-        };
-        base()
-        .then((response) => {
-
-        });
-    },
 }
 </script>
 <style>
@@ -105,7 +98,7 @@ export default {
     font-weight: 300;
 }
 .logs-item ol {
-    margin-left: 2.25em;
+    margin-left: 1em;
 }
 .logs-item ol li {
     padding: .625rem;
