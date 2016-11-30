@@ -66,7 +66,7 @@ class Comment {
      * @subscription: viewpost, commentsturnpage
      * @callback: 获取文章评论数据并赋值
      */
-    static getComments (page) {
+    static getComments (page, component, id) {
         //获取文章id
         const postId = page.$route.params.id;
         //获得当前评论页码
@@ -87,6 +87,7 @@ class Comment {
                 page.comments = res.data.comments;
                 page.commentsCount = res.data.commentsCount;
                 page.hasComment = res.data.comments.length > 0;
+                component.resolved(id);
             }
         });
     }

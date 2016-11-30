@@ -43,7 +43,7 @@ class Article {
      * @subscription: viewpost
      * @callback: 获取文章数据并赋值
      */
-    static getPost (page) {
+    static getPost (page, component, id) {
         //获取文章id
         const postId = page.$route.params.id;
         //获取接口信息
@@ -53,6 +53,7 @@ class Article {
         Parent.fetch(url, 'get').then((res) => {
             if (res.success) {
                 page.post = res.data;
+                component.resolved(id);
             }
         });
     }
@@ -62,7 +63,7 @@ class Article {
      * @subscription: viewposts
      * @callback: 获取文章数据并赋值
      */
-    static getPosts (page) {
+    static getPosts (page, component, id) {
         //获取文章id
         const pageName = page.name;
         //获取接口信息

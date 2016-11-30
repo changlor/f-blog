@@ -24,6 +24,7 @@ const mutations = {
     BUBBLE_DELEGATION (state, subscription, page) {
         state.isBubbled++;
         state.delegation.subscriptions.push({
+            id: state.isBubbled,
             subscription: subscription,
             page: page,
         });

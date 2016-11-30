@@ -37,19 +37,30 @@ class Load {
                 this.subscription[subscription].push(callback);
             }
         }
+        const subscription = (subscription) => {
+            const subscribers = {};
+            if (this.subscription.hasOwnProperty(subscription)) {
+                for (let i = 0; i < this.subscription[subscription].length; i++) {
+                    subscribers[`subscriber${i}`] = false;
+                }
+            }
+            return subscribers;
+        };
+        this.delegation.subscription = subscription;
     }
 
     addBubbles () {
-        const bubble = (subscription, page, component) => {
+        const bubble = (subscription, page, component, id) => {
             if (this.subscription.hasOwnProperty(subscription)) {
                 for (let i = 0; i < this.subscription[subscription].length; i++) {
-                    this.subscription[subscription][i](page, component);
+                    const eventId = {};
+                    eventId.subscription = id;
+                    eventId.subscriber = i;
+                    this.subscription[subscription][i](page, component, eventId);
                 }
             }
         };
-        this.delegation = {
-            bubble: bubble,
-        };
+        this.delegation.bubble = bubble;
     }
 }
 
