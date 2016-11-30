@@ -22,17 +22,20 @@
                         </div>
                     </div>
                 </div>
+                <!--
                 <div class="post-buttons">
-                    <a id="toggle-archives" href="https://hran.me/archives.html">返回文章列表</a>
-                    <a id="toggle-post-qr-code">文章二维码</a>
-                    <a id="toggle-reward-qr-code">打赏</a>
+                    <a>返回文章列表</a>
+                    <a>文章二维码</a>
+                    <a>打赏</a>
                 </div>
+                -->
             </article>
         </div>
     </div>
 </div>
 <div id="body-bottom">
     <div class="container">
+        <hr style="border:0;border-top:3px dashed #aaa;">
         <div id="comments">
             <span class="widget-title text-center" style="padding-bottom: 15px;">评论列表</span>
             <div class="comment-wrap">
