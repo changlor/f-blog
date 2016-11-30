@@ -9,12 +9,9 @@ import Api from '../config/Api';
  */
 class Base {
     //初始化各种子类需要的方法函数
-    constructor() {
-        //通信函数
+    fetch (url, method, params) {
         const userInfo = Func.readUserInfo();
         this.token = userInfo.token;
-    }
-    fetch (url, method, params) {
         const options = {};
         if (method == 'get') {
             let query = Php.http_build_query(params);
