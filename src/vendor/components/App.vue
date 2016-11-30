@@ -5,9 +5,11 @@
         <theme></theme>
         <main class="body">
             <router-view></router-view>
+            <!--
             <footer id="footer" role="contentinfo" class="">
                 <p>Copyright © 2016 <a href="https://hran.me/">Hran's</a> • Theme <a href="https://hran.me/mirages.html?copyright&amp;v=151" target="_blank">Mirages</a></p>
             </footer>
+            -->
         </main>
     </div>
 </div>

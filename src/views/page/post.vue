@@ -1,4 +1,8 @@
 <template>
+<div class="buffer" >
+    <div class="loading"></div>
+    <div class="desc">{{ desc }}</div>
+</div>
 <div class="container">
     <div class="row">
         <div id="post">
@@ -78,10 +82,31 @@
         </div>
     </div>
 </div>
-<div class="loading"></div>
 </template>
 <style>
+@keyframes loading{
+    from {
+        left: 0px;
+    }
+    to {
+        left: 1000px;
+    }
+}
+.desc {
+    opacity: 0.7;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    text-align: center;
+    padding-top: 80px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #999;
+    z-index: 9;
+}
 .loading {
+    z-index: 12;
     background: url('../../assets/img/blog/loading.png') no-repeat;
     background-size: 136px;
     width: 68px;
@@ -89,7 +114,7 @@
     background-position: 0px;
     position: fixed;
     left: 200px;
-    top: 500px;
+    top: 20px;
 }
 </style>
 <script>
@@ -100,6 +125,8 @@ import pagination from '../../components/pagination';
 export default {
     data () {
         return {
+            //
+            isLoaded: false, desc: 'loading...',
             //文章主体部分
             post: {},
             //发布评论
@@ -136,8 +163,11 @@ export default {
         formatTime: Func.formatTime,
     },
     ready () {
-        this.bubble('viewpost');
+        //this.bubble('viewpost');
         this.trigger('loadingstart');
+        setInterval(() => {
+            this.desc = this.desc != 'loading...' ? 'loading...' : 'loading..';
+        }, 500)
     },
     watch: {
         currentPage: function () {

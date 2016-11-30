@@ -109,4 +109,20 @@ export default {
     left: 300px;
     bottom: 30px;
 }
+@media screen and (max-width: 81.3125rem) and (min-width: 48rem) {
+    .Yuki-navbar {
+        width: 265px;
+    }
+    .Yuki-navbar:after {
+        width: 265px;
+    }
+}
+@media (max-width: 47.938rem) {
+    .Yuki-navbar {
+        width: 225px;
+    }
+    .Yuki-navbar:after {
+        width: 225px;
+    }
+}
 </style>

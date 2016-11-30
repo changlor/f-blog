@@ -53,7 +53,7 @@ class Loading {
     //计算目标位置和当前位置
     position () {
         this.el = document.querySelector(this.elName);
-        this.targetPosition = 1000;
+        this.targetPosition = 1800;
         this.currentPosition = 0;
         this.offset = this.currentPosition - this.targetPosition;
     }
