@@ -53,8 +53,10 @@ class Article {
         Parent.fetch(url, 'get').then((res) => {
             if (res.success) {
                 page.post = res.data;
-                component.resolved(id);
             }
+            page.$nextTick(() => {
+                component.resolved(id);
+            });
         });
     }
 
@@ -73,8 +75,10 @@ class Article {
         Parent.fetch(url, 'get').then((res) => {
             if (res.success) {
                 page.posts = res.data;
-                component.resolved(id);
             }
+            page.$nextTick(() => {
+                component.resolved(id);
+            })
         });
     }
 }

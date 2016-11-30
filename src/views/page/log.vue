@@ -36,6 +36,12 @@
                         <li>将储存登陆状态改成sessionstorage</li>
                     </ol>
                 </li>
+                <li class="logs-item">
+                    <h3>2016-11-30 更新</h3>
+                    <ol>
+                        <li>新增过渡动画</li>
+                    </ol>
+                </li>
             </ul>
         </div>
     </div>

@@ -1,6 +1,6 @@
 <template>
 <div class="buffer" >
-    <div class="loading"></div>
+    <div :class="['loading', isShake ? 'shake' : '']"></div>
     <div class="desc">{{ desc }}</div>
 </div>
 </template>
@@ -35,23 +35,26 @@
     background-size: 136px;
     width: 68px;
     height: 40px;
-    background-position: 0px;
     position: fixed;
     left: 200px;
     top: 20px;
+}
+.shake {
+    background-position: -68px;
 }
 </style>
 <script>
 export default {
     data () {
         return {
-            isLoaded: false, desc: 'loading...',
+            isShake: false, isLoaded: false, desc: 'loading...',
         };
     },
     ready () {
         setInterval(() => {
             this.desc = this.desc != 'loading...' ? 'loading...' : 'loading..';
-        }, 500)
+            this.isShake = !this.isShake;
+        }, 400)
     },
 }
 </script>

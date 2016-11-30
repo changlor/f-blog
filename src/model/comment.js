@@ -87,8 +87,10 @@ class Comment {
                 page.comments = res.data.comments;
                 page.commentsCount = res.data.commentsCount;
                 page.hasComment = res.data.comments.length > 0;
-                component.resolved(id);
             }
+            page.$nextTick(() => {
+                component.resolved(id);
+            })
         });
     }
 }

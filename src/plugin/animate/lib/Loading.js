@@ -62,11 +62,6 @@ class Loading {
         //定义需要渲染的动画
         const func = (progress, frameNumber) => {
             this.el.style.left = progress + 'px';
-            if ((Math.floor((this.frameCount - frameNumber) % (this.time / 1000)) == 0)) {
-                this.el.style.backgroundPositionX = this.el.style.backgroundPositionX != '-68px'
-                ? '-68px'
-                : '0px';
-            }
         }
         //调用Render类进行渲染
         this.Render.option({
