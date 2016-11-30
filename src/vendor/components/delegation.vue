@@ -36,6 +36,7 @@ const delegation = {
             if (this.subscriptions.length <= 0) {
                 this.trigger('loadingstop');
             }
+            console.log(id)
         },
         bubble (subscription, page, component, id) {
             subscribers.bubble(subscription, page, component, id);

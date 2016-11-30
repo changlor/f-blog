@@ -57,7 +57,6 @@ export default {
     },
     ready () {
         this.bubble('viewposts');
-        this.bubble('requestadmin');
     },
 }
 </script>
