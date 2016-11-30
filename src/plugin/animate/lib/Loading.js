@@ -54,7 +54,7 @@ class Loading {
     position () {
         this.el = document.querySelector(this.elName);
         this.targetPosition = 1800;
-        this.currentPosition = 0;
+        this.currentPosition = -200;
         this.offset = this.currentPosition - this.targetPosition;
     }
     //渲染动画

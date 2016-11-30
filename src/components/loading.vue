@@ -5,14 +5,6 @@
 </div>
 </template>
 <style>
-@keyframes loading{
-    from {
-        left: 0px;
-    }
-    to {
-        left: 1000px;
-    }
-}
 .buffer {
     display: none;
 }
@@ -36,7 +28,7 @@
     width: 68px;
     height: 40px;
     position: fixed;
-    left: 200px;
+    left: -200px;
     top: 20px;
 }
 .shake {
