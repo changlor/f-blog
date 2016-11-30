@@ -73,6 +73,7 @@ class Article {
         Parent.fetch(url, 'get').then((res) => {
             if (res.success) {
                 page.posts = res.data;
+                component.resolved(id);
             }
         });
     }
