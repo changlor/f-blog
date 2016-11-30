@@ -7,7 +7,7 @@
                 <ul class="post-meta">
                     <li><time>{{ post.created_at | formatTime }}</time></li>
                     <li> • 阅读: 374</li>
-                    <li> • <a href="https://hran.me/category/nichijou/">日常</a></li>
+                    <li> • <a href="javascript:;">日常</a></li>
                 </ul>
                 <p class="cover" v-if="post.cover != ''"><img v-bind:src="post.cover"></p>
                 <div class="post-content">
@@ -16,7 +16,10 @@
                 </div>
                 <div class="tags">
                     <div class="dkeywords">
-                        <div class="keywords">标签: <a href="https://hran.me/tag/Apple-Store/">Apple Store</a>, <a href="https://hran.me/tag/%E5%94%AE%E5%90%8E/">售后</a></div>
+                        <div class="keywords">标签:
+                            <a href="javascript:;" v-if="post.tags != ''" v-for="tag in post.tags">{{ tag }}</a>
+                            <a href="javascript:;" v-if="post.tags == '' || !post.tags">无</a>
+                        </div>
                     </div>
                 </div>
                 <div class="post-buttons">

@@ -20,7 +20,7 @@ class Article {
             return false;
         }
         //获取文章标签
-        const tags = page.tags;
+        const tags = JSON.stringify(page.tags);
         //组装数据
         const post = {
             pageId: pageId,
@@ -52,6 +52,11 @@ class Article {
         //调用父模块get方法
         Parent.fetch(url, 'get').then((res) => {
             if (res.success) {
+                try {
+                    res.data.tags = JSON.parse(res.data.tags);
+                } catch (e) {
+                    res.data.tags = typeof res.data.tags == 'string' ? [res.data.tags] : '';
+                }
                 page.post = res.data;
             }
             page.$nextTick(() => {
