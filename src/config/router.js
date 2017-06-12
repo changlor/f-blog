@@ -1,12 +1,11 @@
 export default {
-    router: {
-        '/t/:id(post)': 'page/post',
-        '/daily': 'page/daily',
-        '/home': 'page/home',
-        '/index': 'admin/index',
-        '/write': 'admin/write',
-        '/log': 'page/log',
+    routes: {
+        '/home': 'Home.vue',
+        '/wiki': 'Home.vue',
+        '/post': 'post.vue',
+        '/link': 'link.vue',
     },
-    custom: ['page/daily', 'page/home', 'page/post', 'post/log'],
-    admin: ['admin/index', 'admin/write'],
+    redirect: {
+        '/home': [''],
+    }
 }

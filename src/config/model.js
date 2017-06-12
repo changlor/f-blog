@@ -1,27 +1,11 @@
 export default {
-    models: ['Article', 'Comment', 'Auth'],
+    models: ['Welcome', 'Post'],
     subscriptions: {
-        'viewpost': {
-            Article: 'getPost',
-            Comment: 'getComments',
+        'say': {
+            Welcome: 'say',
         },
-        'viewposts': {
-            Article: 'getPosts',
-        },
-        'submitpost': {
-            Article: 'createPost',
-        },
-        'submitcomment': {
-            Comment: 'createComment',
-        },
-        'commentsturnpage': {
-            Comment: 'getComments',
-        },
-        'signin': {
-            Auth: 'signin',
-        },
-        'signout': {
-            Auth: 'signout',
-        },
-    },
+        'viewPosts': {
+            Post: 'selectPosts',
+        }
+    }
 }

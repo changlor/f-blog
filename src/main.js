@@ -1,17 +1,8 @@
+// 加载vue
 import Vue from 'vue';
-import VueRouter from 'vue-router';
-import { routerConfig } from './vendor/route';
-
-//装载vue-router
-Vue.use(VueRouter);
-
-//实例化vue-router
-let router = new VueRouter({
-    history: false,
-    saveScrollPosition: true,
-});
-
-let app = Vue.extend(require('./vendor/components/App.vue'));
-routerConfig(router);
-
-router.start(app, '#app');
+// 加载程序各种配置
+import { appOptions, appSetting } from './vendor/autoload';
+// 初始化程序设置
+appSetting(Vue);
+// 启动应用
+const app = new Vue(appOptions);

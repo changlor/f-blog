@@ -20,7 +20,9 @@ const readClassification = function (object, dir, index = 0) {
     if (dir.length == index) {
         return object;
     } else {
-        return readClassification(object[dir[index]], dir, index + 1);
+        return dir.length == 1
+        ? object['./'][dir[index]]
+        : readClassification(object[dir[index]], dir, index + 1);
     }
 }
 //渲染md为html
@@ -65,10 +67,18 @@ const readUserInfo = function () {
     return userInfo;
 }
 
+const isEmptyObject = function (object) {
+    for (let name in object) {
+        return false;
+    }
+    return true;
+}
+
 export default {
     formatTime: formatTime,
     parseMarkdown: parseMarkdown,
     storeClassification: storeClassification,
     readClassification: readClassification,
     readUserInfo: readUserInfo,
+    isEmptyObject: isEmptyObject,
 }
